@@ -27,9 +27,7 @@ public class Beitrag {
 		
 	}
 
-	public void finalize() throws Throwable {
-		
-	}
+	
 
 	/**
 	 * 
@@ -154,6 +152,114 @@ public class Beitrag {
 		else{
 			return false;
 		}
+	}
+
+
+
+	public String getContent() {
+		return content;
+	}
+
+
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+
+
+	public Ydiot getCreator() {
+		return creator;
+	}
+
+
+
+	public void setCreator(Ydiot creator) {
+		this.creator = creator;
+	}
+
+
+
+	public Date getDate() {
+		return date;
+	}
+
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
+
+	public List<Ydiot> getDislikes() {
+		return Dislikes;
+	}
+
+
+
+	public void setDislikes(List<Ydiot> dislikes) {
+		Dislikes = dislikes;
+	}
+
+
+
+	public long getID() {
+		return ID;
+	}
+
+
+
+	public void setID(long iD) {
+		ID = iD;
+	}
+
+
+
+	public List<Ydiot> getLikes() {
+		return Likes;
+	}
+
+
+
+	public void setLikes(List<Ydiot> likes) {
+		Likes = likes;
+	}
+
+
+
+	public List<Ydiot> getReadList() {
+		return readList;
+	}
+
+
+
+	public void setReadList(List<Ydiot> readList) {
+		this.readList = readList;
+	}
+
+
+
+	public Ydiot getRecep() {
+		return recep;
+	}
+
+
+
+	public void setRecep(Ydiot recep) {
+		this.recep = recep;
+	}
+
+
+
+	public List<Ydiot> getReportList() {
+		return reportList;
+	}
+
+
+
+	public void setReportList(List<Ydiot> reportList) {
+		this.reportList = reportList;
 	}
 
 }
