@@ -1,5 +1,6 @@
 package ydio;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,11 +24,33 @@ public class Beitrag {
 	private Ydiot recep;
 	private List<Ydiot> reportList;
 
-	public Beitrag(){
+	
+	/**
+	 * 
+	 * @param creator
+	 * @param recep
+	 * 
+	 * Ein Beitrag kann nur durch die Angabe eines Erstellers(creator)
+	 * und eines Empfängers(recep) erstellt werden. 
+	 * Recep ist der Ydiot auf wessen "Wand" der Beitrag erstellt wird.
+	 * 
+	 */
+	
+	public Beitrag(Ydiot creator, Ydiot recep){
+		this.creator = creator;
+		content = "";
+		date = new Date();
+		Dislikes = new ArrayList<Ydiot>();
 		
+		ID = nextID;
+		ID++;
+		
+		Likes = new ArrayList<Ydiot>();
+		readList = new ArrayList<Ydiot>();
+		this.recep = recep;
+		reportList = new ArrayList<Ydiot>();
 	}
 
-	
 
 	/**
 	 * 
