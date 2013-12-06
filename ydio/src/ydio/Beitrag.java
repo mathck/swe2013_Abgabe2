@@ -44,6 +44,8 @@ public class Beitrag {
 	
 	public Beitrag(Ydiot creator, Ydiot recep){
 		this.creator = creator;
+		this.recep = recep;
+		
 		content = "";
 		date = new Date();
 		Dislikes = new ArrayList<Ydiot>();
@@ -53,12 +55,25 @@ public class Beitrag {
 		
 		Likes = new ArrayList<Ydiot>();
 		readList = new ArrayList<Ydiot>();
-		this.recep = recep;
 		reportList = new ArrayList<Ydiot>();
 	}
 	
+	/**
+	 * Dieser Kontruktor ist für das Laden von Beiträgen aus der Datenbank
+	 * vorgesehen
+	 * 
+	 * @param creator
+	 * @param recep
+	 * @param content
+	 * @param Dislikes
+	 * @param ID
+	 * @param Likes
+	 * @param readList
+	 * @param reportList
+	 * @param date
+	 */
 	public Beitrag(Ydiot creator, Ydiot recep, String content, List<Ydiot> Dislikes, 
-				  long ID, List<Ydiot> Likes, List<Ydiot> readList, List<Ydiot> reportList ){
+				  long ID, List<Ydiot> Likes, List<Ydiot> readList, List<Ydiot> reportList, Date date){
 		
 		this.creator = creator;
 		this.recep = recep;
@@ -68,7 +83,7 @@ public class Beitrag {
 		this.Likes = Likes;
 		this.readList = readList;
 		this.reportList = reportList;
-		
+		this.date = date;
 	}
 	
 
@@ -79,7 +94,7 @@ public class Beitrag {
 	 * @param user
 	 */
 	public void addDislike(Ydiot user){
-		if(!Dislikes.contains(user)){
+		if(!getRated(user)){
 			Dislikes.add(user);
 		}
 	}
@@ -89,8 +104,8 @@ public class Beitrag {
 	 * @param user
 	 */
 	public void addLike(Ydiot user){
-		if(!Likes.contains(user)){
-			Dislikes.add(user);
+		if(!getRated(user)){
+			Likes.add(user);
 		}
 	}
 
