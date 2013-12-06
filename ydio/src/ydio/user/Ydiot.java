@@ -39,4 +39,20 @@ public class Ydiot extends AbstractUser {
 	public void setLocked(Date date_until) {
 		lockedUntil = date_until;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<Ydiot> getFriendList() {
+		return friendList;
+	}
+
+	public void setFriendList(List<Ydiot> friendList) {
+		this.friendList = friendList;
+	}
 }
