@@ -19,6 +19,12 @@ public class Beitrag {
 	private List<Ydiot> Dislikes;
 	private long ID;
 	private List<Ydiot> Likes;
+	
+	/**
+	 * nextID hält fest an welchem ID platz die Beiträge sich gerade befinden
+	 * Beim erstellen eines neuen Betirages wird automatisch durch nextID 
+	 * dem Beitrag eine ID zugeteilt
+	 */
 	private static long nextID;
 	private List<Ydiot> readList;
 	private Ydiot recep;
@@ -43,13 +49,29 @@ public class Beitrag {
 		Dislikes = new ArrayList<Ydiot>();
 		
 		ID = nextID;
-		ID++;
+		nextID++;
 		
 		Likes = new ArrayList<Ydiot>();
 		readList = new ArrayList<Ydiot>();
 		this.recep = recep;
 		reportList = new ArrayList<Ydiot>();
 	}
+	
+	public Beitrag(Ydiot creator, Ydiot recep, String content, List<Ydiot> Dislikes, 
+				  long ID, List<Ydiot> Likes, List<Ydiot> readList, List<Ydiot> reportList ){
+		
+		this.creator = creator;
+		this.recep = recep;
+		this.content = content;
+		this.Dislikes = Dislikes;
+		this.ID = ID;
+		this.Likes = Likes;
+		this.readList = readList;
+		this.reportList = reportList;
+		
+	}
+	
+
 
 
 	/**
@@ -283,6 +305,15 @@ public class Beitrag {
 
 	public void setReportList(List<Ydiot> reportList) {
 		this.reportList = reportList;
+	}
+	
+	
+	public static void setnextID(long id){
+		nextID = id;
+	}
+	
+	public long getnextID(){
+		return nextID;
 	}
 
 }
