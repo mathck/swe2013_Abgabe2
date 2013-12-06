@@ -2,8 +2,8 @@ package ydio.dao;
 
 import java.util.List;
 
+import ydio.*;
 import ydio.user.*;
-import ydio.um.*;
 
 /**
  * @author mathck

@@ -2,7 +2,7 @@ package ydio.dao;
 
 import java.util.List;
 
-import ydio.um.UserManagement;
+import ydio.UserManagement;
 import ydio.user.*;
 
 /**
