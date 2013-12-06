@@ -49,50 +49,26 @@ public abstract class AbstractUser {
 		return username;
 	}
 
-	/**
-	 * 
-	 * @param date
-	 */
 	public void setBirthday(Date date) {
 		this.birthday = date;
 	}
 
-	/**
-	 * 
-	 * @param email
-	 */
 	public void setEMail(String email) {
 		this.eMail = email;
 	}
 
-	/**
-	 * 
-	 * @param fullName
-	 */
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
 
-	/**
-	 * 
-	 * @param password
-	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	/**
-	 * 
-	 * @param sex
-	 */
 	public void setSex(char sex) {
 		this.sex = sex;
 	}
 
-	/**
-	 * 
-	 * @param username
-	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
