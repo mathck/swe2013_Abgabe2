@@ -15,7 +15,7 @@ public class UserManagement {
 
 	private AbstractUser session;
 
-	public UserManagement(){
+	public UserManagement() {
 
 	}
 
@@ -27,7 +27,7 @@ public class UserManagement {
 	 * 
 	 * @param beitrag
 	 */
-	public void addBeitrag(Beitrag beitrag){
+	public void addBeitrag(Beitrag beitrag) {
 
 	}
 
@@ -39,7 +39,7 @@ public class UserManagement {
 	 * @param sex
 	 * @param birthday
 	 */
-	public void editSignedOnUserProfile(String password, String fullName, String eMail, char sex, Date birthday){
+	public void editSignedOnUserProfile(String password, String fullName, String eMail, char sex, Date birthday) {
 
 	}
 
@@ -47,7 +47,7 @@ public class UserManagement {
 	 * 
 	 * @param data_type
 	 */
-	public String getScientistData(data_type dataType){
+	public String getScientistData(data_type dataType) {
 		return "";
 	}
 
@@ -56,24 +56,11 @@ public class UserManagement {
 	 * @param password
 	 * @param username
 	 */
-	public void login(String password, String username){
+	public void login(String password, String username) {
 
 	}
 
-	public void logout(){
-
-	}
-
-	/**
-	 * 
-	 * @param username
-	 * @param password
-	 * @param fullName
-	 * @param eMail
-	 * @param sex
-	 * @param birthday
-	 */
-	public void registerAdministrator(String username, String password, String fullName, String eMail, char sex, Date birthday){
+	public void logout() {
 
 	}
 
@@ -86,7 +73,7 @@ public class UserManagement {
 	 * @param sex
 	 * @param birthday
 	 */
-	public void registerForscher(String username, String password, String fullName, String eMail, char sex, Date birthday){
+	public void registerAdministrator(String username, String password, String fullName, String eMail, char sex, Date birthday) {
 
 	}
 
@@ -99,7 +86,20 @@ public class UserManagement {
 	 * @param sex
 	 * @param birthday
 	 */
-	public void registerModerator(String username, String password, String fullName, String eMail, char sex, Date birthday){
+	public void registerForscher(String username, String password, String fullName, String eMail, char sex, Date birthday) {
+
+	}
+
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @param fullName
+	 * @param eMail
+	 * @param sex
+	 * @param birthday
+	 */
+	public void registerModerator(String username, String password, String fullName, String eMail, char sex, Date birthday) {
 
 	}
 
@@ -113,7 +113,7 @@ public class UserManagement {
 	 * @param birthday
 	 * @param description
 	 */
-	public void registerYidiot(String username, String password, String fullName, String eMail, char sex, Date birthday, String description){
+	public void registerYidiot(String username, String password, String fullName, String eMail, char sex, Date birthday, String description) {
 
 	}
 
@@ -121,7 +121,7 @@ public class UserManagement {
 	 * 
 	 * @param beitrag
 	 */
-	public void removeBeitrag(Beitrag beitrag){
+	public void removeBeitrag(Beitrag beitrag) {
 
 	}
 
@@ -129,23 +129,23 @@ public class UserManagement {
 	 * 
 	 * @param user
 	 */
-	public void removeUser(AbstractUser user){
+	public void removeUser(AbstractUser user) {
 
 	}
 
-	public String viewAdminWall(){
+	public String viewAdminWall() {
 		return "";
 	}
 
-	public String viewMoeratorWall(){
+	public String viewMoeratorWall() {
 		return "";
 	}
 
-	public String viewScientistWall(){
+	public String viewScientistWall() {
 		return "";
 	}
 
-	public String viewSignedOnUserWall(){
+	public String viewSignedOnUserWall() {
 		return "";
 	}
 
@@ -153,11 +153,11 @@ public class UserManagement {
 	 * 
 	 * @param user
 	 */
-	public String viewUserWall(AbstractUser user){
+	public String viewUserWall(AbstractUser user) {
 		return "";
 	}
 	
-	public AbstractUser getSession(){
+	public AbstractUser getSession() {
 		return session;
 	}
 }

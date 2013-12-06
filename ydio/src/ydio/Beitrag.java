@@ -145,7 +145,7 @@ public class Beitrag {
 
 	/**
 	 * 
-	 * @param get    Report
+	 * @param getReport
 	 */
 	public boolean getReport(Ydiot user){
 		if(reportList.contains(user)){
