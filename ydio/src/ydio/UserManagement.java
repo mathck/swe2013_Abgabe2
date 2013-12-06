@@ -20,7 +20,7 @@ public class UserManagement {
 	private DAO dao;
 
 	public UserManagement() {
-
+		dao = new SQL();
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package ydio.dao;
+package ydio;
 
 /**
  * @author mathck
