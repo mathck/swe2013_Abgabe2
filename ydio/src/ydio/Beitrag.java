@@ -24,11 +24,11 @@ public class Beitrag {
 	private List<Ydiot> reportList;
 
 	public Beitrag(){
-
+		
 	}
 
 	public void finalize() throws Throwable {
-
+		
 	}
 
 	/**
@@ -36,7 +36,9 @@ public class Beitrag {
 	 * @param user
 	 */
 	public void addDislike(Ydiot user){
-
+		if(!Dislikes.contains(user)){
+			Dislikes.add(user);
+		}
 	}
 
 	/**
@@ -44,7 +46,9 @@ public class Beitrag {
 	 * @param user
 	 */
 	public void addLike(Ydiot user){
-
+		if(!Likes.contains(user)){
+			Dislikes.add(user);
+		}
 	}
 
 	/**
@@ -52,7 +56,13 @@ public class Beitrag {
 	 * @param user
 	 */
 	public boolean addRead(Ydiot user){
-		return false;
+		if(readList.contains(user)){
+			return false;
+		}
+		else{
+			readList.add(user);
+			return true;
+		}
 	}
 
 	/**
@@ -60,35 +70,51 @@ public class Beitrag {
 	 * @param user
 	 */
 	public boolean addReport(Ydiot user){
-		return false;
+		if(reportList.contains(user)){
+			return false;
+		}
+		else{
+			reportList.add(user);
+			return true;
+		}
 	}
 
 	public int getCountDislike(){
-		return 0;
+		return Dislikes.size();
 	}
 
 	public int getCountLikes(){
-		return 0;
+		return Likes.size();
 	}
 
 	public int getCountReports(){
-		return 0;
+		return reportList.size();
 	}
 
 	/**
 	 * 
 	 * @param user
 	 */
-	public void getDislike(Ydiot user){
-
+	public boolean getDislike(Ydiot user){
+		if(Dislikes.contains(user)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	/**
 	 * 
 	 * @param user
 	 */
-	public void getLike(Ydiot user){
-
+	public boolean getLike(Ydiot user){
+		if(Likes.contains(user)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	/**
@@ -96,7 +122,12 @@ public class Beitrag {
 	 * @param user
 	 */
 	public boolean getRated(Ydiot user){
-		return false;
+		if(getLike(user) || getDislike(user)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	/**
@@ -104,15 +135,25 @@ public class Beitrag {
 	 * @param user
 	 */
 	public boolean getRead(Ydiot user){
-		return false;
+		if(readList.contains(user)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	/**
 	 * 
 	 * @param getReport
 	 */
-	public boolean getReport(Ydiot getReport){
-		return false;
+	public boolean getReport(Ydiot user){
+		if(reportList.contains(user)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 }

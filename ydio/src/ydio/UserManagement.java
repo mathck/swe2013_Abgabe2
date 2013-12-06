@@ -156,5 +156,8 @@ public class UserManagement {
 	public String viewUserWall(AbstractUser user){
 		return "";
 	}
-
+	
+	public AbstractUser getSession(){
+		return session;
+	}
 }
