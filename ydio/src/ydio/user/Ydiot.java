@@ -14,24 +14,45 @@ public class Ydiot extends AbstractUser {
 	private List<Ydiot> friendList;
 	private Date lockedUntil;
 
-	public Ydiot(){
-
+	public Ydiot(String username, String password, String fullName, String email, char sex, Date date, String desc, List<Ydiot> fL) {
+		super(username, password, fullName, email, sex, date);
+		this.description = desc;
+		this.friendList = fL;
 	}
-
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
-
-	public boolean isLocked(){
-		return false;
+	
+	/**
+	 * compares Date.Now and Date.lockedUntil and determins if the User is locked
+	 * @return true: is Locked, false: is not Locked
+	 */
+	public boolean isLocked() {
+		if(lockedUntil.compareTo(new Date()) > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
-	 * 
-	 * @param date_until
+	 * Lock a User, only the Moderator and Admin
+	 * @param date_until set a Date
 	 */
-	public void setLocked(Date date_until){
-
+	public void setLocked(Date date_until) {
+		lockedUntil = date_until;
+	}
+	
+	public String getDescription() {
+		return description;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<Ydiot> getFriendList() {
+		return friendList;
+	}
+
+	public void setFriendList(List<Ydiot> friendList) {
+		this.friendList = friendList;
+	}
 }
