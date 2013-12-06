@@ -2,6 +2,7 @@ package ydio.dao;
 
 import java.util.List;
 
+import ydio.Beitrag;
 import ydio.UserManagement;
 import ydio.user.*;
 

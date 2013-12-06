@@ -1,7 +1,9 @@
-package ydio.user;
+package ydio;
 
 import java.util.Date;
 import java.util.List;
+
+import ydio.user.Ydiot;
 
 /**
  * @author mathck
