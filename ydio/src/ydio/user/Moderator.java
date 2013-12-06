@@ -1,5 +1,7 @@
 package ydio.user;
 
+import java.util.Date;
+
 /**
  * @author mathck
  * @version 1.0
@@ -7,12 +9,7 @@ package ydio.user;
  */
 public class Moderator extends AbstractUser {
 
-	public Moderator(){
-
+	public Moderator(String username, String password, String fullName, String email, char sex, Date date) {
+		super(username, password, fullName, email, sex, date);
 	}
-
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
-
 }

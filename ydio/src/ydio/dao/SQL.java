@@ -21,11 +21,6 @@ public class SQL implements DAO {
 		
 
 	}
-	
-
-	public void finalize() throws Throwable {
-
-	}
 
 	/**
 	 * 

@@ -16,8 +16,13 @@ public abstract class AbstractUser {
 	private char sex;
 	private String username;
 
-	public AbstractUser() {
-
+	public AbstractUser(String username, String password, String fullName, String email, char sex, Date date) {
+		setBirthday(date);
+		setEMail(email);
+		setFullName(fullName);
+		setSex(sex);
+		setPassword(password);
+		setUsername(username);
 	}
 
 	public Date getBirthday() {
