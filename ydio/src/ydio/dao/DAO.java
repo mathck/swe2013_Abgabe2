@@ -13,7 +13,6 @@ import ydio.user.*;
  */
 public interface DAO {
 
-//fggf
 	/**
 	 * 
 	 * @param beitrag
