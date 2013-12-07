@@ -1,5 +1,6 @@
 package ydio.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import ydio.Beitrag;
@@ -17,8 +18,9 @@ public interface DAO {
 	/**
 	 * 
 	 * @param beitrag
+	 * @throws SQLException 
 	 */
-	public void addBeitrag(Beitrag beitrag);
+	public void addBeitrag(Beitrag beitrag) throws SQLException;
 
 	/**
 	 * 

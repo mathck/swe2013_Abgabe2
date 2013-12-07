@@ -18,14 +18,18 @@ public class SQL implements DAO {
 	private static final String path = "mysql://localhost/ydio";
 	private static final String username = "myuser";
 
-	private Connection database;
+	private Connection connection;
+	private Statement statement;
+	private ResultSet result;
 	
 	public SQL() throws SQLException {
 		String url 
 			= "jdbc:" + path
 			+ "?user=" + username
 			+ "&password=" + password;
-		database = DriverManager.getConnection(url);
+		connection = DriverManager.getConnection(url);
+		statement = connection.createStatement();
+		result = null;
 	}
 
 	/**
@@ -33,8 +37,19 @@ public class SQL implements DAO {
 	 * @param beitrag
 	 */
 
-	public void addBeitrag(Beitrag beitrag){
-
+	public void addBeitrag(Beitrag beitrag) throws SQLException {
+		result = statement.executeQuery("select id from id where type=beitrag");
+		long id = result.getLong(0);
+		beitrag.setID(id);
+		result = statement.executeQuery("update id set id="+(id+1)+" where type=beitrag;");
+		String statementString = 
+			"insert into beitrag (creator, content, date, ID, recep) values ('" +
+			beitrag.getCreator().getUsername() + "', '" +
+			beitrag.getContent() + "', '" +
+			beitrag.getDate() + "', '" +
+			beitrag.getID() + "', '" +
+			beitrag.getRecep().getUsername() + "');";				;
+		result = statement.executeQuery(statementString);
 	}
 
 	/**
@@ -43,7 +58,6 @@ public class SQL implements DAO {
 	 */
 
 	public void addUser(AbstractUser user){
-
 	}
 
 	public List<AbstractUser> getAllUsers(){
