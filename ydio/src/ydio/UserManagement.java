@@ -2,6 +2,7 @@ package ydio;
 
 import ydio.user.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,12 @@ public class UserManagement {
 	private DAO dao;
 
 	public UserManagement() {
-		dao = new SQL();
+		try {
+			dao = new SQL();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
