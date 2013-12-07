@@ -1,5 +1,6 @@
 package ydio.dao;
 
+import java.sql.*;
 import java.util.List;
 
 import ydio.*;
@@ -13,13 +14,18 @@ import ydio.user.*;
 public class SQL implements DAO {
 
 	private static final String jdbcDriver = null;
-	private static final String password = null;
-	private static final String path = null;
-	private static final String username = null;
+	private static final String password = "mypassword";
+	private static final String path = "mysql://localhost/ydio";
+	private static final String username = "myuser";
 
-	public SQL(){
-		
-
+	private Connection database;
+	
+	public SQL() throws SQLException {
+		String url 
+			= "jdbc:" + path
+			+ "?user=" + username
+			+ "&password=" + password;
+		database = DriverManager.getConnection(url);
 	}
 
 	/**
