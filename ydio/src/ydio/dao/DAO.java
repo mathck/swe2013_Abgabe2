@@ -1,5 +1,6 @@
 package ydio.dao;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -18,59 +19,67 @@ public interface DAO {
 	 * 
 	 * @param beitrag
 	 * @throws SQLException 
+	 * @throws IOException 
 	 */
-	public void addBeitrag(Beitrag beitrag) throws SQLException;
+	public void addBeitrag(Beitrag beitrag) throws IOException;
 
 	/**
 	 * 
 	 * @param user
+	 * @throws IOException 
 	 * @throws SQLException 
 	 */
-	public void addUser(AbstractUser user) throws SQLException;
+	public void addUser(AbstractUser user) throws IOException;
 
-	public List<AbstractUser> getAllUsers() throws SQLException;
+	public List<AbstractUser> getAllUsers() throws IOException;
 
-	public List<Beitrag> getBeitragList() throws SQLException;
+	public List<Beitrag> getBeitragList() throws IOException;
 
 	/**
 	 * 
 	 * @param data_type
+	 * @throws IOException 
 	 */
-	public String[][] getScientistData(data_type dataType);
+	public String[][] getScientistData(data_type dataType) throws IOException;
 
 	/**
 	 * 
 	 * @param username
+	 * @throws IOException 
 	 * @throws SQLException 
 	 */
-	public AbstractUser getUserByUsername(String username) throws SQLException;
+	public AbstractUser getUserByUsername(String username) throws IOException;
 
-	public List<Ydiot> getUserList() throws SQLException;
+	public List<Ydiot> getUserList() throws IOException;
 
 	/**
 	 * 
 	 * @param beitrag
+	 * @throws IOException 
 	 * @throws SQLException 
 	 */
-	public void removeBeitrag(Beitrag beitrag) throws SQLException;
+	public void removeBeitrag(Beitrag beitrag) throws IOException;
 
 	/**
 	 * 
 	 * @param user
+	 * @throws IOException 
 	 */
-	public void removeUser(AbstractUser user);
+	public void removeUser(AbstractUser user) throws IOException;
 
 	/**
 	 * 
 	 * @param searchstring
+	 * @throws IOException 
 	 */
-	public List<Ydiot> search(String searchstring);
+	public List<Ydiot> search(String searchstring) throws IOException;
 
 	/**
 	 * 
 	 * @param beitrag
+	 * @throws IOException 
 	 */
-	public void updateBeitrag(Beitrag beitrag);
+	public void updateBeitrag(Beitrag beitrag) throws IOException;
 
 	/**
 	 * 
