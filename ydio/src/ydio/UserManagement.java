@@ -254,7 +254,6 @@ public class UserManagement {
 	 * Beschränkt auf: Administrator
 	 */
 	public void removeUser(AbstractUser user) {
-		
 		if(session instanceof Administrator){
 			try {
 				dao.removeUser(user);

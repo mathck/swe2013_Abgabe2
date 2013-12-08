@@ -14,22 +14,24 @@ import ydio.dao.SQL;
 import ydio.user.*;
 
 public class Tests {
+	
+	static Ydiot y = null;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		y = new Ydiot("ydiot", "pw", "vorname nachname", "email@ydio.com", 'm', new Date(), "desc", null);
 	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
 	
 	@Test
 	public void UserTest() {
-		Ydiot y = new Ydiot("vorname", "pw", "vorname nachname", "email@ydio.com", 'm', new Date(), "desc", null);
-		System.out.println(y.getDescription());
+		p(y.getFullName());
+		p(y.getDescription());
+		p(y.getSex());
+		y.setSex('f');
+		p(y.getSex());
 	}
 	
+	/*
 	@Test
 	public void LockedTest() throws IOException {
 		Ydiot y = new Ydiot("vorname", "pw", "vorname nachname", "email@ydio.com", 'm', new Date(), "desc", null);
@@ -38,7 +40,14 @@ public class Tests {
 		SQL s = new SQL();
 		um.login(y.getPassword(), y.getUsername());
 		um.addBeitrag(new Beitrag(y,y));
-		
 	}
+	*/
 
+	public static void p(String s) {
+		System.out.println(s);
+	}
+	
+	public static void p(char s) {
+		System.out.println(s);
+	}
 }
