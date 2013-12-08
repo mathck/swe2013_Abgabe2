@@ -25,12 +25,13 @@ public interface DAO {
 	/**
 	 * 
 	 * @param user
+	 * @throws SQLException 
 	 */
-	public void addUser(AbstractUser user);
+	public void addUser(AbstractUser user) throws SQLException;
 
-	public List<AbstractUser> getAllUsers();
+	public List<AbstractUser> getAllUsers() throws SQLException;
 
-	public List<Beitrag> getBeitragList();
+	public List<Beitrag> getBeitragList() throws SQLException;
 
 	/**
 	 * 
@@ -41,16 +42,18 @@ public interface DAO {
 	/**
 	 * 
 	 * @param username
+	 * @throws SQLException 
 	 */
-	public AbstractUser getUserByUsername(String username);
+	public AbstractUser getUserByUsername(String username) throws SQLException;
 
-	public List<Ydiot> getUserList();
+	public List<Ydiot> getUserList() throws SQLException;
 
 	/**
 	 * 
 	 * @param beitrag
+	 * @throws SQLException 
 	 */
-	public void removeBeitrag(Beitrag beitrag);
+	public void removeBeitrag(Beitrag beitrag) throws SQLException;
 
 	/**
 	 * 
