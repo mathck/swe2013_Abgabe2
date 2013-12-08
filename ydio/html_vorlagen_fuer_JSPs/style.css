@@ -1,0 +1,50 @@
+body {
+ background-color: #EEEEEE;
+}
+
+#header {
+	margin: 0 auto;
+    text-align: left;
+	
+	background-color: lightblue;
+	padding: 10px;
+	margin-top: 0px;
+	margin-bottom: 20px;
+	border: 1px solid #AAAAAA;
+	width: 1280px;
+	height: 50px;
+	vertical-align: middle;
+}
+
+#content {
+	margin: 0 auto;
+    text-align: left;
+	
+	background-color: white;
+	width: 1280px;
+	padding: 10px;
+	border: 1px solid #AAAAAA;
+	margin-bottom: 20px;
+}
+
+#footer {
+	margin: 0 auto;
+    text-align: left;
+	
+	background-color: white;
+	width: 1280px;
+	height: 30px;
+	padding: 10px;
+	border: 1px solid #AAAAAA;
+}
+
+/*
+Prototype 2: insert like, dislike, melden ...
+*/
+.beitrag {
+	border: 1px solid #AAAAAA;
+	width: 400px;
+	font-family: Verdana;
+	margin-top: 20px;
+	padding: 20px;
+}
