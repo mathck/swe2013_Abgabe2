@@ -11,10 +11,10 @@ import java.util.List;
 public class Ydiot extends AbstractUser {
 
 	private String description;
-	private List<Ydiot> friendList;
+	private List<String> friendList;
 	private Date lockedUntil;
 
-	public Ydiot(String username, String password, String fullName, String email, char sex, Date date, String desc, List<Ydiot> fL) {
+	public Ydiot(String username, String password, String fullName, String email, char sex, Date date, String desc, List<String> fL) {
 		super(username, password, fullName, email, sex, date);
 		this.description = desc;
 		this.friendList = fL;
@@ -48,11 +48,11 @@ public class Ydiot extends AbstractUser {
 		this.description = description;
 	}
 
-	public List<Ydiot> getFriendList() {
+	public List<String> getFriendList() {
 		return friendList;
 	}
 
-	public void setFriendList(List<Ydiot> friendList) {
+	public void setFriendList(List<String> friendList) {
 		this.friendList = friendList;
 	}
 }

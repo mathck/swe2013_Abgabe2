@@ -21,7 +21,7 @@ public class Beitrag {
 	private List<Ydiot> Likes;
 	
 	/**
-	 * nextID hält fest an welchem ID platz die Beiträge sich gerade befinden
+	 * nextID hï¿½lt fest an welchem ID platz die Beitrï¿½ge sich gerade befinden
 	 * Beim erstellen eines neuen Betirages wird automatisch durch nextID 
 	 * dem Beitrag eine ID zugeteilt
 	 */
@@ -37,7 +37,7 @@ public class Beitrag {
 	 * @param recep
 	 * 
 	 * Ein Beitrag kann nur durch die Angabe eines Erstellers(creator)
-	 * und eines Empfängers(recep) erstellt werden. 
+	 * und eines Empfï¿½ngers(recep) erstellt werden. 
 	 * Recep ist der Ydiot auf wessen "Wand" der Beitrag erstellt wird.
 	 * 
 	 */
@@ -59,7 +59,7 @@ public class Beitrag {
 	}
 	
 	/**
-	 * Dieser Kontruktor ist für das Laden von Beiträgen aus der Datenbank
+	 * Dieser Kontruktor ist fï¿½r das Laden von Beitrï¿½gen aus der Datenbank
 	 * vorgesehen
 	 * 
 	 * @param creator

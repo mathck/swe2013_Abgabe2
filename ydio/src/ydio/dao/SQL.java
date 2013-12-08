@@ -322,8 +322,9 @@ public class SQL implements DAO {
 	/**
 	 * 
 	 * @param user
+	 * @throws IOException 
 	 */
-	public void updateUser(AbstractUser user){
+	public void updateUser(AbstractUser user) throws IOException{
 		try {
 			//TODO updateUser implementieren
 		} catch (SQLException e) {

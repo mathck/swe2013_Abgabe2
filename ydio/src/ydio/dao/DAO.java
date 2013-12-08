@@ -84,7 +84,8 @@ public interface DAO {
 	/**
 	 * 
 	 * @param user
+	 * @throws IOException 
 	 */
-	public void updateUser(AbstractUser user);
+	public void updateUser(AbstractUser user) throws IOException;
 
 }
