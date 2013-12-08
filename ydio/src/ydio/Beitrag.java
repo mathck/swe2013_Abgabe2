@@ -21,7 +21,7 @@ public class Beitrag {
 	private List<Ydiot> Likes;
 	
 	/**
-	 * nextID hï¿½lt fest an welchem ID platz die Beitrï¿½ge sich gerade befinden
+	 * nextID hält fest an welchem ID platz die Beiträge sich gerade befinden
 	 * Beim erstellen eines neuen Betirages wird automatisch durch nextID 
 	 * dem Beitrag eine ID zugeteilt
 	 */
@@ -33,8 +33,8 @@ public class Beitrag {
 	
 	/**
 	 * 
-	 * @param creator
-	 * @param recep
+	 * @param creator Ersteller
+	 * @param recep   Empfänger
 	 * 
 	 * Ein Beitrag kann nur durch die Angabe eines Erstellers(creator)
 	 * und eines Empfï¿½ngers(recep) erstellt werden. 
@@ -91,7 +91,9 @@ public class Beitrag {
 
 	/**
 	 * 
-	 * @param user
+	 * @param user 
+	 * Wenn noch keine Wertung seitens User stattgefunden hat
+	 * wird  der user zur Dislike Liste des Beitrages hinzugefügt
 	 */
 	public void addDislike(Ydiot user){
 		if(!getRated(user)){
@@ -101,7 +103,9 @@ public class Beitrag {
 
 	/**
 	 * 
-	 * @param user
+	 * @param user 
+	 * Wenn noch keine Wertung seitens User stattgefunden hat
+	 * wird  der user zur Likes Liste des Beitrages hinzugefügt
 	 */
 	public void addLike(Ydiot user){
 		if(!getRated(user)){
@@ -112,6 +116,11 @@ public class Beitrag {
 	/**
 	 * 
 	 * @param user
+	 * 
+	 * Soll aufgerufen werden wenn der User dieses Beitrag ladet.
+	 * Der user wird auf die readList hinzugefügt.
+	 * 
+	 * @return liefert TRUE wenn der User nicht schon vertreten ist, sonst FALSE
 	 */
 	public boolean addRead(Ydiot user){
 		if(readList.contains(user)){
@@ -126,7 +135,11 @@ public class Beitrag {
 	/**
 	 * 
 	 * @param user
+	 * Wenn noch kein Report seitens User stattgefunden hat
+	 * wird der user zur reportList des Beitrages hinzugefügt
+	 * @return liefert TRUE wenn der User nicht schon vertreten ist, sonst FALSE
 	 */
+	
 	public boolean addReport(Ydiot user){
 		if(reportList.contains(user)){
 			return false;
@@ -136,22 +149,33 @@ public class Beitrag {
 			return true;
 		}
 	}
-
+	
+	/**
+	 * @return Gibt die Anzahl der User zurück, welche diesen Beitrag mit Dislike bewertet haben
+	 */
 	public int getCountDislike(){
 		return Dislikes.size();
 	}
-
+	
+	/**
+	 * @return Gibt die Anzahl der User zurück, welche diesen Beitrag mit Like bewertet haben 
+	 */
 	public int getCountLikes(){
 		return Likes.size();
 	}
-
+	
+	/**
+	 * 
+	 * @return Gibt die Anzahl der User zurück, welche diesen Beitrag gemeldet haben
+	 */
 	public int getCountReports(){
 		return reportList.size();
 	}
 
 	/**
-	 * 
 	 * @param user
+	 * 
+	 * @return Gibt TRUE zurück wenn der übergebene user diesen Beitrag mit Disklike bewertet hat
 	 */
 	public boolean getDislike(Ydiot user){
 		if(Dislikes.contains(user)){
@@ -163,8 +187,9 @@ public class Beitrag {
 	}
 
 	/**
-	 * 
 	 * @param user
+	 * 
+	 * @return Gibt TRUE zurück wenn der übergebene user diesen Beitrag mit Like bewertet hat
 	 */
 	public boolean getLike(Ydiot user){
 		if(Likes.contains(user)){
@@ -176,8 +201,9 @@ public class Beitrag {
 	}
 
 	/**
-	 * 
 	 * @param user
+	 * 
+	 * @return Gibt TRUE zurück wenn der übergebene user diesen Beitrag gewertet hat
 	 */
 	public boolean getRated(Ydiot user){
 		if(getLike(user) || getDislike(user)){
@@ -189,8 +215,9 @@ public class Beitrag {
 	}
 
 	/**
-	 * 
 	 * @param user
+	 * 
+	 * @return Gibt TRUE zurück wenn der übergebene user diesen Beitrag gelesen hat
 	 */
 	public boolean getRead(Ydiot user){
 		if(readList.contains(user)){
@@ -202,8 +229,9 @@ public class Beitrag {
 	}
 
 	/**
+	 * @param user
 	 * 
-	 * @param getReport
+	 * @return Gibt TRUE zurück wenn der übergebene user diesen Beitrag gemeldet hat
 	 */
 	public boolean getReport(Ydiot user){
 		if(reportList.contains(user)){
@@ -213,7 +241,13 @@ public class Beitrag {
 			return false;
 		}
 	}
-
+	
+	
+	/**
+	 * 
+	 * 
+	 *  
+	 */
 
 
 	public String getContent() {

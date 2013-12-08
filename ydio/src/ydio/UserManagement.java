@@ -25,13 +25,14 @@ public class UserManagement {
 		try {
 			dao = new SQL();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	/**
 	 * Fuegt einen neuen Beitrag hinzu
+	 * Zugriffsüberprüfung
+	 * Beschränkt auf: Ydiot
 	 * @param beitrag
 	 */
 	public void addBeitrag(Beitrag beitrag) {
@@ -39,7 +40,6 @@ public class UserManagement {
 			try {
 				dao.addBeitrag(beitrag);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -47,6 +47,8 @@ public class UserManagement {
 
 	/**
 	 * set strings null if no change, set char ' ' if no change
+	 * Zugriffsüberprüfung
+	 * Beschränkt auf: Ydiot, Moderator
 	 */
 	public void editSignedOnUserProfile(String password, String fullName, String eMail, char sex, Date birthday) {
 		if(session instanceof Ydiot || session instanceof Moderator){
@@ -62,6 +64,8 @@ public class UserManagement {
 	/**
 	 * IMPLEMENT THIS METHODE IN PROTOTYPE 2
 	 * @param data_type
+	 * Zugriffsüberprüfung
+	 * Beschränkt auf: Forscher
 	 */
 	public String getScientistData(data_type dataType) {
 		if(session instanceof Forscher){
@@ -110,8 +114,10 @@ public class UserManagement {
 
 	/**
 	 * simple login
+	 * 
 	 * @param password
 	 * @param username
+	 * Keine Zugriffsüberprüfung
 	 */
 	public void login(String password, String username) {
 		try {
@@ -141,6 +147,8 @@ public class UserManagement {
 	 * @param eMail
 	 * @param sex
 	 * @param birthday
+	 * Zugriffsüberprüfung
+	 * Beschränkt auf: Administrator
 	 */
 	public void registerAdministrator(String username, String password, String fullName, String eMail, char sex, Date birthday) {
 		if(session instanceof Administrator){
@@ -161,6 +169,8 @@ public class UserManagement {
 	 * @param eMail
 	 * @param sex
 	 * @param birthday
+	 * Zugriffsüberprüfung
+	 * Beschränkt auf: Administrator
 	 */
 	public void registerForscher(String username, String password, String fullName, String eMail, char sex, Date birthday) {
 		if(session instanceof Administrator){
@@ -181,6 +191,8 @@ public class UserManagement {
 	 * @param eMail
 	 * @param sex
 	 * @param birthday
+	 * Zugriffsüberprüfung
+	 * Beschränkt auf: Administrator
 	 */
 	public void registerModerator(String username, String password, String fullName, String eMail, char sex, Date birthday) {
 		if(session instanceof Administrator){
@@ -202,6 +214,8 @@ public class UserManagement {
 	 * @param sex
 	 * @param birthday
 	 * @param description
+	 * Zugriffsüberprüfung
+	 * Beschränkt auf: Ydiot, Moderator
 	 */
 	public void registerYidiot(String username, String password, String fullName, String eMail, char sex, Date birthday, String description) {
 		if(session instanceof Ydiot || session instanceof Moderator){
@@ -218,6 +232,8 @@ public class UserManagement {
 	/**
 	 * remove Beitrag
 	 * @param beitrag
+	 * Zugriffsüberprüfung
+	 * Beschränkt auf: Moderator
 	 */
 	public void removeBeitrag(Beitrag beitrag) {
 		if(session instanceof Moderator){
@@ -233,6 +249,8 @@ public class UserManagement {
 	/**
 	 * remove User
 	 * @param user
+	 * Zugriffsüberprüfung
+	 * Beschränkt auf: Administrator
 	 */
 	public void removeUser(AbstractUser user) {
 		
