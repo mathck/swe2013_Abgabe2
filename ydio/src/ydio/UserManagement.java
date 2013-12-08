@@ -34,7 +34,11 @@ public class UserManagement {
 	 * @param beitrag
 	 */
 	public void addBeitrag(Beitrag beitrag) {
-		dao.addBeitrag(beitrag);
+		try {
+			dao.addBeitrag(beitrag);
+		} catch (SQLException e) {
+			throw new NotImplementedException();
+		}
 	}
 
 	/**
@@ -101,7 +105,11 @@ public class UserManagement {
 	 * @param username
 	 */
 	public void login(String password, String username) {
-		this.session = dao.getUserByUsername(username);
+		try {
+			this.session = dao.getUserByUsername(username);
+		} catch (SQLException e) {
+			throw new NotImplementedException();
+		}
 		
 		if(!session.getPassword().equals(password)) {
 			this.session = null;
@@ -124,7 +132,11 @@ public class UserManagement {
 	 * @param birthday
 	 */
 	public void registerAdministrator(String username, String password, String fullName, String eMail, char sex, Date birthday) {
-		dao.addUser(new Administrator(username, password, fullName, eMail, sex, birthday));
+		try {
+			dao.addUser(new Administrator(username, password, fullName, eMail, sex, birthday));
+		} catch (SQLException e) {
+			throw new NotImplementedException();
+		}
 	}
 
 	/**
@@ -137,7 +149,11 @@ public class UserManagement {
 	 * @param birthday
 	 */
 	public void registerForscher(String username, String password, String fullName, String eMail, char sex, Date birthday) {
-		dao.addUser(new Forscher(username, password, fullName, eMail, sex, birthday));
+		try {
+			dao.addUser(new Forscher(username, password, fullName, eMail, sex, birthday));
+		} catch (SQLException e) {
+			throw new NotImplementedException();
+		}
 	}
 
 	/**
@@ -150,7 +166,11 @@ public class UserManagement {
 	 * @param birthday
 	 */
 	public void registerModerator(String username, String password, String fullName, String eMail, char sex, Date birthday) {
-		dao.addUser(new Moderator(username, password, fullName, eMail, sex, birthday));
+		try {
+			dao.addUser(new Moderator(username, password, fullName, eMail, sex, birthday));
+		} catch (SQLException e) {
+			throw new NotImplementedException();
+		}
 	}
 
 	/**
@@ -165,7 +185,11 @@ public class UserManagement {
 	 */
 	public void registerYidiot(String username, String password, String fullName, String eMail, char sex, Date birthday, String description) {
 		List<Ydiot> fL = new ArrayList<Ydiot>();
-		dao.addUser(new Ydiot(username, password, fullName, eMail, sex, birthday, description, fL));
+		try {
+			dao.addUser(new Ydiot(username, password, fullName, eMail, sex, birthday, description, fL));
+		} catch (SQLException e) {
+			throw new NotImplementedException();
+		}
 	}
 
 	/**
@@ -173,7 +197,11 @@ public class UserManagement {
 	 * @param beitrag
 	 */
 	public void removeBeitrag(Beitrag beitrag) {
-		dao.removeBeitrag(beitrag);
+		try {
+			dao.removeBeitrag(beitrag);
+		} catch (SQLException e) {
+			throw new NotImplementedException();
+		}
 	}
 
 	/**
