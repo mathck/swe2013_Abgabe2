@@ -1,9 +1,12 @@
 package ydio;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ydio.dao.DAO;
+import ydio.dao.SQL;
 import ydio.user.Ydiot;
 
 /**
@@ -19,6 +22,7 @@ public class Beitrag {
 	private List<Ydiot> Dislikes;
 	private long ID;
 	private List<Ydiot> Likes;
+	private DAO dao;
 	
 	/**
 	 * nextID hält fest an welchem ID platz die Beiträge sich gerade befinden
@@ -56,6 +60,12 @@ public class Beitrag {
 		Likes = new ArrayList<Ydiot>();
 		readList = new ArrayList<Ydiot>();
 		reportList = new ArrayList<Ydiot>();
+		try {
+			dao = new SQL();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -84,10 +94,18 @@ public class Beitrag {
 		this.readList = readList;
 		this.reportList = reportList;
 		this.date = date;
+		
 	}
 	
 
 
+
+	public Beitrag(String creator, String recep, String Dislikes,
+			Object object, int int1, Object object2, Object object3,
+			Object object4, java.sql.Date date2) {
+		
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * 
