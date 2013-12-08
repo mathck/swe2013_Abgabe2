@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import ydio.*;
 import ydio.user.*;
 
 /**
- * @author mathck
+ * Die Klasse SQL implementiert DAO. 
+ * Diese Klasse erstellt eine Verbindung zum MySQL Server entsprechend den Benutzerdaten und dem Pfad, der angegeben wurde.
+ * @author Benjamin Ilg
  * @version 1.0
  * @created 04-Dez-2013 20:51:12
  */
@@ -22,21 +23,28 @@ public class SQL implements DAO {
 	private Statement statement;
 	private ResultSet result;
 	
-	public SQL() throws SQLException {
-		String url 
-			= "jdbc:" + path
-			+ "?user=" + username
-			+ "&password=" + password;
-		connection = DriverManager.getConnection(url);
-		statement = connection.createStatement();
-		result = null;
+	/**
+	 * 
+	 * @throws SQLException
+	 */
+	public SQL() throws IOException {
+		try {
+			String url 
+				= "jdbc:" + path
+				+ "?user=" + username
+				+ "&password=" + password;
+			connection = DriverManager.getConnection(url);
+			statement = connection.createStatement();
+			result = null;
+		} catch (SQLException e) {
+			throw new IOException (e.getMessage());
+		}
 	}
 
 	/**
-	 * 
-	 * @param beitrag
+	 * Speichert eine Repräsentation des Beitrag Objektes in der MySQL Datenbank.
+	 * @param beitrag Das zu speichernde Objekt für die MySQL Datenbank.
 	 */
-
 	public void addBeitrag(Beitrag beitrag) throws IOException {
 		try {
 			statement = connection.createStatement();
@@ -63,9 +71,9 @@ public class SQL implements DAO {
 	}
 
 	/**
-	 * 
-	 * @param user
-	 * @throws IOException 
+	 * Speichert eine Repräsentation des Benutzers in der Datenbank.
+	 * @param user Benutzerobjekt. Es wird die leere Freundesliste nicht übernommen (da keine Daten vorhanden).
+	 * @throws IOException Wirft eine Exception, wenn ein Fehler bei der SQL Abfrage vorkommt für Handling im auszuführenden Code.
 	 */
 
 	public void addUser(AbstractUser user) throws IOException {
@@ -103,7 +111,11 @@ public class SQL implements DAO {
 			} catch (SQLException e) {}	
 		}
 	}
-
+	/**
+	 * Gibt alle Benutzer aus der Datenbank zurück, fragt einfach alle Tabellen ydiot, administrator, moderator und forscher ab.
+	 * @return List Enthält alle user Elemente aus der Datenbank.
+	 * @exception IOException Gibt Fehlermeldung der Datenbank zurück.
+	 */
 	public List<AbstractUser> getAllUsers() throws IOException{
 		try {
 			statement = connection.createStatement();
@@ -134,7 +146,11 @@ public class SQL implements DAO {
 			} catch (SQLException e) {}
 		}
 	}
-
+	/**
+	 * Gibt eine Liste aller Beiträge aus der Datenbank zurück.
+	 * @return List<Beitrag> Von SQL Struktur zu Objektstruktur konvertierte Liste der Beiträge
+	 * @exception Wird geworfen, wenn bei der Datenbankabfrage Fehler auftreten.
+	 */
 	public List<Beitrag> getBeitragList() throws IOException{	
 		try {
 			statement = connection.createStatement();
@@ -155,9 +171,9 @@ public class SQL implements DAO {
 	}
 
 	/**
-	 * 
-	 * @param data_type
-	 * @throws IOException 
+	 * Gibt jeweils eine Tabelle zurück mit statistisch verwertbaren Daten
+	 * @param data_type Durch data_type wird definiert welche Tabellen erstellt und zurückgegeben werden
+	 * @throws IOException Wird geworfen wenn die Datenbankabfrage Fehler erzeugt.
 	 */
 	public String[][] getScientistData(data_type dataType) throws IOException{
 		try {
@@ -174,9 +190,9 @@ public class SQL implements DAO {
 	}
 
 	/**
-	 * 
-	 * @param username
-	 * @throws IOException 
+	 * Gibt einen Benutzer mit genau dem Benutzernamen zurück, der angegeben wurde.
+	 * @param username String, der im Objekt AbstractUser als Identifikator verwendet wird.
+	 * @throws IOException Wird geworfen, wenn Fehler bei der MySQL Abfrage auftreten.
 	 */
 	public AbstractUser getUserByUsername(String username) throws IOException{
 		try {
@@ -195,7 +211,12 @@ public class SQL implements DAO {
 			} catch (SQLException e) {}
 		}
 	}
-
+	
+	/**
+	 * Erzeugt eine Liste aller in der MySQL Datenbank gespeicherten Ydioten.
+	 * @return List<Ydiot> Liste aller Benutzer in der Datenbank.
+	 * @exception Fehlermeldung wird zurückgegeben wenn bei der Datenbankabfrage Fehler auftreten.
+	 */
 	public List<Ydiot> getUserList() throws IOException{
 		try {
 			statement = connection.createStatement();
@@ -233,9 +254,9 @@ public class SQL implements DAO {
 	}
 
 	/**
-	 * 
-	 * @param user
-	 * @throws IOException 
+	 * Entfernt den spezifizierten Benutzer aus der Tabelle, die mit der user Klasse korrespondiert.
+	 * @param user zu löschender Benutzer (es wird in der Abfrage nur der username verwendet, da er die id darstellt)
+	 * @throws IOException Wird geworfen, wenn Fehler bei der Ausführung am MySQL Server auftreten.
 	 */
 	public void removeUser(AbstractUser user) throws IOException{
 		try {
@@ -262,9 +283,10 @@ public class SQL implements DAO {
 	}
 
 	/**
-	 * 
-	 * @param searchstring
-	 * @throws IOException 
+	 * Sucht im Feld username und fullname nach dem angegebenen searchstring
+	 * @param searchstring beliebige eingabedaten
+	 * @throws IOException Wird zurückgegeben, falls Fehler bei der Ausführung am MySQL Server auftreten.
+	 * @return List<Ydiot> Gibt eine Liste aller Benutzer zurück, die bei Abgleich mit SQL LIKE gefunden wurden.
 	 */
 	public List<Ydiot> search(String searchstring) throws IOException{
 		try {
@@ -292,9 +314,10 @@ public class SQL implements DAO {
 	}
 
 	/**
-	 * 
-	 * @param beitrag
-	 * @throws IOException 
+	 * Aktualisierung eines Beitrag OBjektes. Hier wird auch die List mit Likes, Dislikes, etc gepflegt.
+	 * Diese sind in der MySQL Datenbank über eigene Tabellen realisiert.
+	 * @param beitrag In der Datenbank zu aktualisierender Beitrag
+	 * @throws IOException Wird ausgegeben, wenn Fehler bei der Ausführung am MySQL Server auftreten.
 	 */
 	public void updateBeitrag(Beitrag beitrag) throws IOException{
 		try {
@@ -320,13 +343,15 @@ public class SQL implements DAO {
 	}
 
 	/**
-	 * 
-	 * @param user
-	 * @throws IOException 
+	 * Aktualisiert die Benutzerdaten (vollständig entsprechend dem Objekt)
+	 * Hier wird auch die friendList gepflegt, welche über eine eigene Tabelle in der MySQL Datenbank realisiert ist.
+	 * @param user Benutzer, der aktualisiert werden soll.
+	 * @throws IOException Wird ausgegeben, wenn Fehler bei der Ausführung auf dem MySQL Server auftreten.
 	 */
 	public void updateUser(AbstractUser user) throws IOException{
 		try {
 			//TODO updateUser implementieren
+			throw new SQLException ();
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} finally {
@@ -336,8 +361,10 @@ public class SQL implements DAO {
 			} catch (SQLException e) {}	
 		}
 	}
-	private Ydiot createYdiot (ResultSet result) {
-		Ydiot user = new Ydiot (
+	
+	private Ydiot createYdiot (ResultSet result) throws IOException {
+		try {
+			Ydiot user = new Ydiot (
 				result.getString("username"), 
 				result.getString("password"), 
 				result.getString("fullname"), 
@@ -353,7 +380,15 @@ public class SQL implements DAO {
 			}
 			//TODO friendList abklären
 			user.setFriendList(friendList);
-		return user;
+			return user;
+		} catch (SQLException e) {
+			throw new IOException (e.getMessage());
+		} finally {
+			try {
+				if (result != null) result.close();
+				if (statement != null) statement.close();
+			} catch (SQLException e) {}	
+		}
 	}
 	private Administrator createAdministrator (ResultSet result) throws SQLException {
 		Administrator user = new Administrator (
