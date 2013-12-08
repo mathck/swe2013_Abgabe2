@@ -2,6 +2,7 @@ package ydio;
 
 import ydio.user.*;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,10 +35,13 @@ public class UserManagement {
 	 * @param beitrag
 	 */
 	public void addBeitrag(Beitrag beitrag) {
-		try {
-			dao.addBeitrag(beitrag);
-		} catch (SQLException e) {
-			throw new NotImplementedException();
+		if(session instanceof Ydiot){
+			try {
+				dao.addBeitrag(beitrag);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -45,12 +49,14 @@ public class UserManagement {
 	 * set strings null if no change, set char ' ' if no change
 	 */
 	public void editSignedOnUserProfile(String password, String fullName, String eMail, char sex, Date birthday) {
-		session.setPassword(password);
-		session.setFullName(fullName);
-		session.setEMail(eMail);
-		if(sex != ' ')
-			session.setSex(sex);
-		session.setBirthday(birthday);
+		if(session instanceof Ydiot || session instanceof Moderator){
+			session.setPassword(password);
+			session.setFullName(fullName);
+			session.setEMail(eMail);
+			if(sex != ' ')
+				session.setSex(sex);
+			session.setBirthday(birthday);
+		}
 	}
 
 	/**
@@ -58,45 +64,48 @@ public class UserManagement {
 	 * @param data_type
 	 */
 	public String getScientistData(data_type dataType) {
-		String out = "";
+		if(session instanceof Forscher){
+			String out = "";
+			
+			switch(dataType) {
+			
+			case ydiotCount:
+				// TODO
+				break;
+				
+			case likeDislikeReportStats:
+				// TODO
+				break;
+				
+			case avgContentLength:
+				// TODO
+				break;
+				
+			case maleVsFemale:
+				// TODO
+				break;
+				
+			case avgAge:
+				// TODO
+				break;
+				
+			case avgPasswordLength:
+				// TODO
+				break;
+				
+			case wordCount_FuckStupidIdiotGayNoob:
+				// TODO
+				break;
+				
+			default:
+				out = "wrong data_type in getScientistData(data_type dataType) in UserManagement!";
+				throw new NotImplementedException();
+				//break;
+			}
 		
-		switch(dataType) {
-		
-		case ydiotCount:
-			// TODO
-			break;
-			
-		case likeDislikeReportStats:
-			// TODO
-			break;
-			
-		case avgContentLength:
-			// TODO
-			break;
-			
-		case maleVsFemale:
-			// TODO
-			break;
-			
-		case avgAge:
-			// TODO
-			break;
-			
-		case avgPasswordLength:
-			// TODO
-			break;
-			
-		case wordCount_FuckStupidIdiotGayNoob:
-			// TODO
-			break;
-			
-		default:
-			out = "wrong data_type in getScientistData(data_type dataType) in UserManagement!";
-			throw new NotImplementedException();
-			//break;
+			return out;
 		}
-		
-		return out;
+		return null;
 	}
 
 	/**
@@ -107,8 +116,9 @@ public class UserManagement {
 	public void login(String password, String username) {
 		try {
 			this.session = dao.getUserByUsername(username);
-		} catch (SQLException e) {
-			throw new NotImplementedException();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		if(!session.getPassword().equals(password)) {
@@ -117,6 +127,7 @@ public class UserManagement {
 			throw new NotImplementedException();
 		}
 	}
+	
 
 	public void logout() {
 		this.session = null;
@@ -132,10 +143,13 @@ public class UserManagement {
 	 * @param birthday
 	 */
 	public void registerAdministrator(String username, String password, String fullName, String eMail, char sex, Date birthday) {
-		try {
-			dao.addUser(new Administrator(username, password, fullName, eMail, sex, birthday));
-		} catch (SQLException e) {
-			throw new NotImplementedException();
+		if(session instanceof Administrator){
+			try {
+				dao.addUser(new Administrator(username, password, fullName, eMail, sex, birthday));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -149,10 +163,13 @@ public class UserManagement {
 	 * @param birthday
 	 */
 	public void registerForscher(String username, String password, String fullName, String eMail, char sex, Date birthday) {
-		try {
-			dao.addUser(new Forscher(username, password, fullName, eMail, sex, birthday));
-		} catch (SQLException e) {
-			throw new NotImplementedException();
+		if(session instanceof Administrator){
+			try {
+				dao.addUser(new Forscher(username, password, fullName, eMail, sex, birthday));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -166,10 +183,13 @@ public class UserManagement {
 	 * @param birthday
 	 */
 	public void registerModerator(String username, String password, String fullName, String eMail, char sex, Date birthday) {
-		try {
-			dao.addUser(new Moderator(username, password, fullName, eMail, sex, birthday));
-		} catch (SQLException e) {
-			throw new NotImplementedException();
+		if(session instanceof Administrator){
+			try {
+				dao.addUser(new Moderator(username, password, fullName, eMail, sex, birthday));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -184,11 +204,14 @@ public class UserManagement {
 	 * @param description
 	 */
 	public void registerYidiot(String username, String password, String fullName, String eMail, char sex, Date birthday, String description) {
-		List<Ydiot> fL = new ArrayList<Ydiot>();
-		try {
-			dao.addUser(new Ydiot(username, password, fullName, eMail, sex, birthday, description, fL));
-		} catch (SQLException e) {
-			throw new NotImplementedException();
+		if(session instanceof Ydiot || session instanceof Moderator){
+			List<String> fL = new ArrayList<String>();
+			try {
+				dao.addUser(new Ydiot(username, password, fullName, eMail, sex, birthday, description, fL));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -197,10 +220,13 @@ public class UserManagement {
 	 * @param beitrag
 	 */
 	public void removeBeitrag(Beitrag beitrag) {
-		try {
-			dao.removeBeitrag(beitrag);
-		} catch (SQLException e) {
-			throw new NotImplementedException();
+		if(session instanceof Moderator){
+			try {
+				dao.removeBeitrag(beitrag);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -209,28 +235,18 @@ public class UserManagement {
 	 * @param user
 	 */
 	public void removeUser(AbstractUser user) {
-		dao.removeUser(user);
+		
+		if(session instanceof Administrator){
+			try {
+				dao.removeUser(user);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
-	public String viewAdminWall() {
-		return "<HTML></HTML>";
-	}
-
-	public String viewMoeratorWall() {
-		return "<HTML></HTML>";
-	}
-
-	public String viewScientistWall() {
-		return "<HTML></HTML>";
-	}
-
-	public String viewSignedOnUserWall() {
-		return "<HTML></HTML>";
-	}
-
-	public String viewUserWall(AbstractUser user) {
-		return "<HTML></HTML>";
-	}
+	
 	
 	public AbstractUser getSession() {
 		return session;
