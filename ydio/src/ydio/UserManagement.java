@@ -24,7 +24,8 @@ public class UserManagement {
 	public UserManagement() {
 		try {
 			dao = new SQL();
-		} catch (SQLException e) {
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
