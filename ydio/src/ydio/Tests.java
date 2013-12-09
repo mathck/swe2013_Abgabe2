@@ -16,10 +16,12 @@ import ydio.user.*;
 public class Tests {
 	
 	static Ydiot y = null;
+	static UserManagement um = null;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		y = new Ydiot("ydiot", "pw", "vorname nachname", "email@ydio.com", 'm', new Date(), "desc", null);
+		UserManagement um = new UserManagement();
 	}
 	
 	@Test
@@ -37,7 +39,6 @@ public class Tests {
 		Ydiot y = new Ydiot("vorname", "pw", "vorname nachname", "email@ydio.com", 'm', new Date(), "desc", null);
 		UserManagement um = new UserManagement();
 		
-		SQL s = new SQL();
 		um.login(y.getPassword(), y.getUsername());
 		um.addBeitrag(new Beitrag(y,y));
 	}
