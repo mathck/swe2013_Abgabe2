@@ -7,7 +7,7 @@ import java.util.List;
 
 import ydio.dao.DAO;
 import ydio.dao.SQL;
-import ydio.user.Ydiot;
+import ydio.user.String;
 
 /**
  * @author mathck
@@ -17,49 +17,49 @@ import ydio.user.Ydiot;
 public class Beitrag {
 
 	private String content;
-	private Ydiot creator;
+	private String creator;
 	private Date date;
-	private List<Ydiot> Dislikes;
+	private List<String> Dislikes;
 	private long ID;
-	private List<Ydiot> Likes;
+	private List<String> Likes;
 	private DAO dao;
 	
 	/**
-	 * nextID hält fest an welchem ID platz die Beiträge sich gerade befinden
+	 * nextID hï¿½lt fest an welchem ID platz die Beitrï¿½ge sich gerade befinden
 	 * Beim erstellen eines neuen Betirages wird automatisch durch nextID 
 	 * dem Beitrag eine ID zugeteilt
 	 */
 	private static long nextID;
-	private List<Ydiot> readList;
-	private Ydiot recep;
-	private List<Ydiot> reportList;
+	private List<String> readList;
+	private String recep;
+	private List<String> reportList;
 
 	
 	/**
 	 * 
 	 * @param creator Ersteller
-	 * @param recep   Empfänger
+	 * @param recep   Empfï¿½nger
 	 * 
 	 * Ein Beitrag kann nur durch die Angabe eines Erstellers(creator)
 	 * und eines Empfï¿½ngers(recep) erstellt werden. 
-	 * Recep ist der Ydiot auf wessen "Wand" der Beitrag erstellt wird.
+	 * Recep ist der String auf wessen "Wand" der Beitrag erstellt wird.
 	 * 
 	 */
 	
-	public Beitrag(Ydiot creator, Ydiot recep){
+	public Beitrag(String creator, String recep){
 		this.creator = creator;
 		this.recep = recep;
 		
 		content = "";
 		date = new Date();
-		Dislikes = new ArrayList<Ydiot>();
+		Dislikes = new ArrayList<String>();
 		
 		ID = nextID;
 		nextID++;
 		
-		Likes = new ArrayList<Ydiot>();
-		readList = new ArrayList<Ydiot>();
-		reportList = new ArrayList<Ydiot>();
+		Likes = new ArrayList<String>();
+		readList = new ArrayList<String>();
+		reportList = new ArrayList<String>();
 		try {
 			dao = new SQL();
 		} catch (IOException e) {
@@ -82,8 +82,8 @@ public class Beitrag {
 	 * @param reportList
 	 * @param date
 	 */
-	public Beitrag(Ydiot creator, Ydiot recep, String content, List<Ydiot> Dislikes, 
-				  long ID, List<Ydiot> Likes, List<Ydiot> readList, List<Ydiot> reportList, Date date){
+	public Beitrag(String creator, String recep, String content, List<String> Dislikes, 
+				  long ID, List<String> Likes, List<String> readList, List<String> reportList, Date date){
 		
 		this.creator = creator;
 		this.recep = recep;
@@ -96,24 +96,14 @@ public class Beitrag {
 		this.date = date;
 		
 	}
-	
-
-
-
-	public Beitrag(String creator, String recep, String Dislikes,
-			Object object, int int1, Object object2, Object object3,
-			Object object4, java.sql.Date date2) {
-		
-		// TODO Auto-generated constructor stub
-	}
 
 	/**
 	 * 
 	 * @param user 
 	 * Wenn noch keine Wertung seitens User stattgefunden hat
-	 * wird  der user zur Dislike Liste des Beitrages hinzugefügt
+	 * wird  der user zur Dislike Liste des Beitrages hinzugefï¿½gt
 	 */
-	public void addDislike(Ydiot user){
+	public void addDislike(String user){
 		if(!getRated(user)){
 			Dislikes.add(user);
 		}
@@ -123,9 +113,9 @@ public class Beitrag {
 	 * 
 	 * @param user 
 	 * Wenn noch keine Wertung seitens User stattgefunden hat
-	 * wird  der user zur Likes Liste des Beitrages hinzugefügt
+	 * wird  der user zur Likes Liste des Beitrages hinzugefï¿½gt
 	 */
-	public void addLike(Ydiot user){
+	public void addLike(String user){
 		if(!getRated(user)){
 			Likes.add(user);
 		}
@@ -136,11 +126,11 @@ public class Beitrag {
 	 * @param user
 	 * 
 	 * Soll aufgerufen werden wenn der User dieses Beitrag ladet.
-	 * Der user wird auf die readList hinzugefügt.
+	 * Der user wird auf die readList hinzugefï¿½gt.
 	 * 
 	 * @return liefert TRUE wenn der User nicht schon vertreten ist, sonst FALSE
 	 */
-	public boolean addRead(Ydiot user){
+	public boolean addRead(String user){
 		if(readList.contains(user)){
 			return false;
 		}
@@ -154,11 +144,11 @@ public class Beitrag {
 	 * 
 	 * @param user
 	 * Wenn noch kein Report seitens User stattgefunden hat
-	 * wird der user zur reportList des Beitrages hinzugefügt
+	 * wird der user zur reportList des Beitrages hinzugefï¿½gt
 	 * @return liefert TRUE wenn der User nicht schon vertreten ist, sonst FALSE
 	 */
 	
-	public boolean addReport(Ydiot user){
+	public boolean addReport(String user){
 		if(reportList.contains(user)){
 			return false;
 		}
@@ -169,14 +159,14 @@ public class Beitrag {
 	}
 	
 	/**
-	 * @return Gibt die Anzahl der User zurück, welche diesen Beitrag mit Dislike bewertet haben
+	 * @return Gibt die Anzahl der User zurï¿½ck, welche diesen Beitrag mit Dislike bewertet haben
 	 */
 	public int getCountDislike(){
 		return Dislikes.size();
 	}
 	
 	/**
-	 * @return Gibt die Anzahl der User zurück, welche diesen Beitrag mit Like bewertet haben 
+	 * @return Gibt die Anzahl der User zurï¿½ck, welche diesen Beitrag mit Like bewertet haben 
 	 */
 	public int getCountLikes(){
 		return Likes.size();
@@ -184,7 +174,7 @@ public class Beitrag {
 	
 	/**
 	 * 
-	 * @return Gibt die Anzahl der User zurück, welche diesen Beitrag gemeldet haben
+	 * @return Gibt die Anzahl der User zurï¿½ck, welche diesen Beitrag gemeldet haben
 	 */
 	public int getCountReports(){
 		return reportList.size();
@@ -193,9 +183,9 @@ public class Beitrag {
 	/**
 	 * @param user
 	 * 
-	 * @return Gibt TRUE zurück wenn der übergebene user diesen Beitrag mit Disklike bewertet hat
+	 * @return Gibt TRUE zurï¿½ck wenn der ï¿½bergebene user diesen Beitrag mit Disklike bewertet hat
 	 */
-	public boolean getDislike(Ydiot user){
+	public boolean getDislike(String user){
 		if(Dislikes.contains(user)){
 			return true;
 		}
@@ -207,9 +197,9 @@ public class Beitrag {
 	/**
 	 * @param user
 	 * 
-	 * @return Gibt TRUE zurück wenn der übergebene user diesen Beitrag mit Like bewertet hat
+	 * @return Gibt TRUE zurï¿½ck wenn der ï¿½bergebene user diesen Beitrag mit Like bewertet hat
 	 */
-	public boolean getLike(Ydiot user){
+	public boolean getLike(String user){
 		if(Likes.contains(user)){
 			return true;
 		}
@@ -221,9 +211,9 @@ public class Beitrag {
 	/**
 	 * @param user
 	 * 
-	 * @return Gibt TRUE zurück wenn der übergebene user diesen Beitrag gewertet hat
+	 * @return Gibt TRUE zurï¿½ck wenn der ï¿½bergebene user diesen Beitrag gewertet hat
 	 */
-	public boolean getRated(Ydiot user){
+	public boolean getRated(String user){
 		if(getLike(user) || getDislike(user)){
 			return true;
 		}
@@ -235,9 +225,9 @@ public class Beitrag {
 	/**
 	 * @param user
 	 * 
-	 * @return Gibt TRUE zurück wenn der übergebene user diesen Beitrag gelesen hat
+	 * @return Gibt TRUE zurï¿½ck wenn der ï¿½bergebene user diesen Beitrag gelesen hat
 	 */
-	public boolean getRead(Ydiot user){
+	public boolean getRead(String user){
 		if(readList.contains(user)){
 			return true;
 		}
@@ -249,9 +239,9 @@ public class Beitrag {
 	/**
 	 * @param user
 	 * 
-	 * @return Gibt TRUE zurück wenn der übergebene user diesen Beitrag gemeldet hat
+	 * @return Gibt TRUE zurï¿½ck wenn der ï¿½bergebene user diesen Beitrag gemeldet hat
 	 */
-	public boolean getReport(Ydiot user){
+	public boolean getReport(String user){
 		if(reportList.contains(user)){
 			return true;
 		}
@@ -280,13 +270,13 @@ public class Beitrag {
 
 
 
-	public Ydiot getCreator() {
+	public String getCreator() {
 		return creator;
 	}
 
 
 
-	public void setCreator(Ydiot creator) {
+	public void setCreator(String creator) {
 		this.creator = creator;
 	}
 
@@ -304,13 +294,13 @@ public class Beitrag {
 
 
 
-	public List<Ydiot> getDislikes() {
+	public List<String> getDislikes() {
 		return Dislikes;
 	}
 
 
 
-	public void setDislikes(List<Ydiot> dislikes) {
+	public void setDislikes(List<String> dislikes) {
 		Dislikes = dislikes;
 	}
 
@@ -328,49 +318,49 @@ public class Beitrag {
 
 
 
-	public List<Ydiot> getLikes() {
+	public List<String> getLikes() {
 		return Likes;
 	}
 
 
 
-	public void setLikes(List<Ydiot> likes) {
+	public void setLikes(List<String> likes) {
 		Likes = likes;
 	}
 
 
 
-	public List<Ydiot> getReadList() {
+	public List<String> getReadList() {
 		return readList;
 	}
 
 
 
-	public void setReadList(List<Ydiot> readList) {
+	public void setReadList(List<String> readList) {
 		this.readList = readList;
 	}
 
 
 
-	public Ydiot getRecep() {
+	public String getRecep() {
 		return recep;
 	}
 
 
 
-	public void setRecep(Ydiot recep) {
+	public void setRecep(String recep) {
 		this.recep = recep;
 	}
 
 
 
-	public List<Ydiot> getReportList() {
+	public List<String> getReportList() {
 		return reportList;
 	}
 
 
 
-	public void setReportList(List<Ydiot> reportList) {
+	public void setReportList(List<String> reportList) {
 		this.reportList = reportList;
 	}
 	

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import ydio.*;
 import ydio.user.*;
 
@@ -24,7 +25,8 @@ public class SQL implements DAO {
 	private ResultSet result;
 	
 	/**
-	 * 
+	 * Creation of SQL Element.
+	 * This is the object that the application will work with.
 	 * @throws SQLException
 	 */
 	public SQL() throws IOException {
@@ -53,12 +55,12 @@ public class SQL implements DAO {
 			beitrag.setID(id);
 			result = statement.executeQuery("update id set id="+(id+1)+" where type=beitrag;");
 			String statementString = 
-				"insert into beitrag (creator, content, date, ID, recep) values ('" +
-				beitrag.getCreator().getUsername() + "', '" +
+				"insert into beitrag (creator, content, creation_date, ID, recipient) values ('" +
+				beitrag.getCreator() + "', '" +
 				beitrag.getContent() + "', '" +
 				beitrag.getDate() + "', '" +
 				beitrag.getID() + "', '" +
-				beitrag.getRecep().getUsername() + "');";				;
+				beitrag.getRecep() + "');";				;
 			result = statement.executeQuery(statementString);
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
@@ -75,7 +77,6 @@ public class SQL implements DAO {
 	 * @param user Benutzerobjekt. Es wird die leere Freundesliste nicht übernommen (da keine Daten vorhanden).
 	 * @throws IOException Wirft eine Exception, wenn ein Fehler bei der SQL Abfrage vorkommt für Handling im auszuführenden Code.
 	 */
-
 	public void addUser(AbstractUser user) throws IOException {
 		try {
 			statement = connection.createStatement();
@@ -323,8 +324,8 @@ public class SQL implements DAO {
 		try {
 			statement = connection.createStatement();
 			String query = "update beitrag set "+
-				"creator='"+beitrag.getCreator().getUsername()+"', "+
-				"recipiant='"+beitrag.getRecep().getUsername()+"', "+
+				"creator='"+beitrag.getCreator()+"', "+
+				"recipiant='"+beitrag.getRecep()+"', "+
 				"content='"+beitrag.getContent()+"', "+
 				"date='"+beitrag.getDate()+"'"+
 				"where id="+beitrag.getID();
@@ -375,10 +376,9 @@ public class SQL implements DAO {
 				null);
 			ResultSet friendResult = statement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"';");
 			List<String> friendList = new ArrayList<String> ();
-			while (result.next()) {
-				friendList.add(result.getString("user2"));
+			while (friendResult.next()) {
+				friendList.add(friendResult.getString("user2"));
 			}
-			//TODO friendList abklären
 			user.setFriendList(friendList);
 			return user;
 		} catch (SQLException e) {
@@ -400,7 +400,6 @@ public class SQL implements DAO {
 				result.getDate("birthday"));
 		return user;
 	}
-	
 	private Moderator createModerator (ResultSet result) throws SQLException {
 		Moderator user = new Moderator (
 				result.getString("username"), 
@@ -421,18 +420,50 @@ public class SQL implements DAO {
 				result.getDate("birthday"));
 		return user;
 	}
-	private Beitrag createBeitrag (ResultSet result) throws SQLException {
-		Beitrag beitrag = new Beitrag (
-			result.getString("creator"), 
-			result.getString("recipient"), 
-			result.getString("content"), 
-			null,
-			result.getInt("id"), 
-			null, 
-			null, 
-			null, 
-			result.getDate("date"));
-			// TODO zugehörige Listen laden
-		return beitrag;
+	private Beitrag createBeitrag (ResultSet result) throws IOException {
+		ResultSet tempResult = null;
+		try {
+			List<String> likeList = new ArrayList<String> ();
+			List<String> dislikeList = new ArrayList<String> ();
+			List<String> reportList = new ArrayList<String> ();
+			List<String> readList = new ArrayList<String> ();
+			tempResult = statement.executeQuery("select * from stats where id="+result.getLong("id"));
+			while (tempResult.next()) {
+				switch (tempResult.getString("type")) {
+				case "like":
+					likeList.add(tempResult.getString("username"));
+					break;
+				case "dislike":
+					dislikeList.add(tempResult.getString("username"));
+					break;
+				case "report":
+					reportList.add(tempResult.getString("username"));
+					break;
+				case "read":
+					reportList.add(tempResult.getString("username"));
+					break;
+				default:
+					throw new IOException ("type not defined, cannot build stats of beitrag");	
+				}
+			}
+			Beitrag beitrag = new Beitrag (
+				result.getString("creator"), 
+				result.getString("recipient"), 
+				result.getString("content"), 
+				dislikeList,
+				result.getInt("id"), 
+				likeList, 
+				readList, 
+				reportList, 
+				result.getDate("creation_date"));
+			return beitrag;
+		} catch (Throwable e) {
+			throw new IOException (e.getMessage());
+		} finally {
+			try {
+				tempResult.close();
+			} catch (SQLException e) {}
+		}
+		
 	}
 }

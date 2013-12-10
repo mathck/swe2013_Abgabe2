@@ -103,5 +103,4 @@ public interface DAO {
 	 * @throws IOException Bei Ausnahmefällen in der Datenbank wird eine Exception geworfen.
 	 */
 	public void updateUser(AbstractUser user) throws IOException;
-
 }
