@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ydio.dao.DAO;
-import ydio.dao.SQL;
 
 /**
  * @author mathck
@@ -21,7 +19,6 @@ public class Beitrag {
 	private List<String> Dislikes;
 	private long ID;
 	private List<String> Likes;
-	private DAO dao;
 	
 	/**
 	 * nextID h�lt fest an welchem ID platz die Beitr�ge sich gerade befinden
@@ -59,12 +56,7 @@ public class Beitrag {
 		Likes = new ArrayList<String>();
 		readList = new ArrayList<String>();
 		reportList = new ArrayList<String>();
-		try {
-			dao = new SQL();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 	
 	/**
