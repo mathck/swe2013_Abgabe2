@@ -382,6 +382,9 @@ public class SQL implements DAO {
 	/**
 	 * Aktualisiert die Benutzerdaten (vollständig entsprechend dem Objekt)
 	 * Hier wird auch die friendList gepflegt, welche über eine eigene Tabelle in der MySQL Datenbank realisiert ist.
+	 * Bei der im user Objekt gegebenen friendList wird davon ausgegangen, dass diese die aktuellste Version ist, d.h.
+	 * hat es mehr Einträge als die MySQL Datenbank, dann werden Einträge in der DB hinzugefügt, hat es weniger Ein-
+	 * träge, dann werden Einträge in der DB gelöscht.
 	 * @param user Benutzer, der aktualisiert werden soll.
 	 * @throws IOException Wird ausgegeben, wenn Fehler bei der Ausführung auf dem MySQL Server auftreten.
 	 */
@@ -406,6 +409,21 @@ public class SQL implements DAO {
 				List<String> oldList = new ArrayList<String> ();
 				while (result.next()) {
 					oldList.add(result.getString("user2"));
+				}
+				if (temp.containsAll(oldList)) {
+					temp.removeAll(oldList);
+					for (int i = 0; i < temp.size(); i++) {
+						statement.executeQuery("insert into friendlist (user1, user2) values ('"
+							+ user.getUsername()+"', '"
+							+ temp.get(i)+"')");
+					}
+				} else {
+					oldList.removeAll(temp);
+					for (int i = 0; i < oldList.size(); i++) {
+						statement.executeQuery("delete from friendlist where "
+							+ "user1='"+user.getUsername()+"' and "
+							+ "user2='"+oldList.get(i)+"'");
+					}
 				}
 			} else if (user instanceof Administrator) {
 				table = "administrator";
