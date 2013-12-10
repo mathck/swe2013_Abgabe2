@@ -7,7 +7,6 @@ import java.util.List;
 
 import ydio.dao.DAO;
 import ydio.dao.SQL;
-import ydio.user.String;
 
 /**
  * @author mathck
