@@ -39,6 +39,9 @@ public class Ydiot extends AbstractUser {
 	public void setLocked(Date date_until) {
 		lockedUntil = date_until;
 	}
+	public Date getLocked() {
+		return lockedUntil;
+	}
 	
 	public String getDescription() {
 		return description;

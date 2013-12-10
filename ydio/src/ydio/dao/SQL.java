@@ -325,13 +325,49 @@ public class SQL implements DAO {
 			statement = connection.createStatement();
 			String query = "update beitrag set "+
 				"creator='"+beitrag.getCreator()+"', "+
-				"recipiant='"+beitrag.getRecep()+"', "+
+				"recipient='"+beitrag.getRecep()+"', "+
 				"content='"+beitrag.getContent()+"', "+
 				"date='"+beitrag.getDate()+"'"+
 				"where id="+beitrag.getID();
 			result = statement.executeQuery(query);
-			for (int i = 0; i < beitrag.getLikes().size(); i++) {
-				// TODO Listen absprechen und dann anpassen
+			result = statement.executeQuery("select * from stats where id="+beitrag.getID());
+			List<String> compare = new ArrayList<String> ();
+			List<String> compareRead = new ArrayList<String> ();
+			List<String> temp = new ArrayList<String> ();
+			while (result.next()) {
+				if (result.getString("type").equals("read")) compare.add(result.getString("username"));
+				else compareRead.add(result.getString("username"));
+			}
+			temp.addAll(beitrag.getLikes());
+			temp.removeAll(compare);
+			for (int i = 0; i < temp.size(); i++) {
+				statement.executeQuery("insert into stats (id, username, type) values ("+
+					beitrag.getID()+", '"+
+					temp.get(i)+"', 'like')");
+			}
+			temp.clear();
+			temp.addAll(beitrag.getDislikes());
+			temp.removeAll(compare);
+			for (int i = 0; i < temp.size(); i++) {
+				statement.executeQuery("insert into stats (id, username, type) values ("+
+					beitrag.getID()+", '"+
+					temp.get(i)+"', 'dislike')");
+			}
+			temp.clear();
+			temp.addAll(beitrag.getReportList());
+			temp.removeAll(compare);
+			for (int i = 0; i < temp.size(); i++) {
+				statement.executeQuery("insert into stats (id, username, type) values ("+
+					beitrag.getID()+", '"+
+					temp.get(i)+"', 'report')");
+			}
+			temp.clear();
+			temp.addAll(beitrag.getReadList());
+			temp.removeAll(compareRead);
+			for (int i = 0; i < temp.size(); i++) {
+				statement.executeQuery("insert into stats (id, username, type) values ("+
+					beitrag.getID()+", '"+
+					temp.get(i)+"', 'read')");
 			}
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
@@ -351,8 +387,34 @@ public class SQL implements DAO {
 	 */
 	public void updateUser(AbstractUser user) throws IOException{
 		try {
-			//TODO updateUser implementieren
-			throw new SQLException ();
+			statement = connection.createStatement();
+			String table = null;
+			String setColumns = 
+				"password='"+user.getPassword()+"', "
+				+ "fullname='"+user.getFullName()+"', "
+				+ "email='"+user.getEMail()+"', "
+				+ "birthday="+user.getBirthday()+", "
+				+ "sex='"+user.getSex()+"' "
+				+ "where username='"+user.getUsername()+"'";
+			if (user instanceof Ydiot) {
+				table = "ydiot";
+				setColumns = setColumns
+					+ "lockeduntil="+((Ydiot) user).getLocked()+", "
+					+ "description='"+((Ydiot) user).getDescription()+"'";
+				result = statement.executeQuery("select * from friendlist where user1='"+user.getUsername()+"'");
+				List<String> temp = ((Ydiot) user).getFriendList();
+				List<String> oldList = new ArrayList<String> ();
+				while (result.next()) {
+					oldList.add(result.getString("user2"));
+				}
+			} else if (user instanceof Administrator) {
+				table = "administrator";
+			} else if (user instanceof Moderator) {
+				table = "moderator";
+			} else if (user instanceof Forscher) {
+				table = "forscher";
+			}
+			result = statement.executeQuery("update "+table+" set "+setColumns);
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} finally {
@@ -451,7 +513,7 @@ public class SQL implements DAO {
 				result.getString("recipient"), 
 				result.getString("content"), 
 				dislikeList,
-				result.getInt("id"), 
+				result.getLong("id"), 
 				likeList, 
 				readList, 
 				reportList, 
@@ -461,7 +523,7 @@ public class SQL implements DAO {
 			throw new IOException (e.getMessage());
 		} finally {
 			try {
-				tempResult.close();
+				if (tempResult != null) tempResult.close();
 			} catch (SQLException e) {}
 		}
 		
