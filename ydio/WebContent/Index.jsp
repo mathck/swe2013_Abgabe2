@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ page import="javax.servlet.http.HttpServletRequest" %>
-<%@ page import="java.util.Vector" %>
+
+
+    
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
@@ -29,40 +29,37 @@
 <div id="content">
 <h1>Willkommen auf ydio!</h1>
 <h2>Melde dich jetzt noch an und gib uns deine Daten.</h2>
-<table>
-<tr>
-<td width="200px">Username</td>
-<td><input type="text" name="username"></td>
-</tr>
-<tr>
-<td width="200px">Vorname</td>
-<td><input type="text" name="firstName"></td>
-</tr>
-<tr>
-<td width="200px">Nachname</td>
-<td><input type="text" name="secondName"></td>
-</tr>
-<tr>
-<td>Passwort</td>
-<td><input type="password" name="password"></td>
-</tr>
-<tr>
-<td>Passwort nochmal</td>
-<td><input type="password" name="password"></td>
-</tr>
-<tr>
-<td>E-Mail</td>
-<td><input type="email" name="email"></td>
-</tr>
-<tr>
-<td>Geburtstag</td>
-<td><input type="date" name="date"></td>
-</tr>
-<tr>
-<td>Deine Beschreibung</td>
-<td><textarea rows="4" cols="30"></textarea></td>
-</tr>
-</table>
+<form action="Register" method="post">
+	<table>
+	<tr>
+	<td width="200px">Username</td>
+	<td><input type="text" name="username"></td>
+	</tr>
+	<tr>
+	<td width="200px">Name</td>
+	<td><input type="text" name="fullname"></td>
+	</tr>
+	<tr>
+	<td>Passwort</td>
+	<td><input type="password" name="password"></td>
+	</tr>
+	<tr>
+	<td>E-Mail</td>
+	<td><input type="email" name="email"></td>
+	</tr>
+	<tr>
+	<td>Geburtstag</td>
+	<td><input type="date" name="date"></td>
+	</tr>
+	<tr>
+	<td>Deine Beschreibung</td>
+	<td><textarea name="desc" rows="4" cols="30"></textarea></td>
+	</tr>
+	<tr>
+	 <td><input type="submit" value="submit"/><br></td>
+	 </tr>
+	</table>
+</form>
 </div>
 <!-- CONTENT OVER -->
 

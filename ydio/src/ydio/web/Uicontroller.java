@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ydio.UserManagement;
+import ydio.dao.DAO;
 import ydio.web.Index;
 
 /**
@@ -27,11 +29,9 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 
 	private RequestDispatcher JSPIndex = null;
 	
-	/**
-	 *
-	 * Initialisierung beim laden des Servlets
-	 * 
-	 */
+	
+	private UserManagement um;
+	
 	public void init() throws ServletException
 	{
 		// Header und Footer hier nur exemplarisch als extra Seiten, da somit der
