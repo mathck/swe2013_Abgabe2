@@ -66,9 +66,14 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 	 * @param response Http Servlet Response
 	 * 
 	 */
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException
-	{
-		doRequest(request, response);
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+		switch (request.getParameter("action")) {
+		case "register":
+			(new Register()).doPost(request, response);
+			break;
+		default:
+			doRequest(request, response);
+		}
 	}
 
 	/**

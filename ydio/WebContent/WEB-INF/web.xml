@@ -11,10 +11,10 @@
   </welcome-file-list>
     <servlet>
     <servlet-name>Ydio</servlet-name>
-    <servlet-class>ydio.web.Register</servlet-class>
+    <servlet-class>ydio.web.Uicontroller</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Ydio</servlet-name>
-    <url-pattern>/Register</url-pattern>
+    <url-pattern>/Uicontroller</url-pattern>
   </servlet-mapping>
 </web-app>

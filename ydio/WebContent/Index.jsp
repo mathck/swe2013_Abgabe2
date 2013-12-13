@@ -29,7 +29,7 @@
 <div id="content">
 <h1>Willkommen auf ydio!</h1>
 <h2>Melde dich jetzt noch an und gib uns deine Daten.</h2>
-<form action="Register" method="post">
+<form action="register" method="post">
 	<table>
 	<tr>
 	<td width="200px">Username</td>
