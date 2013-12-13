@@ -29,7 +29,8 @@
 <div id="content">
 <h1>Willkommen auf ydio!</h1>
 <h2>Melde dich jetzt noch an und gib uns deine Daten.</h2>
-<form action="register" method="post">
+<form action="Uicontroller" method="post">
+	<input type="hidden" name="action" value="register">
 	<table>
 	<tr>
 	<td width="200px">Username</td>
