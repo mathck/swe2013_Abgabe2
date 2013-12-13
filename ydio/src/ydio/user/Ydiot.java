@@ -3,6 +3,13 @@ package ydio.user;
 import java.util.Date;
 import java.util.List;
 
+import ydio.exceptions.InvalidDateInputException;
+import ydio.exceptions.InvalidEmailInputException;
+import ydio.exceptions.InvalidNameInputException;
+import ydio.exceptions.InvalidPasswordInputException;
+import ydio.exceptions.InvalidSexInputException;
+import ydio.exceptions.InvalidUsernameInputException;
+
 /**
  * @author mathck
  * @version 1.0
@@ -14,7 +21,7 @@ public class Ydiot extends AbstractUser {
 	private List<String> friendList;
 	private Date lockedUntil;
 
-	public Ydiot(String username, String password, String fullName, String email, char sex, Date date, String desc, List<String> fL) {
+	public Ydiot(String username, String password, String fullName, String email, char sex, Date date, String desc, List<String> fL) throws InvalidEmailInputException, InvalidNameInputException, InvalidSexInputException, InvalidPasswordInputException, InvalidUsernameInputException, InvalidDateInputException {
 		super(username, password, fullName, email, sex, date);
 		this.description = desc;
 		this.friendList = fL;

@@ -3,7 +3,6 @@ package ydio;
 import ydio.user.*;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,13 +51,18 @@ public class UserManagement {
 	 * Beschr�nkt auf: Ydiot, Moderator
 	 */
 	public void editSignedOnUserProfile(String password, String fullName, String eMail, char sex, Date birthday) {
-		if(session instanceof Ydiot || session instanceof Moderator){
-			session.setPassword(password);
-			session.setFullName(fullName);
-			session.setEMail(eMail);
-			if(sex != ' ')
-				session.setSex(sex);
-			session.setBirthday(birthday);
+		if(session instanceof Ydiot || session instanceof Moderator) {
+			try {
+				session.setPassword(password);
+				session.setFullName(fullName);
+				session.setEMail(eMail);
+				if(sex != ' ')
+					session.setSex(sex);
+				session.setBirthday(birthday);
+			} catch(Exception e) {
+				// catch all exceptions TODO
+			}
+			
 		}
 	}
 
@@ -128,11 +132,8 @@ public class UserManagement {
 			e.printStackTrace();
 		}
 		
-		if(!session.getPassword().equals(password)) {
+		if(!session.getPassword().equals(password))
 			this.session = null;
-		} else {
-			throw new NotImplementedException();
-		}
 	}
 	
 
@@ -155,9 +156,8 @@ public class UserManagement {
 		if(session instanceof Administrator){
 			try {
 				dao.addUser(new Administrator(username, password, fullName, eMail, sex, birthday));
-			} catch (IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 	}
@@ -177,9 +177,8 @@ public class UserManagement {
 		if(session instanceof Administrator){
 			try {
 				dao.addUser(new Forscher(username, password, fullName, eMail, sex, birthday));
-			} catch (IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 	}
@@ -199,9 +198,8 @@ public class UserManagement {
 		if(session instanceof Administrator){
 			try {
 				dao.addUser(new Moderator(username, password, fullName, eMail, sex, birthday));
-			} catch (IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 	}
@@ -223,9 +221,8 @@ public class UserManagement {
 			List<String> fL = new ArrayList<String>();
 			try {
 				dao.addUser(new Ydiot(username, password, fullName, eMail, sex, birthday, description, fL));
-			} catch (IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 	}
@@ -263,8 +260,6 @@ public class UserManagement {
 			}
 		}
 	}
-
-	
 	
 	public AbstractUser getSession() {
 		return session;

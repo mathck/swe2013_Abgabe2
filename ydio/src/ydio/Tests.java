@@ -21,7 +21,7 @@ public class Tests {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		y = new Ydiot("ydiot", "pw", "vorname nachname", "email@ydio.com", 'm', new Date(), "desc", null);
-		UserManagement um = new UserManagement();
+		//UserManagement um = new UserManagement();
 	}
 	
 	@Test
@@ -29,8 +29,10 @@ public class Tests {
 		p(y.getFullName());
 		p(y.getDescription());
 		p(y.getSex());
-		y.setSex('f');
+		//y.setSex('f');
 		p(y.getSex());
+		
+		//um.login("pw", "ydiot");
 	}
 	
 	/*

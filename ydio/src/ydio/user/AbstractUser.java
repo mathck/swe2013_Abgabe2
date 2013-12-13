@@ -2,6 +2,8 @@ package ydio.user;
 
 import java.util.Date;
 
+import ydio.exceptions.*;
+
 /**
  * @author mathck
  * @version 1.0
@@ -16,7 +18,7 @@ public abstract class AbstractUser {
 	private char sex;
 	private String username;
 
-	public AbstractUser(String username, String password, String fullName, String email, char sex, Date date) {
+	public AbstractUser(String username, String password, String fullName, String email, char sex, Date date) throws InvalidEmailInputException, InvalidNameInputException, InvalidSexInputException, InvalidPasswordInputException, InvalidUsernameInputException, InvalidDateInputException {
 		setBirthday(date);
 		setEMail(email);
 		setFullName(fullName);
@@ -49,27 +51,46 @@ public abstract class AbstractUser {
 		return username;
 	}
 
-	public void setBirthday(Date date) {
+	public void setBirthday(Date date) throws InvalidDateInputException {
+		Date now = new Date();
+		if(date.after(now))
+			throw new InvalidDateInputException();
+		
 		this.birthday = date;
 	}
 
-	public void setEMail(String email) {
-		this.eMail = email;
+	public void setEMail(String email) throws InvalidEmailInputException {
+		if(email.contains("@"))
+			this.eMail = email;
+		else
+			throw new InvalidEmailInputException();
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setFullName(String fullName) throws InvalidNameInputException {
+		if(fullName.contains(" "))
+			this.fullName = fullName;
+		else
+			throw new InvalidNameInputException();
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword(String password) throws InvalidPasswordInputException {
+		if(!(password.length() < 6))
+			this.password = password;
+		else
+			throw new InvalidPasswordInputException();
 	}
 
-	public void setSex(char sex) {
-		this.sex = sex;
+	public void setSex(char sex) throws InvalidSexInputException {
+		if(sex == 'm' || sex == 'f')
+			this.sex = sex;
+		else
+			throw new InvalidSexInputException();
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsername(String username) throws InvalidUsernameInputException {
+		if(!username.contains(" "))
+			this.username = username;
+		else
+			throw new InvalidUsernameInputException();
 	}
 }

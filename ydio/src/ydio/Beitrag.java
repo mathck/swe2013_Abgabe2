@@ -356,11 +356,11 @@ public class Beitrag {
 	}
 	
 	
-	public static void setnextID(long id){
+	public static void setnextID(long id) {
 		nextID = id;
 	}
 	
-	public long getnextID(){
+	public long getnextID() {
 		return nextID;
 	}
 
