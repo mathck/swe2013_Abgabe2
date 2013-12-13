@@ -53,7 +53,7 @@ public class SQL implements DAO {
 			result = statement.executeQuery("select id from id where type='beitrag'");
 			long id = result.getLong(0);
 			beitrag.setID(id);
-			result = statement.executeQuery("update id set id="+(id+1)+" where type='beitrag';");
+			result = statement.executeQuery("update id set id="+(id+1)+" where type='beitrag'");
 			String statementString = 
 				"insert into beitrag (creator, content, creation_date, ID, recipient) values ('" +
 				beitrag.getCreator() + "', '" +
@@ -102,7 +102,7 @@ public class SQL implements DAO {
 			} else if (user instanceof Forscher) {
 				columns = "forscher ("+columns+")";
 			}
-			result = statement.executeQuery("insert into"+columns+" values ("+values+");");
+			result = statement.executeQuery("insert into"+columns+" values ("+values+")");
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} finally {
@@ -458,7 +458,7 @@ public class SQL implements DAO {
 				null);
 			if (result.getDate("lockeduntil") != null) 
 				user.setLocked(new Date(result.getDate("lockeduntil").getTime()));
-			ResultSet friendResult = statement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"';");
+			ResultSet friendResult = statement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"'");
 			List<String> friendList = new ArrayList<String> ();
 			while (friendResult.next()) {
 				friendList.add(friendResult.getString("user2"));
