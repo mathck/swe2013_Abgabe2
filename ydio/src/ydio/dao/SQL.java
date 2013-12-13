@@ -50,15 +50,15 @@ public class SQL implements DAO {
 	public void addBeitrag(Beitrag beitrag) throws IOException {
 		try {
 			statement = connection.createStatement();
-			result = statement.executeQuery("select id from id where type=beitrag");
+			result = statement.executeQuery("select id from id where type='beitrag'");
 			long id = result.getLong(0);
 			beitrag.setID(id);
-			result = statement.executeQuery("update id set id="+(id+1)+" where type=beitrag;");
+			result = statement.executeQuery("update id set id="+(id+1)+" where type='beitrag';");
 			String statementString = 
 				"insert into beitrag (creator, content, creation_date, ID, recipient) values ('" +
 				beitrag.getCreator() + "', '" +
 				beitrag.getContent() + "', '" +
-				beitrag.getDate() + "', '" +
+				new java.sql.Date(beitrag.getDate().getTime()) + "', '" +
 				beitrag.getID() + "', '" +
 				beitrag.getRecep() + "');";				;
 			result = statement.executeQuery(statementString);
@@ -87,14 +87,14 @@ public class SQL implements DAO {
 				user.getFullName()+"', '"+
 				user.getPassword()+"', '"+
 				user.getSex()+"', '"+
-				user.getBirthday()+"'";
+				new java.sql.Date (user.getBirthday().getTime())+"'";
 			if (user instanceof Ydiot) {
 				columns = 
 					"ydiot ("+columns+", description, lockeduntil)";
 				values = 
 					values+", '"+
-					((Ydiot) user).getDescription()+"', '"+
-					null+"'";
+					((Ydiot) user).getDescription()+"', "+
+					"null";
 			} else if (user instanceof Administrator) {
 				columns = "administrator ("+columns+")";
 			} else if (user instanceof Moderator) {
@@ -327,7 +327,7 @@ public class SQL implements DAO {
 				"creator='"+beitrag.getCreator()+"', "+
 				"recipient='"+beitrag.getRecep()+"', "+
 				"content='"+beitrag.getContent()+"', "+
-				"date='"+beitrag.getDate()+"'"+
+				"date='"+new java.sql.Date(beitrag.getDate().getTime())+"'"+
 				"where id="+beitrag.getID();
 			result = statement.executeQuery(query);
 			result = statement.executeQuery("select * from stats where id="+beitrag.getID());
@@ -396,13 +396,15 @@ public class SQL implements DAO {
 				"password='"+user.getPassword()+"', "
 				+ "fullname='"+user.getFullName()+"', "
 				+ "email='"+user.getEMail()+"', "
-				+ "birthday="+user.getBirthday()+", "
+				+ "birthday="+new java.sql.Date(user.getBirthday().getTime())+", "
 				+ "sex='"+user.getSex()+"' "
 				+ "where username='"+user.getUsername()+"'";
 			if (user instanceof Ydiot) {
 				table = "ydiot";
+				java.sql.Date lockedUntil = null;
+				if (((Ydiot) user).getLocked() != null) lockedUntil = new java.sql.Date(((Ydiot) user).getLocked().getTime());
 				setColumns = setColumns
-					+ "lockeduntil="+((Ydiot) user).getLocked()+", "
+					+ "lockeduntil="+lockedUntil+", "
 					+ "description='"+((Ydiot) user).getDescription()+"'";
 				result = statement.executeQuery("select * from friendlist where user1='"+user.getUsername()+"'");
 				List<String> temp = ((Ydiot) user).getFriendList();
@@ -451,9 +453,11 @@ public class SQL implements DAO {
 				result.getString("fullname"), 
 				result.getString("email"), 
 				result.getString("sex").charAt(0), 
-				result.getDate("birthday"), 
-				result.getString("description"), 
+				new Date(result.getDate("birthday").getTime()), 
+				result.getString("description"),
 				null);
+			if (result.getDate("lockeduntil") != null) 
+				user.setLocked(new Date(result.getDate("lockeduntil").getTime()));
 			ResultSet friendResult = statement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"';");
 			List<String> friendList = new ArrayList<String> ();
 			while (friendResult.next()) {
@@ -477,7 +481,7 @@ public class SQL implements DAO {
 				result.getString("fullname"), 
 				result.getString("email"), 
 				result.getString("sex").charAt(0), 
-				result.getDate("birthday"));
+				new Date(result.getDate("birthday").getTime()));
 		return user;
 	}
 	private Moderator createModerator (ResultSet result) throws SQLException {
@@ -487,7 +491,7 @@ public class SQL implements DAO {
 				result.getString("fullname"), 
 				result.getString("email"), 
 				result.getString("sex").charAt(0), 
-				result.getDate("birthday"));
+				new Date(result.getDate("birthday").getTime()));
 		return user;
 	}
 	private Forscher createForscher (ResultSet result) throws SQLException {
@@ -497,7 +501,7 @@ public class SQL implements DAO {
 				result.getString("fullname"), 
 				result.getString("email"), 
 				result.getString("sex").charAt(0), 
-				result.getDate("birthday"));
+				new Date(result.getDate("birthday").getTime()));
 		return user;
 	}
 	private Beitrag createBeitrag (ResultSet result) throws IOException {
@@ -535,7 +539,7 @@ public class SQL implements DAO {
 				likeList, 
 				readList, 
 				reportList, 
-				result.getDate("creation_date"));
+				new Date(result.getDate("creation_date").getTime()));
 			return beitrag;
 		} catch (Throwable e) {
 			throw new IOException (e.getMessage());
