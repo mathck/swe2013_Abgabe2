@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ydio.*;
+import ydio.exceptions.YdioException;
 import ydio.user.*;
 
 /**
@@ -446,8 +447,9 @@ public class SQL implements DAO {
 	}
 	
 	private Ydiot createYdiot (ResultSet result) throws IOException {
+		Ydiot user = null;
 		try {
-			Ydiot user = new Ydiot (
+			user = new Ydiot (
 				result.getString("username"), 
 				result.getString("password"), 
 				result.getString("fullname"), 
@@ -464,44 +466,63 @@ public class SQL implements DAO {
 				friendList.add(friendResult.getString("user2"));
 			}
 			user.setFriendList(friendList);
-			return user;
+			
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
+		} catch (YdioException e) {
+			// wrong input was saved in database, impossible
 		} finally {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
 			} catch (SQLException e) {}	
 		}
+		
+		return user;
 	}
 	private Administrator createAdministrator (ResultSet result) throws SQLException {
-		Administrator user = new Administrator (
-				result.getString("username"), 
-				result.getString("password"), 
-				result.getString("fullname"), 
-				result.getString("email"), 
-				result.getString("sex").charAt(0), 
-				new Date(result.getDate("birthday").getTime()));
+		Administrator user = null;
+		try {
+			user = new Administrator (
+					result.getString("username"), 
+					result.getString("password"), 
+					result.getString("fullname"), 
+					result.getString("email"), 
+					result.getString("sex").charAt(0), 
+					new Date(result.getDate("birthday").getTime()));
+		} catch (YdioException e) {
+			// wrong input was saved in database, impossible
+		}
 		return user;
 	}
 	private Moderator createModerator (ResultSet result) throws SQLException {
-		Moderator user = new Moderator (
-				result.getString("username"), 
-				result.getString("password"), 
-				result.getString("fullname"), 
-				result.getString("email"), 
-				result.getString("sex").charAt(0), 
-				new Date(result.getDate("birthday").getTime()));
+		Moderator user = null;
+		try {
+			user = new Moderator (
+					result.getString("username"), 
+					result.getString("password"), 
+					result.getString("fullname"), 
+					result.getString("email"), 
+					result.getString("sex").charAt(0), 
+					new Date(result.getDate("birthday").getTime()));
+		} catch (YdioException e) {
+			// wrong input was saved in database, impossible
+		}
 		return user;
 	}
 	private Forscher createForscher (ResultSet result) throws SQLException {
-		Forscher user = new Forscher (
-				result.getString("username"), 
-				result.getString("password"), 
-				result.getString("fullname"), 
-				result.getString("email"), 
-				result.getString("sex").charAt(0), 
-				new Date(result.getDate("birthday").getTime()));
+		Forscher user = null;
+		try {
+			user = new Forscher (
+					result.getString("username"), 
+					result.getString("password"), 
+					result.getString("fullname"), 
+					result.getString("email"), 
+					result.getString("sex").charAt(0), 
+					new Date(result.getDate("birthday").getTime()));
+		} catch (YdioException e) {
+			// wrong input was saved in database, impossible
+		}
 		return user;
 	}
 	private Beitrag createBeitrag (ResultSet result) throws IOException {
