@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import ydio.UserManagement;
 import ydio.dao.DAO;
-import ydio.web.Index;
 
 /**
  * 
@@ -22,22 +21,18 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/**
-	 * 
-	 */
-	//private static final long serialVersionUID = 1L;
 
-	private RequestDispatcher JSPIndex = null;
+
+	private RequestDispatcher JSPRegister = null;
+	private RequestDispatcher JSPUserpage = null;
 	
-	
-	private UserManagement um;
+
 	
 	public void init() throws ServletException
 	{
-		// Header und Footer hier nur exemplarisch als extra Seiten, da somit der
-		// immergleiche Content nicht jedesmal neu geschrieben werden muss
 
-		JSPIndex = getServletContext().getRequestDispatcher("/Index.jsp");
+		JSPRegister = getServletContext().getRequestDispatcher("/register.jsp");
+		JSPUserpage = getServletContext().getRequestDispatcher("/userpage.jsp");
 
 	}
 	
@@ -51,11 +46,7 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException
 	{
-		try{
 			doRequest(request, response);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
 	}
 	
 	/**
@@ -66,14 +57,13 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 	 * @param response Http Servlet Response
 	 * 
 	 */
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
-		switch (request.getParameter("action")) {
-		case "register":
-			(new Register()).doPost(request, response);
-			break;
-		default:
-			doRequest(request, response);
-		}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException
+	{
+		
+		
+		doRequest(request, response);
+
 	}
 
 	/**
@@ -93,18 +83,26 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 			
 		if (session == null)
 		{
-			// neue Session erstellen und zuweisen
 			session = request.getSession(true);
 			session.setAttribute("name", "Testuser");
 			session.setAttribute("status", "Session erstellt");
 			
 		}
 		
-		
-		if ((gewuenschteSeite == null) || (gewuenschteSeite.equals("index")))
-		{
-			Index.aufrufIndex(request, response, session,  JSPIndex);
+		if( gewuenschteSeite == null){
+			Register.aufrufRegister(request, response, session,  JSPRegister);
+		} else {
+			switch(gewuenschteSeite){
+					case "register":
+						Register.aufrufRegister(request, response, session,  JSPRegister);
+						break;
+					case "userpage":
+						Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+					
+			}
 		}
+		
+		
 		
 	}
 }

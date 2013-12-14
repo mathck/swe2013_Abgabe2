@@ -8,37 +8,24 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ydio.UserManagement;
 
-public class Register extends HttpServlet {
+public class Register{
 	private static final long serialVersionUID = 1L;
 	private UserManagement um;
-	private RequestDispatcher JSPUserpage = null;
+
 	
-    public Register() {
-        super();
-    }
     
-    public void init() throws ServletException
-	{
-
-		JSPUserpage = getServletContext().getRequestDispatcher("/userpage.jsp");
-
-	}
     
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String username = request.getParameter("username");
-    	String password = request.getParameter("password");
-    	String eMail = request.getParameter("email");
-    	String fullName = request.getParameter("fullname");
-        
-        
-        
-        response.setContentType("text/html");
-        //um.registerYdiot(username, password, fullName, eMail, 'm', new Date(), "desc");
-       
-        JSPUserpage.forward(request, response);           
-
-    }
+    public static void aufrufRegister(HttpServletRequest request, HttpServletResponse response, HttpSession session, RequestDispatcher JSPRegister) throws ServletException, IOException
+   	{
+   		try{
+   			
+   			JSPRegister.include(request, response);
+   		}catch(Exception e){
+   			e.printStackTrace();
+   		}
+   	}
 }

@@ -14,7 +14,7 @@
 <table><tr>
 <td><a href="index.html"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
 <td><input type="search" size="50" name="search"></td>
-<td><a href="userpage.html">my username</a></td>
+<td><a href="?gewuenschteSeite=userpage"><%= request.getParameter("username") %></a></td>
 </tr></table>
 </div>
 <!-- HEADER OVER -->
