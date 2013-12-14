@@ -27,38 +27,24 @@
 
 <!-- CONTENT START -->
 <div id="content">
-<h1>Willkommen auf ydio!</h1>
-<h2>Melde dich jetzt noch an und gib uns deine Daten.</h2>
+<h1>Log dich jetzt ein!</h1>
 <form action="Uicontroller" method="post">
-	<input type="hidden" name="gewuenschteSeite" value="userpage">
 	<table>
 	<tr>
 	<td width="200px">Username</td>
 	<td><input type="text" name="username"></td>
 	</tr>
 	<tr>
-	<td width="200px">Name</td>
-	<td><input type="text" name="fullname"></td>
-	</tr>
 	<tr>
 	<td>Passwort</td>
 	<td><input type="password" name="password"></td>
 	</tr>
 	<tr>
-	<td>E-Mail</td>
-	<td><input type="email" name="email"></td>
-	</tr>
-	<tr>
-	<td>Geburtstag</td>
-	<td><input type="date" name="date"></td>
-	</tr>
-	<tr>
-	<td>Deine Beschreibung</td>
-	<td><textarea name="desc" rows="4" cols="30"></textarea></td>
-	</tr>
-	<tr>
-	 <td><input type="submit" value="submit"/><br></td>
+	 <td><a href="Uicontroller?gewuenschteSeite=register">Registriere dich jetzt</a></td>
+	 <input type="hidden" name="gewuenschteSeite" value="userpage">
+	  <td><input type="submit" value="Login"/><br></td>
 	 </tr>
+	 
 	</table>
 </form>
 </div>

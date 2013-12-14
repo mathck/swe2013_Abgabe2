@@ -25,7 +25,7 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 
 	private RequestDispatcher JSPRegister = null;
 	private RequestDispatcher JSPUserpage = null;
-	
+	private RequestDispatcher JSPLogin = null;
 
 	
 	public void init() throws ServletException
@@ -33,7 +33,7 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 
 		JSPRegister = getServletContext().getRequestDispatcher("/register.jsp");
 		JSPUserpage = getServletContext().getRequestDispatcher("/userpage.jsp");
-
+		JSPLogin = getServletContext().getRequestDispatcher("/login.jsp");
 	}
 	
 	/**
@@ -98,7 +98,10 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 						break;
 					case "userpage":
 						Userpage.aufrufUserpage(request, response, session, JSPUserpage);
-					
+						break;
+					case "login":
+						Login.aufrufLogin(request, response, session, JSPLogin);
+						break;
 			}
 		}
 		
