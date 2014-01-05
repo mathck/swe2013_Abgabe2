@@ -126,6 +126,7 @@ public class UserManagement {
 	 */
 	public void login(String password, String username) {
 		try {
+			if (username == null || password == null) throw new IOException ("Username or Password is null");
 			this.session = dao.getUserByUsername(username);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

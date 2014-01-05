@@ -227,7 +227,7 @@ public class SQL implements DAO {
 			connection = source.getConnection();
 			statement = connection.createStatement();
 			result = statement.executeQuery("select * from ydiot where username='"+username+"'");
-			if (result.first()) {
+			if (result.next()) {
 				return createYdiot(result);
 			}
 			return null;
