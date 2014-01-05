@@ -12,7 +12,7 @@
 <!-- HEADER START -->
 <div id="header">
 <table><tr>
-<td><a href="index.html"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
+<td><a href="Uicontroller?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
 <td><input type="search" size="50" name="search"></td>
 <td><a href="Uicontroller?gewuenschteSeite=userpage"><%= request.getParameter("username") %></a></td>
 </tr></table>
