@@ -37,7 +37,7 @@ public class SQL implements DAO {
 				+ "?user=" + username
 				+ "&password=" + password;
 			connection = DriverManager.getConnection(url);
-			statement = connection.createStatement();
+			statement = null;
 			result = null;
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
