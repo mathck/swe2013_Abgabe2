@@ -10,6 +10,6 @@
     username="ydio_java" 
     password="whatever" 
     driverClassName="com.mysql.jdbc.Driver"
-    url="jdbc:mysql://localhost/ydio"
+    url="jdbc:mysql://localhost:3306/ydio"
   />
 </Context>
