@@ -41,7 +41,7 @@
 	</tr>
 	<tr>
 	 <td><a href="Uicontroller?gewuenschteSeite=register">Registriere dich jetzt</a></td>
-	 <input type="hidden" name="gewuenschteSeite" value="userpage">
+	 <input type="hidden" name="gewuenschteSeite" value="verifylogin">
 	  <td><input type="submit" value="Login"/><br></td>
 	 </tr>
 	 

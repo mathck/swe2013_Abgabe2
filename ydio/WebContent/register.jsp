@@ -57,7 +57,8 @@
 	<td><textarea name="desc" rows="4" cols="30"></textarea></td>
 	</tr>
 	<tr>
-	 <td><input type="submit" value="submit"/><br></td>
+	 <input type="hidden" name="gewuenschteSeite" value="completeRegistration">
+	 <td><input type="submit" value="Registrieren"/><br></td>
 	 </tr>
 	</table>
 </form>

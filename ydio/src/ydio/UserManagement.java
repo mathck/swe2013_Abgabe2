@@ -217,14 +217,14 @@ public class UserManagement {
 	 * Beschr�nkt auf: Ydiot, Moderator
 	 */
 	public void registerYdiot(String username, String password, String fullName, String eMail, char sex, Date birthday, String description) {
-		if(session instanceof Ydiot || session instanceof Moderator){
+	//if(session instanceof Ydiot || session instanceof Moderator){
 			List<String> fL = new ArrayList<String>();
 			try {
 				dao.addUser(new Ydiot(username, password, fullName, eMail, sex, birthday, description, fL));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 			}
-		}
+	//}
 	}
 
 	/**

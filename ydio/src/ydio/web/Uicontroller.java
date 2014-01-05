@@ -1,5 +1,6 @@
 package ydio.web;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +22,8 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	UserManagement um = new UserManagement();
 
 	private RequestDispatcher JSPRegister = null;
 	private RequestDispatcher JSPUserpage = null;
@@ -101,6 +103,20 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 						break;
 					case "login":
 						Login.aufrufLogin(request, response, session, JSPLogin);
+						break;
+					case "verifylogin":
+						um.login(request.getParameter("password"),request.getParameter("username"));
+						
+						if(um.getSession() == null){
+							Login.aufrufLogin(request, response, session, JSPLogin);
+						}
+						else{
+							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+						}
+						break;
+					case "completeRegistration":
+						um.registerYdiot(request.getParameter("username"), request.getParameter("password"), "fullName", "eMail", 'm', new Date(63, 0, 16), "description");
+						Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 						break;
 			}
 		}
