@@ -227,7 +227,7 @@ public class SQL implements DAO {
 	 * @throws IOException Wird geworfen, wenn Fehler bei der MySQL Abfrage auftreten.
 	 */
 	public AbstractUser getUserByUsername(String username) throws IOException{
-		/* try {
+		try {
 			AbstractUser user = null;
 			connection = source.getConnection();
 			statement = connection.createStatement();
@@ -257,14 +257,6 @@ public class SQL implements DAO {
 				if (statement != null) statement.close();
 				if (connection != null) connection.close();
 			} catch (SQLException e) {}
-		} */
-		try {
-			return new Administrator (username, username, username, username, 'm', null);
-		} catch (InvalidEmailInputException | InvalidNameInputException
-				| InvalidSexInputException | InvalidPasswordInputException
-				| InvalidUsernameInputException | InvalidDateInputException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	
