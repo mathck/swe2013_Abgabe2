@@ -224,9 +224,25 @@ public class SQL implements DAO {
 	 */
 	public AbstractUser getUserByUsername(String username) throws IOException{
 		try {
+			if (source == null) throw new IOException ("DataSource is missing");
 			connection = source.getConnection();
+			if (connection == null) throw new IOException ("Connection failure");
 			statement = connection.createStatement();
+			if (statement == null) throw new IOException ("Statement failure");
 			result = statement.executeQuery("select * from ydiot where username='"+username+"'");
+			if (result == null) throw new IOException ("Result missing");
+			if (result.next()) {
+				return createYdiot(result);
+			}
+			result = statement.executeQuery("select * from administrator where username='"+username+"'");
+			if (result.next()) {
+				return createYdiot(result);
+			}
+			result = statement.executeQuery("select * from moderator where username='"+username+"'");
+			if (result.next()) {
+				return createYdiot(result);
+			}
+			result = statement.executeQuery("select * from forscher where username='"+username+"'");
 			if (result.next()) {
 				return createYdiot(result);
 			}
