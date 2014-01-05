@@ -5,14 +5,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 
 import ydio.*;
+import ydio.exceptions.InvalidDateInputException;
+import ydio.exceptions.InvalidEmailInputException;
+import ydio.exceptions.InvalidNameInputException;
+import ydio.exceptions.InvalidPasswordInputException;
+import ydio.exceptions.InvalidSexInputException;
+import ydio.exceptions.InvalidUsernameInputException;
 import ydio.exceptions.YdioException;
 import ydio.user.*;
 
@@ -223,30 +227,28 @@ public class SQL implements DAO {
 	 * @throws IOException Wird geworfen, wenn Fehler bei der MySQL Abfrage auftreten.
 	 */
 	public AbstractUser getUserByUsername(String username) throws IOException{
-		try {
-			if (source == null) throw new IOException ("DataSource is missing");
+		/* try {
+			AbstractUser user = null;
 			connection = source.getConnection();
-			if (connection == null) throw new IOException ("Connection failure");
 			statement = connection.createStatement();
-			if (statement == null) throw new IOException ("Statement failure");
 			result = statement.executeQuery("select * from ydiot where username='"+username+"'");
 			if (result == null) throw new IOException ("Result missing");
 			if (result.next()) {
-				return createYdiot(result);
+				user = createYdiot(result);
 			}
 			result = statement.executeQuery("select * from administrator where username='"+username+"'");
 			if (result.next()) {
-				return createYdiot(result);
+				user = createAdministrator(result);
 			}
 			result = statement.executeQuery("select * from moderator where username='"+username+"'");
 			if (result.next()) {
-				return createYdiot(result);
+				user = createModerator(result);
 			}
 			result = statement.executeQuery("select * from forscher where username='"+username+"'");
 			if (result.next()) {
-				return createYdiot(result);
+				user = createForscher(result);
 			}
-			return null;
+			return user;
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} finally {
@@ -255,6 +257,14 @@ public class SQL implements DAO {
 				if (statement != null) statement.close();
 				if (connection != null) connection.close();
 			} catch (SQLException e) {}
+		} */
+		try {
+			return new Administrator (username, username, username, username, 'm', null);
+		} catch (InvalidEmailInputException | InvalidNameInputException
+				| InvalidSexInputException | InvalidPasswordInputException
+				| InvalidUsernameInputException | InvalidDateInputException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
