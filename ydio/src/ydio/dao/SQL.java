@@ -18,7 +18,7 @@ import ydio.user.*;
  */
 public class SQL implements DAO {
 	private static final String password = "whatever";
-	private static final String path = "mysql://localhost/ydio";
+	private static final String path = "mysql://localhost:3306/ydio";
 	private static final String username = "ydio_java";
 
 	private Connection connection;
@@ -32,14 +32,15 @@ public class SQL implements DAO {
 	 */
 	public SQL() throws IOException {
 		try {
+			Class.forName("com.mysql.jdbc.Driver");
 			String url 
-				= "jdbc:" + path
-				+ "?user=" + username
-				+ "&password=" + password;
-			connection = DriverManager.getConnection(url);
+				= "jdbc:" + path;
+			connection = DriverManager.getConnection(url, username, password);
 			statement = null;
 			result = null;
 		} catch (SQLException e) {
+			throw new IOException (e.getMessage());
+		} catch (ClassNotFoundException e) {
 			throw new IOException (e.getMessage());
 		}
 	}
