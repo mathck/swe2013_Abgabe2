@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 
@@ -49,6 +52,13 @@ public class SQL implements DAO {
 		} catch (ClassNotFoundException e) {
 			throw new IOException (e.getMessage());
 		}*/
+		try {
+			Context context = new InitialContext();
+			source = (DataSource)context.lookup("java:comp/env/jdbc/ydio");
+		} catch (NamingException e) {
+			throw new IOException (e.getMessage());
+		}
+		
 	}
 
 	/**
@@ -57,7 +67,7 @@ public class SQL implements DAO {
 	 */
 	public void addBeitrag(Beitrag beitrag) throws IOException {
 		try {
-			
+			connection = source.getConnection();
 			statement = connection.createStatement();
 			result = statement.executeQuery("select id from id where type='beitrag'");
 			long id = result.getLong(0);
@@ -77,6 +87,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}			
 		}
 	}
@@ -88,6 +99,7 @@ public class SQL implements DAO {
 	 */
 	public void addUser(AbstractUser user) throws IOException {
 		try {
+			connection = source.getConnection();
 			statement = connection.createStatement();
 			String columns = "username, email, fullname, password, sex, birthday";
 			String values = "'"+
@@ -118,6 +130,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}	
 		}
 	}
@@ -128,6 +141,7 @@ public class SQL implements DAO {
 	 */
 	public List<AbstractUser> getAllUsers() throws IOException{
 		try {
+			connection = source.getConnection();
 			statement = connection.createStatement();
 			List<AbstractUser> list = new ArrayList<AbstractUser> ();
 			result = statement.executeQuery("select * from ydiot");
@@ -153,6 +167,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}
 		}
 	}
@@ -163,6 +178,7 @@ public class SQL implements DAO {
 	 */
 	public List<Beitrag> getBeitragList() throws IOException{	
 		try {
+			connection = source.getConnection();
 			statement = connection.createStatement();
 			result = statement.executeQuery("select * from beitrag");
 			List<Beitrag> list = new ArrayList<Beitrag> ();
@@ -176,6 +192,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}	
 		}
 	}
@@ -195,6 +212,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}	
 		}
 	}
@@ -231,6 +249,7 @@ public class SQL implements DAO {
 	 */
 	public List<Ydiot> getUserList() throws IOException{
 		try {
+			connection = source.getConnection();
 			statement = connection.createStatement();
 			result = statement.executeQuery("select * from ydiot");
 			List<Ydiot> list = new ArrayList<Ydiot> ();
@@ -242,6 +261,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}	
 		}
 	}
@@ -253,6 +273,7 @@ public class SQL implements DAO {
 	 */
 	public void removeBeitrag(Beitrag beitrag) throws IOException{
 		try {
+			connection = source.getConnection();
 			statement = connection.createStatement();
 			result = statement.executeQuery("delete from beitrag where id="+beitrag.getID());
 		} catch (SQLException e) {
@@ -261,6 +282,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}	
 		}
 	}
@@ -272,6 +294,7 @@ public class SQL implements DAO {
 	 */
 	public void removeUser(AbstractUser user) throws IOException{
 		try {
+			connection = source.getConnection();
 			statement = connection.createStatement();
 			String table = null;
 			if (user instanceof Administrator) {
@@ -290,6 +313,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}	
 		}
 	}
@@ -302,6 +326,7 @@ public class SQL implements DAO {
 	 */
 	public List<Ydiot> search(String searchstring) throws IOException{
 		try {
+			connection = source.getConnection();
 			statement = connection.createStatement();
 			result = statement.executeQuery("select * from ydiot where username like '"+searchstring+"'");
 			List<Ydiot> list = new ArrayList<Ydiot> ();
@@ -321,6 +346,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}	
 		}
 	}
@@ -333,6 +359,7 @@ public class SQL implements DAO {
 	 */
 	public void updateBeitrag(Beitrag beitrag) throws IOException{
 		try {
+			connection = source.getConnection();
 			statement = connection.createStatement();
 			String query = "update beitrag set "+
 				"creator='"+beitrag.getCreator()+"', "+
@@ -386,6 +413,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}	
 		}
 	}
@@ -401,6 +429,7 @@ public class SQL implements DAO {
 	 */
 	public void updateUser(AbstractUser user) throws IOException{
 		try {
+			connection = source.getConnection();
 			statement = connection.createStatement();
 			String table = null;
 			String setColumns = 
@@ -452,6 +481,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}	
 		}
 	}
