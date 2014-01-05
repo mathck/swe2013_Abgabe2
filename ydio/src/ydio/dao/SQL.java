@@ -28,7 +28,6 @@ public class SQL implements DAO {
 	private static final String path = "mysql://localhost:3306/ydio";
 	private static final String username = "ydio_java";
 	
-	@Resource(name="jdbc/ydio")
 	private DataSource source;
 	private Connection connection;
 	private Statement statement;
@@ -53,8 +52,10 @@ public class SQL implements DAO {
 			throw new IOException (e.getMessage());
 		}*/
 		try {
-			Context context = new InitialContext();
+			InitialContext context = new InitialContext();
+			if (context == null) throw new IOException ("No Context found");
 			source = (DataSource)context.lookup("java:comp/env/jdbc/ydio");
+			if (source == null) throw new IOException ("Data Source not found");
 		} catch (NamingException e) {
 			throw new IOException (e.getMessage());
 		}
