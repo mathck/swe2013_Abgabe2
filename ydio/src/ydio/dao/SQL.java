@@ -225,11 +225,11 @@ public class SQL implements DAO {
 	public AbstractUser getUserByUsername(String username) throws IOException{
 		try {
 			connection = source.getConnection();
-			statement = connection.createStatement();
+			/*statement = connection.createStatement();
 			result = statement.executeQuery("select * from ydiot where username='"+username+"'");
 			if (result.first()) {
 				return createYdiot(result);
-			}
+			}*/
 			return null;
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
