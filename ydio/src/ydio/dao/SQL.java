@@ -53,7 +53,6 @@ public class SQL implements DAO {
 		}*/
 		try {
 			InitialContext context = new InitialContext();
-			if (context == null) throw new IOException ("No Context found");
 			source = (DataSource)context.lookup("java:comp/env/jdbc/ydio");
 			if (source == null) throw new IOException ("Data Source not found");
 		} catch (NamingException e) {
@@ -225,8 +224,8 @@ public class SQL implements DAO {
 	 */
 	public AbstractUser getUserByUsername(String username) throws IOException{
 		try {
-			connection = source.getConnection();
-			/*statement = connection.createStatement();
+			/*connection = source.getConnection();
+			statement = connection.createStatement();
 			result = statement.executeQuery("select * from ydiot where username='"+username+"'");
 			if (result.first()) {
 				return createYdiot(result);
