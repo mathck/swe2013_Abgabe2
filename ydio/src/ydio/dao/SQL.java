@@ -518,10 +518,10 @@ public class SQL implements DAO {
 				null);
 			if (result.getDate("lockeduntil") != null) 
 				user.setLocked(new Date(result.getDate("lockeduntil").getTime()));
-			ResultSet friendResult = statement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"'");
+			result = statement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"'");
 			List<String> friendList = new ArrayList<String> ();
-			while (friendResult.next()) {
-				friendList.add(friendResult.getString("user2"));
+			while (result.next()) {
+				friendList.add(result.getString("user2"));
 			}
 			user.setFriendList(friendList);
 			
