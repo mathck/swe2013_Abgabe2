@@ -5,6 +5,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.apache.tomcat.jdbc.pool.DataSource;
+
 import ydio.*;
 import ydio.exceptions.YdioException;
 import ydio.user.*;
@@ -20,7 +24,9 @@ public class SQL implements DAO {
 	private static final String password = "whatever";
 	private static final String path = "mysql://localhost:3306/ydio";
 	private static final String username = "ydio_java";
-
+	
+	@Resource(name="jdbc/ydio")
+	private DataSource source;
 	private Connection connection;
 	private Statement statement;
 	private ResultSet result;
@@ -31,7 +37,7 @@ public class SQL implements DAO {
 	 * @throws SQLException
 	 */
 	public SQL() throws IOException {
-		try {
+		/**try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url 
 				= "jdbc:" + path;
@@ -42,7 +48,7 @@ public class SQL implements DAO {
 			throw new IOException (e.getMessage());
 		} catch (ClassNotFoundException e) {
 			throw new IOException (e.getMessage());
-		}
+		}*/
 	}
 
 	/**
@@ -51,6 +57,7 @@ public class SQL implements DAO {
 	 */
 	public void addBeitrag(Beitrag beitrag) throws IOException {
 		try {
+			
 			statement = connection.createStatement();
 			result = statement.executeQuery("select id from id where type='beitrag'");
 			long id = result.getLong(0);
@@ -199,6 +206,7 @@ public class SQL implements DAO {
 	 */
 	public AbstractUser getUserByUsername(String username) throws IOException{
 		try {
+			connection = source.getConnection();
 			statement = connection.createStatement();
 			result = statement.executeQuery("select * from ydiot where username='"+username+"'");
 			if (result.first()) {
@@ -211,6 +219,7 @@ public class SQL implements DAO {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (connection != null) connection.close();
 			} catch (SQLException e) {}
 		}
 	}
