@@ -1,3 +1,4 @@
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -14,7 +15,7 @@
 <table><tr>
 <td><a href="Uicontroller?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
 <td><input type="search" size="50" name="search"></td>
-<td><a href="Uicontroller?gewuenschteSeite=userpage"><%= request.getParameter("username") %></a></td>
+<td><a href="Uicontroller?gewuenschteSeite=userpage"><%= session.getAttribute("username") %></a></td>
 </tr></table>
 </div>
 <!-- HEADER OVER -->
@@ -27,19 +28,19 @@
 <table>
 <tr>
 <td width="200px">Username</td>
-<td><%= request.getParameter("username") %></td>
+<td><%= session.getAttribute("username") %></td>
 </tr>
 <tr>
 <td width="200px">Fullname</td>
-<td><%= request.getParameter("fullname") %></td>
+<td><%= session.getAttribute("fullname") %></td>
 </tr>
 <tr>
 <td>E-Mail</td>
-<td><%= request.getParameter("email") %></td>
+<td><%= session.getAttribute("email") %></td>
 </tr>
 <tr>
 <td>Geburtstag</td>
-<td>Datum</td>
+<td><%= session.getAttribute("date") %></td>
 </tr>
 <tr>
 <td>Beschreibung</td>

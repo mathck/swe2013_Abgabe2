@@ -1,10 +1,13 @@
 package ydio.web;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.SingleThreadModel;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import ydio.UserManagement;
 import ydio.dao.DAO;
+import ydio.user.AbstractUser;
 
 /**
  * 
@@ -24,6 +28,7 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 	private static final long serialVersionUID = 1L;
 	
 	UserManagement um = new UserManagement();
+	AbstractUser user;
 
 	private RequestDispatcher JSPRegister = null;
 	private RequestDispatcher JSPUserpage = null;
@@ -48,7 +53,11 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException
 	{
-			doRequest(request, response);
+			try {
+				doRequest(request, response);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	/**
@@ -64,7 +73,12 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 	{
 		
 		
-		doRequest(request, response);
+		try {
+			doRequest(request, response);
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		}
 
 	}
 
@@ -74,22 +88,25 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 	 *
 	 * @param request Http Servlet Request
 	 * @param response Http Servlet Response
+	 * @throws ParseException 
 	 * 
 	 */
-	private void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	private void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException
 	{
 
 		HttpSession session = request.getSession(false);
 		
 		String gewuenschteSeite = request.getParameter("gewuenschteSeite");
 			
-		if (session == null)
+		if (um.getSession() == null || session == null)
 		{
 			session = request.getSession(true);
-			session.setAttribute("name", "Testuser");
-			session.setAttribute("status", "Session erstellt");
+			session.setAttribute("username", "guest");
+			session.setAttribute("status", "no login");
 			
 		}
+		
+		
 		
 		if( gewuenschteSeite == null){
 			Register.aufrufRegister(request, response, session,  JSPRegister);
@@ -111,12 +128,20 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 							Login.aufrufLogin(request, response, session, JSPLogin);
 						}
 						else{
+							session.setAttribute("username", um.getSession().getUsername());
+							session.setAttribute("fullname", um.getSession().getFullName());
+							session.setAttribute("email", um.getSession().getEMail());
+							session.setAttribute("date", um.getSession().getBirthday());
+							
 							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 						}
 						break;
 					case "completeRegistration":
-						um.registerYdiot(request.getParameter("username"), request.getParameter("password"), "fullName", "eMail", 'm', new Date(63, 0, 16), "description");
-						Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+						String requestDate = request.getParameter("date");
+						Date date = new SimpleDateFormat("yyyy-MM-dd").parse(requestDate);
+						um.registerYdiot(request.getParameter("username"), request.getParameter("password"),request.getParameter("fullName"),
+										request.getParameter("email"), request.getParameter("sex").charAt(0), date, request.getParameter("desc"));
+						Login.aufrufLogin(request, response, session, JSPLogin);
 						break;
 			}
 		}

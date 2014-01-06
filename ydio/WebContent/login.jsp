@@ -1,7 +1,7 @@
 
 
     
-
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
@@ -18,7 +18,7 @@
 <table><tr>
 <td><a href="Uicontroller?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
 <td><input type="search" size="50" name="search"></td>
-<td><a href="Uicontroller?gewuenschteSeite=userpage"><%= request.getParameter("username") %></a></td>
+<td><a href="Uicontroller?gewuenschteSeite=userpage"><%= session.getAttribute("username") %></a></td>
 </tr></table>
 </div>
 <!-- HEADER OVER -->

@@ -18,7 +18,7 @@
 <table><tr>
 <td><a href="Uicontroller?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
 <td><input type="search" size="50" name="search"></td>
-<td><a href="Uicontroller?gewuenschteSeite=userpage"><%= request.getParameter("username") %></a></td>
+<td><a href="Uicontroller?gewuenschteSeite=userpage"><%= session.getAttribute("username") %></a></td>
 </tr></table>
 </div>
 <!-- HEADER OVER -->
@@ -47,6 +47,10 @@
 	<tr>
 	<td>E-Mail</td>
 	<td><input type="email" name="email"></td>
+	</tr>
+	<tr>
+	<input type="radio" name="sex" value="m"/>Männlich
+	<input type="radio" name="sex" value="f"/>Weiblich
 	</tr>
 	<tr>
 	<td>Geburtstag</td>
