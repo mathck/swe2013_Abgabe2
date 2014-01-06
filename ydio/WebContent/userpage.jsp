@@ -17,6 +17,7 @@
 <td><input type="search" size="50" name="search"></td>
 <% if(session.getAttribute("status") !=null && session.getAttribute("status").equals("logged in")){ %>
 <td><a href="Uicontroller?gewuenschteSeite=userpage"><%= session.getAttribute("username") %></a></td>
+<td><a href="Uicontroller?gewuenschteSeite=logout">Logout</a></td>
 </tr>
 <% } %></table>
 </div>
@@ -26,6 +27,9 @@
 
 <!-- CONTENT START -->
 <div id="content">
+<% if(session.getAttribute("error") !=null){ %>
+<h2><%= session.getAttribute("error") %></h2>
+<% } %>
 <h1><%= session.getAttribute("username") %></h1>
 <table>
 <tr>
