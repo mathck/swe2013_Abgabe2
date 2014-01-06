@@ -234,7 +234,8 @@ public class SQL implements DAO {
 			result = statement.executeQuery("select * from ydiot where username='"+username+"'");
 			if (result == null) throw new IOException ("Result missing");
 			if (result.next()) {
-				user = createYdiot(result);
+				throw new IOException ("I get here!");
+				// user = createYdiot(result);
 			}
 			result = statement.executeQuery("select * from administrator where username='"+username+"'");
 			if (result.next()) {
