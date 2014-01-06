@@ -30,6 +30,7 @@
 
 <!-- CONTENT START -->
 <div id="content">
+<div id="content_wrapper">
 <% if(session.getAttribute("error") !=null){ %>
 <h2><%= session.getAttribute("error") %></h2>
 <%	session.setAttribute("error",null); 
@@ -47,13 +48,18 @@
 	<td><input type="password" name="password"></td>
 	</tr>
 	<tr>
-	 <td><a href="Uicontroller?gewuenschteSeite=register">Registriere dich jetzt</a></td>
+	 <td></td>
 	 <input type="hidden" name="gewuenschteSeite" value="verifylogin">
-	  <td><input type="submit" value="Login"/><br></td>
+	  <td><input type="submit" value="Login"><br></td>
+	 </tr>
+	 <tr><td><br /></td></tr>
+	 <tr>
+	 <td><a href="http://sahws2013.cs.univie.ac.at:8080/ydio/Uicontroller?gewuenschteSeite=register">Registriere dich jetzt</a></td>
 	 </tr>
 	 
 	</table>
 </form>
+</div>
 </div>
 <!-- CONTENT OVER -->
 
@@ -61,8 +67,10 @@
 
 <!-- FOOTER START -->
 <div id="footer">
-<a href="https://github.com/mathck/swe2013_Abgabe2">Github link</a> | 
-SWE Abgabe 2, 2013
+	<div id="footer_wrapper">
+		<a href="https://github.com/mathck/swe2013_Abgabe2">Github link</a> | 
+		SWE Abgabe 2, 2013
+	</div>
 </div>
 <!-- FOOTER OVER -->
 

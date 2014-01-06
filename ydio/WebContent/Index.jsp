@@ -27,6 +27,7 @@
 
 <!-- CONTENT START -->
 <div id="content">
+<div id="content_wrapper">
 <h1>Willkommen auf ydio!</h1>
 <h2>Melde dich jetzt noch an und gib uns deine Daten.</h2>
 <form action="Uicontroller" method="post">
@@ -62,17 +63,17 @@
 	</table>
 </form>
 </div>
+</div>
 <!-- CONTENT OVER -->
-
-
 
 <!-- FOOTER START -->
 <div id="footer">
-<a href="https://github.com/mathck/swe2013_Abgabe2">Github link</a> | 
-SWE Abgabe 2, 2013
+	<div id="footer_wrapper">
+		<a href="https://github.com/mathck/swe2013_Abgabe2">Github link</a> | 
+		SWE Abgabe 2, 2013
+	</div>
 </div>
 <!-- FOOTER OVER -->
-
 
 </body>
 </html>

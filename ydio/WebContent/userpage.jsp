@@ -12,12 +12,12 @@
 
 <!-- HEADER START -->
 <div id="header">
-<table><tr>
-<td><a href="Uicontroller?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
+<table style="width:100%"><tr>
+<td width="10px"><a href="Uicontroller?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
 <td><input type="search" size="50" name="search"></td>
 <% if(session.getAttribute("status") !=null && session.getAttribute("status").equals("logged in")){ %>
-<td><a href="Uicontroller?gewuenschteSeite=userpage"><%= session.getAttribute("username") %></a></td>
-<td><a href="Uicontroller?gewuenschteSeite=logout">Logout</a></td>
+<td align="center"><a href="Uicontroller?gewuenschteSeite=userpage"><%= session.getAttribute("username") %></a></td>
+<td align="center"><a href="Uicontroller?gewuenschteSeite=logout">Logout</a></td>
 </tr>
 <%	session.setAttribute("error",null); 
 } %>
@@ -29,6 +29,7 @@
 
 <!-- CONTENT START -->
 <div id="content">
+<div id="content_wrapper">
 <% if(session.getAttribute("error") !=null){ %>
 <h2><%= session.getAttribute("error") %></h2>
 <% } %>
@@ -64,14 +65,17 @@
 <%} %>
 
 </div>
+</div>
 <!-- CONTENT OVER -->
 
 
 
 <!-- FOOTER START -->
 <div id="footer">
-<a href="https://github.com/mathck/swe2013_Abgabe2">Github link</a> | 
-SWE Abgabe 2, 2013
+	<div id="footer_wrapper">
+		<a href="https://github.com/mathck/swe2013_Abgabe2">Github link</a> | 
+		SWE Abgabe 2, 2013
+	</div>
 </div>
 <!-- FOOTER OVER -->
 

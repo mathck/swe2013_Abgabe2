@@ -30,6 +30,7 @@
 
 <!-- CONTENT START -->
 <div id="content">
+<div id="content_wrapper">
 <% if(session.getAttribute("error") !=null){ %>
 <h2><%= session.getAttribute("error") %></h2>
 <%	session.setAttribute("error",null); 
@@ -73,14 +74,17 @@
 	</table>
 </form>
 </div>
+</div>
 <!-- CONTENT OVER -->
 
 
 
 <!-- FOOTER START -->
 <div id="footer">
-<a href="https://github.com/mathck/swe2013_Abgabe2">Github link</a> | 
-SWE Abgabe 2, 2013
+	<div id="footer_wrapper">
+		<a href="https://github.com/mathck/swe2013_Abgabe2">Github link</a> | 
+		SWE Abgabe 2, 2013
+	</div>
 </div>
 <!-- FOOTER OVER -->
 
