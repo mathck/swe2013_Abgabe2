@@ -517,7 +517,7 @@ public class SQL implements DAO {
 				result.getString("sex").charAt(0), 
 				new Date(result.getDate("birthday").getTime()), 
 				result.getString("description"),
-				null);
+				new ArrayList <String> ());
 			/* if (result.getDate("lockeduntil") != null) 
 				user.setLocked(new Date(result.getDate("lockeduntil").getTime()));
 			friendStatement = connection.createStatement();
@@ -528,6 +528,7 @@ public class SQL implements DAO {
 			}
 			user.setFriendList(friendList);
 			*/
+			return user;
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} catch (YdioException e) {
@@ -540,8 +541,7 @@ public class SQL implements DAO {
 				if (friendStatement != null) friendStatement.close();
 			} catch (SQLException e) {}	
 		}
-		
-		return user;
+		return null;
 	}
 	private Administrator createAdministrator (ResultSet result) throws SQLException {
 		Administrator user = null;
