@@ -105,6 +105,7 @@ public class SQL implements DAO {
 		try {
 			connection = source.getConnection();
 			statement = connection.createStatement();
+			if (getUserByUsername(user.getUsername()) != null) return;	 
 			String columns = "username, email, fullname, password, sex, birthday";
 			String values = "'"+
 				user.getUsername()+"', '"+
@@ -517,7 +518,7 @@ public class SQL implements DAO {
 				new Date(result.getDate("birthday").getTime()), 
 				result.getString("description"),
 				new ArrayList <String> ());
-			/* if (result.getDate("lockeduntil") != null) 
+			if (result.getDate("lockeduntil") != null) 
 				user.setLocked(new Date(result.getDate("lockeduntil").getTime()));
 			friendStatement = connection.createStatement();
 			friendResult = friendStatement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"'");
@@ -526,7 +527,6 @@ public class SQL implements DAO {
 				friendList.add(friendResult.getString("user2"));
 			}
 			user.setFriendList(friendList);
-			*/
 			return user;
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
@@ -540,7 +540,7 @@ public class SQL implements DAO {
 				if (friendStatement != null) friendStatement.close();
 			} catch (SQLException e) {}	
 		}
-		return null;
+		return user;
 	}
 	private Administrator createAdministrator (ResultSet result) throws SQLException {
 		Administrator user = null;
