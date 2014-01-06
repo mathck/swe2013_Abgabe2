@@ -506,6 +506,8 @@ public class SQL implements DAO {
 	
 	private Ydiot createYdiot (ResultSet result) throws IOException {
 		Ydiot user = null;
+		Statement friendStatement = null;
+		ResultSet friendResult = null;
 		try {
 			user = new Ydiot (
 				result.getString("username"), 
@@ -518,10 +520,11 @@ public class SQL implements DAO {
 				null);
 			if (result.getDate("lockeduntil") != null) 
 				user.setLocked(new Date(result.getDate("lockeduntil").getTime()));
-			result = statement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"'");
+			friendStatement = connection.createStatement();
+			friendResult = friendStatement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"'");
 			List<String> friendList = new ArrayList<String> ();
-			while (result.next()) {
-				friendList.add(result.getString("user2"));
+			while (friendResult.next()) {
+				friendList.add(friendResult.getString("user2"));
 			}
 			user.setFriendList(friendList);
 			
@@ -532,7 +535,9 @@ public class SQL implements DAO {
 		} finally {
 			try {
 				if (result != null) result.close();
+				if (friendResult != null) friendResult.close();
 				if (statement != null) statement.close();
+				if (friendStatement != null) friendStatement.close();
 			} catch (SQLException e) {}	
 		}
 		
