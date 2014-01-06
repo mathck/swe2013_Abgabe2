@@ -227,6 +227,33 @@ public class UserManagement {
 			}
 	//}
 	}
+	
+	/**
+	 * this method is very bad, it goes through all Beitraege and return a List of all created by username
+	 * deeper changes are needed to improve performance
+	 * @param username
+	 * @return list of all Beitraege created username
+	 */
+	public List<Beitrag> getBeitragListByUsername(String username) {
+		try {
+			List<Beitrag> list = dao.getBeitragList();
+			List<Beitrag> newList = new ArrayList<Beitrag>();
+
+			for(int i = 0; i < list.size(); i++) {
+				if(list.get(i).getCreator().equals(username)) {
+					newList.add(list.get(i));
+				}
+			}
+			
+			return newList;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 	/**
 	 * remove Beitrag
