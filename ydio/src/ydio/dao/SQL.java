@@ -520,13 +520,13 @@ public class SQL implements DAO {
 				new ArrayList <String> ());
 			if (result.getDate("lockeduntil") != null) 
 				user.setLocked(new Date(result.getDate("lockeduntil").getTime()));
-			/* friendStatement = connection.createStatement();
+			friendStatement = connection.createStatement();
 			friendResult = friendStatement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"'");
 			List<String> friendList = new ArrayList<String> ();
 			while (friendResult.next()) {
 				friendList.add(friendResult.getString("user2"));
 			}
-			user.setFriendList(friendList); */
+			user.setFriendList(friendList);
 			return user;
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
