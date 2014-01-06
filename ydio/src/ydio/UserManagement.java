@@ -254,6 +254,14 @@ public class UserManagement {
 		
 		return null;
 	}
+	
+	/**
+	 * get all beitraege of current session
+	 * @return
+	 */
+	public List<Beitrag> getSessionBeitragList() {
+		return getBeitragListByUsername(session.getUsername());
+	}
 
 	/**
 	 * remove Beitrag
