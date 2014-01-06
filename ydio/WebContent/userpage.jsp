@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>ydio - TODO username</title>
+<title>ydio - <%= session.getAttribute("username") %></title>
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -24,7 +24,7 @@
 
 <!-- CONTENT START -->
 <div id="content">
-<h1>TODO username</h1>
+<h1><%= session.getAttribute("username") %></h1>
 <table>
 <tr>
 <td width="200px">Username</td>
@@ -42,19 +42,18 @@
 <td>Geburtstag</td>
 <td><%= session.getAttribute("date") %></td>
 </tr>
-<tr>
-<td>Beschreibung</td>
-<td><%= request.getParameter("desc") %></td>
-</tr>
+<% if (request.getParameter("desc") != null) {
+        out.println("<tr><td>Beschreibung</td><td>" + request.getParameter("desc") + "</td></tr>");
+    }
+%>
 </table>
 
-<div class="beitrag">
-TODO insert all beitrags like this
-</div>
-
-<div class="beitrag">
-TODO insert all beitrags like this
-</div>
+<% int number=3;
+	for(int i=1;i<=number;i++)
+	{
+%>
+<div class="beitrag">TODO insert all beitrags like this</div>
+<%} %>
 
 </div>
 <!-- CONTENT OVER -->
