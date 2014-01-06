@@ -518,7 +518,7 @@ public class SQL implements DAO {
 				new Date(result.getDate("birthday").getTime()), 
 				result.getString("description"),
 				null);
-			if (result.getDate("lockeduntil") != null) 
+			/* if (result.getDate("lockeduntil") != null) 
 				user.setLocked(new Date(result.getDate("lockeduntil").getTime()));
 			friendStatement = connection.createStatement();
 			friendResult = friendStatement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"'");
@@ -527,7 +527,7 @@ public class SQL implements DAO {
 				friendList.add(friendResult.getString("user2"));
 			}
 			user.setFriendList(friendList);
-			
+			*/
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} catch (YdioException e) {
