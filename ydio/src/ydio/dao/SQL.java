@@ -534,9 +534,7 @@ public class SQL implements DAO {
 			// wrong input was saved in database, impossible
 		} finally {
 			try {
-				if (result != null) result.close();
 				if (friendResult != null) friendResult.close();
-				if (statement != null) statement.close();
 				if (friendStatement != null) friendStatement.close();
 			} catch (SQLException e) {}	
 		}
@@ -589,12 +587,14 @@ public class SQL implements DAO {
 	}
 	private Beitrag createBeitrag (ResultSet result) throws IOException {
 		ResultSet tempResult = null;
+		Statement tempStatement = null;
 		try {
 			List<String> likeList = new ArrayList<String> ();
 			List<String> dislikeList = new ArrayList<String> ();
 			List<String> reportList = new ArrayList<String> ();
 			List<String> readList = new ArrayList<String> ();
-			tempResult = statement.executeQuery("select * from stats where id="+result.getLong("id"));
+			tempStatement = connection.createStatement();
+			tempResult = tempStatement.executeQuery("select * from stats where id="+result.getLong("id"));
 			while (tempResult.next()) {
 				switch (tempResult.getString("type")) {
 				case "like":
@@ -629,6 +629,7 @@ public class SQL implements DAO {
 		} finally {
 			try {
 				if (tempResult != null) tempResult.close();
+				if (tempStatement != null) tempStatement.close();
 			} catch (SQLException e) {}
 		}
 		
