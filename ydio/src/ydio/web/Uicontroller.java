@@ -144,6 +144,17 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 										request.getParameter("email"), request.getParameter("sex").charAt(0), date, request.getParameter("desc"));
 						Login.aufrufLogin(request, response, session, JSPLogin);
 						break;
+					
+					case "logout":
+						if(session.getAttribute("status").equals("logged in")){
+							um.logout();
+							session.setAttribute("status", "no login");
+							Login.aufrufLogin(request, response, session, JSPLogin);
+							break;
+						}
+						session.setAttribute("error", "not logged in");
+						Login.aufrufLogin(request, response, session, JSPLogin);
+						break;
 			}
 		}
 		

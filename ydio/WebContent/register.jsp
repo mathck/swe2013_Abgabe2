@@ -20,6 +20,7 @@
 <td><input type="search" size="50" name="search"></td>
 <% if(session.getAttribute("status") !=null && session.getAttribute("status").equals("logged in")){ %>
 <td><a href="Uicontroller?gewuenschteSeite=userpage"><%= session.getAttribute("username") %></a></td>
+<td><a href="Uicontroller?gewuenschteSeite=logout">Logout</a></td>
 </tr>
 <% } %></table>
 </div>
@@ -29,6 +30,9 @@
 
 <!-- CONTENT START -->
 <div id="content">
+<% if(session.getAttribute("error") !=null){ %>
+<h2><%= session.getAttribute("error") %></h2>
+<% } %>
 <h1>Willkommen auf ydio!</h1>
 <h2>Melde dich jetzt noch an und gib uns deine Daten.</h2>
 <form action="Uicontroller" method="post">
