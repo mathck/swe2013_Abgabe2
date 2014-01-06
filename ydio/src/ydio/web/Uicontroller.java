@@ -98,7 +98,7 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 		
 		String gewuenschteSeite = request.getParameter("gewuenschteSeite");
 			
-		if (um.getSession() == null || session == null)
+		if (session == null)
 		{
 			session = request.getSession(true);
 			session.setAttribute("username", "guest");
@@ -132,6 +132,7 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 							session.setAttribute("fullname", um.getSession().getFullName());
 							session.setAttribute("email", um.getSession().getEMail());
 							session.setAttribute("date", um.getSession().getBirthday());
+							session.setAttribute("status", "logged in");
 							
 							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 						}
