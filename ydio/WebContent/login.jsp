@@ -32,7 +32,8 @@
 <div id="content">
 <% if(session.getAttribute("error") !=null){ %>
 <h2><%= session.getAttribute("error") %></h2>
-<% } %>
+<%	session.setAttribute("error",null); 
+} %>
 <h1>Log dich jetzt ein!</h1>
 <form action="Uicontroller" method="post">
 	<table>

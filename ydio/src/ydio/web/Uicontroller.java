@@ -125,6 +125,7 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 						um.login(request.getParameter("password"),request.getParameter("username"));
 						
 						if(um.getSession() == null){
+							session.setAttribute("error", "Benutzername und Password stimmen nicht überein");
 							Login.aufrufLogin(request, response, session, JSPLogin);
 						}
 						else{

@@ -32,7 +32,8 @@
 <div id="content">
 <% if(session.getAttribute("error") !=null){ %>
 <h2><%= session.getAttribute("error") %></h2>
-<% } %>
+<%	session.setAttribute("error",null); 
+} %>
 <h1>Willkommen auf ydio!</h1>
 <h2>Melde dich jetzt noch an und gib uns deine Daten.</h2>
 <form action="Uicontroller" method="post">

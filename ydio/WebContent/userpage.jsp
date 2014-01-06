@@ -19,7 +19,9 @@
 <td><a href="Uicontroller?gewuenschteSeite=userpage"><%= session.getAttribute("username") %></a></td>
 <td><a href="Uicontroller?gewuenschteSeite=logout">Logout</a></td>
 </tr>
-<% } %></table>
+<%	session.setAttribute("error",null); 
+} %>
+</table>
 </div>
 <!-- HEADER OVER -->
 
