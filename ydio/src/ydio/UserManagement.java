@@ -141,6 +141,10 @@ public class UserManagement {
 	public void logout() {
 		this.session = null;
 	}
+	
+	public boolean isSessionActive() {
+		return this.session != null;
+	}
 
 	/**
 	 * create new admin
