@@ -134,6 +134,7 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 							session.setAttribute("email", um.getSession().getEMail());
 							session.setAttribute("date", um.getSession().getBirthday());
 							session.setAttribute("status", "logged in");
+							// session.setAttribute("um", um);
 							
 							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 						}
