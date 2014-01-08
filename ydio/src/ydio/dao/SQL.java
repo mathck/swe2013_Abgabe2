@@ -70,13 +70,15 @@ public class SQL implements DAO {
 	 * @param beitrag Das zu speichernde Objekt für die MySQL Datenbank.
 	 */
 	public void addBeitrag(Beitrag beitrag) throws IOException {
+		Statement addStatement = null;
 		try {
 			connection = source.getConnection();
 			statement = connection.createStatement();
+			addStatement = connection.createStatement();
 			result = statement.executeQuery("select id from id where type='beitrag'");
 			long id = result.getLong(0);
 			beitrag.setID(id);
-			result = statement.executeQuery("update id set id="+(id+1)+" where type='beitrag'");
+			result = statement.executeQuery("update id set id='"+(id+1)+"' where type='beitrag'");
 			String statementString = 
 				"insert into beitrag (creator, content, creation_date, ID, recipient) values ('" +
 				beitrag.getCreator() + "', '" +
@@ -84,13 +86,14 @@ public class SQL implements DAO {
 				new java.sql.Date(beitrag.getDate().getTime()) + "', '" +
 				beitrag.getID() + "', '" +
 				beitrag.getRecep() + "');";				;
-			result = statement.executeQuery(statementString);
+			addStatement.executeQuery(statementString);
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} finally {
 			try {
 				if (result != null) result.close();
 				if (statement != null) statement.close();
+				if (addStatement != null) addStatement.close();
 				if (connection != null) connection.close();
 			} catch (SQLException e) {}			
 		}
