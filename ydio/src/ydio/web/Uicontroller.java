@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ydio.Beitrag;
 import ydio.UserManagement;
 import ydio.dao.DAO;
 import ydio.user.AbstractUser;
@@ -101,10 +102,9 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 		if (session == null)
 		{
 			session = request.getSession(true);
-			session.setAttribute("username", "guest");
 			session.setAttribute("status", "no login");
-			
 		}
+		
 		
 		
 		
@@ -116,7 +116,11 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 						Register.aufrufRegister(request, response, session,  JSPRegister);
 						break;
 					case "userpage":
-						Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+						if(session.getAttribute("status") == "logged in"){
+							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+							break;
+						}
+						Login.aufrufLogin(request, response, session, JSPLogin);
 						break;
 					case "login":
 						Login.aufrufLogin(request, response, session, JSPLogin);
@@ -125,17 +129,12 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 						um.login(request.getParameter("password"),request.getParameter("username"));
 						
 						if(um.getSession() == null){
-							session.setAttribute("error", "Benutzername und Password stimmen nicht überein");
+							request.setAttribute("error", "Benutzername und Password stimmen nicht überein");
 							Login.aufrufLogin(request, response, session, JSPLogin);
 						}
 						else{
-							session.setAttribute("username", um.getSession().getUsername());
-							session.setAttribute("fullname", um.getSession().getFullName());
-							session.setAttribute("email", um.getSession().getEMail());
-							session.setAttribute("date", um.getSession().getBirthday());
+							session.setAttribute("um", um);
 							session.setAttribute("status", "logged in");
-							// session.setAttribute("um", um);
-							
 							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 						}
 						break;
@@ -148,14 +147,22 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 						break;
 					
 					case "logout":
-						if(session.getAttribute("status").equals("logged in")){
-							um.logout();
-							session.setAttribute("status", "no login");
-							Login.aufrufLogin(request, response, session, JSPLogin);
+						session.setAttribute("um", null);
+						session.setAttribute("status", "no login");
+						Login.aufrufLogin(request, response, session, JSPLogin);
+						break;
+					case "addBeitrag":
+						if(session.getAttribute("status") == "logged in"){
+							String temp = (String) request.getAttribute("content");
+							um = (UserManagement) session.getAttribute("um");
+							Beitrag bt = new Beitrag(um.getSession().getUsername(), um.getSession().getUsername());
+							bt.setContent(temp);
+							um.addBeitrag(bt);
+							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 							break;
 						}
-						session.setAttribute("error", "not logged in");
-						Login.aufrufLogin(request, response, session, JSPLogin);
+						request.setAttribute("error", "No Login");
+						Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 						break;
 			}
 		}
