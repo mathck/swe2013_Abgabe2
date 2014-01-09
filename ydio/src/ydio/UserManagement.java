@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ydio.dao.*;
@@ -19,13 +22,19 @@ public class UserManagement {
 
 	private AbstractUser session;
 	private DAO dao;
+	private Handler handler;
+	private Logger log;
+	private static long count = 0;
+	
 
 	public UserManagement() {
 		try {
 			dao = new SQL();
+			handler = new FileHandler ("ydio_log"+(count++)+".txt");
+			log.addHandler(handler);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.info(e.getMessage());
 		}
 	}
 
@@ -36,11 +45,11 @@ public class UserManagement {
 	 * @param beitrag
 	 */
 	public void addBeitrag(Beitrag beitrag) {
-		if(session instanceof Ydiot){
+		if(/*session instanceof Ydiot*/ true){
 			try {
 				dao.addBeitrag(beitrag);
 			} catch (IOException e) {
-				e.printStackTrace();
+				log.info(e.getMessage());
 			}
 		}
 	}
@@ -130,7 +139,7 @@ public class UserManagement {
 			this.session = dao.getUserByUsername(username);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.info(e.getMessage());
 		}
 		
 		if(!session.getPassword().equals(password))
@@ -253,7 +262,7 @@ public class UserManagement {
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.info(e.getMessage());
 		}
 		
 		return null;
@@ -279,7 +288,7 @@ public class UserManagement {
 				dao.removeBeitrag(beitrag);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.info(e.getMessage());
 			}
 		}
 	}
@@ -296,7 +305,7 @@ public class UserManagement {
 				dao.removeUser(user);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.info(e.getMessage());
 			}
 		}
 	}
