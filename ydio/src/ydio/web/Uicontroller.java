@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import ydio.Beitrag;
 import ydio.UserManagement;
-import ydio.dao.DAO;
+import ydio.dao.DatabaseAccess;
 import ydio.user.AbstractUser;
 
 /**

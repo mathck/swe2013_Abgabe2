@@ -18,11 +18,11 @@ import ydio.dao.*;
 public class UserManagement {
 
 	private AbstractUser session;
-	private DAO dao;
+	private DatabaseAccess dao;
 
 	public UserManagement() {
 		try {
-			dao = new SQL();
+			dao = new MySQL();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
