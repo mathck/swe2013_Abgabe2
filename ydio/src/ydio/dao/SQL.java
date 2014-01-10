@@ -11,12 +11,6 @@ import javax.naming.NamingException;
 import org.apache.tomcat.jdbc.pool.DataSource;
 
 import ydio.*;
-import ydio.exceptions.InvalidDateInputException;
-import ydio.exceptions.InvalidEmailInputException;
-import ydio.exceptions.InvalidNameInputException;
-import ydio.exceptions.InvalidPasswordInputException;
-import ydio.exceptions.InvalidSexInputException;
-import ydio.exceptions.InvalidUsernameInputException;
 import ydio.exceptions.YdioException;
 import ydio.user.*;
 
@@ -28,9 +22,6 @@ import ydio.user.*;
  * @created 04-Dez-2013 20:51:12
  */
 public class SQL implements DAO {
-	private static final String password = "whatever";
-	private static final String path = "mysql://localhost:3306/ydio";
-	private static final String username = "ydio_java";
 	
 	private DataSource source;
 	private Connection connection;
@@ -38,23 +29,11 @@ public class SQL implements DAO {
 	private ResultSet result;
 	
 	/**
-	 * Creation of SQL Element.
-	 * This is the object that the application will work with.
+	 * Erstellt eine Instanz von SQL und lädt die Resource für den MySQL Zugriff für die späteren Queries.
+	 * Getestet und funktioniert.
 	 * @throws SQLException
 	 */
 	public SQL() throws IOException {
-		/**try {
-			Class.forName("com.mysql.jdbc.Driver");
-			String url 
-				= "jdbc:" + path;
-			connection = DriverManager.getConnection(url, username, password);
-			statement = null;
-			result = null;
-		} catch (SQLException e) {
-			throw new IOException (e.getMessage());
-		} catch (ClassNotFoundException e) {
-			throw new IOException (e.getMessage());
-		}*/
 		try {
 			InitialContext context = new InitialContext();
 			source = (DataSource)context.lookup("java:comp/env/jdbc/ydio");
@@ -67,6 +46,7 @@ public class SQL implements DAO {
 
 	/**
 	 * Speichert eine ReprÃ¤sentation des Beitrag Objektes in der MySQL Datenbank.
+	 * Getestet und funktioniert.
 	 * @param beitrag Das zu speichernde Objekt fÃ¼r die MySQL Datenbank.
 	 */
 	public void addBeitrag(Beitrag beitrag) throws IOException {
@@ -75,9 +55,11 @@ public class SQL implements DAO {
 			connection = source.getConnection();
 			statement = connection.createStatement();
 			result = statement.executeQuery("select id from id where type='beitrag'");
-			long id = Long.getLong(result.getString("id"));
+			
+			if (!result.next()) throw new IOException ("No ID specified in database.");
+			long id = result.getLong("id");
 			beitrag.setID(id);
-			result = statement.executeQuery("update id set id='"+(id+1)+"' where type='beitrag'");
+			statement.executeUpdate("update id set id='"+(id+1)+"' where type='beitrag'");
 			addStatement = connection.prepareStatement(
 					"insert into beitrag (creator, recipient, content, creation_date, ID) "
 					+ "values (?, ?, ?, ?, ?)");
@@ -86,15 +68,7 @@ public class SQL implements DAO {
 			addStatement.setString(3, beitrag.getContent());
 			addStatement.setDate(4, new java.sql.Date (beitrag.getDate().getTime()));
 			addStatement.setInt(5, (int) beitrag.getID());
-			addStatement.execute();
-			/*String statementString = 
-				"insert into beitrag (creator, content, creation_date, ID, recipient) values ('" +
-				beitrag.getCreator() + "', '" +
-				beitrag.getContent() + "', '" +
-				new java.sql.Date(beitrag.getDate().getTime()) + "', '" +
-				beitrag.getID() + "', '" +
-				beitrag.getRecep() + "');";				;
-			addStatement.executeQuery(statementString);*/
+			addStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} finally {
@@ -116,7 +90,7 @@ public class SQL implements DAO {
 		try {
 			connection = source.getConnection();
 			statement = connection.createStatement();
-			if (getUserByUsername(user.getUsername()) != null) return;	 
+			if (getUserByUsername(user.getUsername()) != null) return;
 			String columns = "username, email, fullname, password, sex, birthday";
 			String values = "'"+
 				user.getUsername()+"', '"+
@@ -139,7 +113,7 @@ public class SQL implements DAO {
 			} else if (user instanceof Forscher) {
 				columns = "forscher ("+columns+")";
 			}
-			result = statement.executeQuery("insert into"+columns+" values ("+values+")");
+			statement.executeUpdate("insert into"+columns+" values ("+values+")");
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} finally {
@@ -408,7 +382,7 @@ public class SQL implements DAO {
 			temp.addAll(beitrag.getLikes());
 			temp.removeAll(compare);
 			for (int i = 0; i < temp.size(); i++) {
-				statement.executeQuery("insert into stats (id, username, type) values ("+
+				statement.executeUpdate("insert into stats (id, username, type) values ("+
 					beitrag.getID()+", '"+
 					temp.get(i)+"', 'like')");
 			}
@@ -416,7 +390,7 @@ public class SQL implements DAO {
 			temp.addAll(beitrag.getDislikes());
 			temp.removeAll(compare);
 			for (int i = 0; i < temp.size(); i++) {
-				statement.executeQuery("insert into stats (id, username, type) values ("+
+				statement.executeUpdate("insert into stats (id, username, type) values ("+
 					beitrag.getID()+", '"+
 					temp.get(i)+"', 'dislike')");
 			}
@@ -424,7 +398,7 @@ public class SQL implements DAO {
 			temp.addAll(beitrag.getReportList());
 			temp.removeAll(compare);
 			for (int i = 0; i < temp.size(); i++) {
-				statement.executeQuery("insert into stats (id, username, type) values ("+
+				statement.executeUpdate("insert into stats (id, username, type) values ("+
 					beitrag.getID()+", '"+
 					temp.get(i)+"', 'report')");
 			}
@@ -432,7 +406,7 @@ public class SQL implements DAO {
 			temp.addAll(beitrag.getReadList());
 			temp.removeAll(compareRead);
 			for (int i = 0; i < temp.size(); i++) {
-				statement.executeQuery("insert into stats (id, username, type) values ("+
+				statement.executeUpdate("insert into stats (id, username, type) values ("+
 					beitrag.getID()+", '"+
 					temp.get(i)+"', 'read')");
 			}
@@ -484,7 +458,7 @@ public class SQL implements DAO {
 				if (temp.containsAll(oldList)) {
 					temp.removeAll(oldList);
 					for (int i = 0; i < temp.size(); i++) {
-						statement.executeQuery("insert into friendlist (user1, user2) values ('"
+						statement.executeUpdate("insert into friendlist (user1, user2) values ('"
 							+ user.getUsername()+"', '"
 							+ temp.get(i)+"')");
 					}
