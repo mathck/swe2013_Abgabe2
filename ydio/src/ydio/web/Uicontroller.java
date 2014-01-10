@@ -152,7 +152,7 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 						break;
 					case "addBeitrag":
 						if(session.getAttribute("status").equals("logged in")){
-							String temp = (String) request.getAttribute("content");
+							String temp = (String) request.getParameter("content");
 							um = (UserManagement) session.getAttribute("um");
 							Beitrag bt = new Beitrag(um.getSession().getUsername(), um.getSession().getUsername());
 							bt.setContent(temp);
