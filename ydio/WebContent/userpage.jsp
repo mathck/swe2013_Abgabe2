@@ -71,7 +71,6 @@
 </table>
 
 <% number = list.size(); %>
-<%= number %>
 <% for(int i = 0; i < number; i++){%>
 <div class="beitrag"><%= list.get(i).getContent() %></div>
 <%} %>
