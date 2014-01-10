@@ -7,7 +7,8 @@
 <%! UserManagement um;%>
 <%! boolean login = false; %>
 <%! List<Beitrag> list; %>
-<% if(session.getAttribute("um") != null) { %>
+<%! int number = 0; %>
+<% if(session.getAttribute("status") !=null &&  session.getAttribute("status").equals("logged in")){ %>
 <% um = (UserManagement)session.getAttribute("um");%>
 <% if(um.isSessionActive()){ %>
 <% login = true; %>
@@ -69,11 +70,10 @@
 %>
 </table>
 
-<% int number= list.size();
-	for(int i=0;i<number;i++)
-	{
-%>
-<div class="beitrag"><%= list.get(number).getContent() %></div>
+<% number = list.size(); %>
+<%= number %>
+<% for(int i = 0; i < number; i++){%>
+<div class="beitrag"><%= list.get(i).getContent() %></div>
 <%} %>
 
 <form action="Uicontroller" method="post">

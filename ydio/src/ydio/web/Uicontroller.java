@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.SingleThreadModel;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -116,7 +115,7 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 						Register.aufrufRegister(request, response, session,  JSPRegister);
 						break;
 					case "userpage":
-						if(session.getAttribute("status") == "logged in"){
+						if(session.getAttribute("status").equals("logged in")){
 							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 							break;
 						}
@@ -152,7 +151,7 @@ public class Uicontroller extends HttpServlet implements SingleThreadModel {
 						Login.aufrufLogin(request, response, session, JSPLogin);
 						break;
 					case "addBeitrag":
-						if(session.getAttribute("status") == "logged in"){
+						if(session.getAttribute("status").equals("logged in")){
 							String temp = (String) request.getAttribute("content");
 							um = (UserManagement) session.getAttribute("um");
 							Beitrag bt = new Beitrag(um.getSession().getUsername(), um.getSession().getUsername());

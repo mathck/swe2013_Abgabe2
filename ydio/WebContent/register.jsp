@@ -3,7 +3,7 @@
 <%@ page import="ydio.UserManagement" %>
 <%! UserManagement um;%>
 <%! boolean login = false; %>
-<% if(session.getAttribute("um") != null) { %>
+<% if(session.getAttribute("status") !=null &&  session.getAttribute("status").equals("logged in")){ %>
 <% um = (UserManagement)session.getAttribute("um");%>
 <% if(um.isSessionActive()){ %>
 <% login = true; %>
