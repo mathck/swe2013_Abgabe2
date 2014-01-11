@@ -67,6 +67,17 @@ public class UserManagement {
 	}
 	
 	/**
+	 * update Beitrag
+	 */
+	public void updateBeitrag(Beitrag beitrag) {
+		try {
+			dao.updateBeitrag(beitrag);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * get the user by his username (every type of user)
 	 * @param username
 	 * @return
