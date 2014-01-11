@@ -3,6 +3,7 @@ package ydio;
 import ydio.user.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -64,6 +65,19 @@ public class UserManagement {
 			}
 			
 		}
+	}
+	
+	/**
+	 * search
+	 */
+	public List<Ydiot> search(String searchstring) {
+		try {
+			return dao.search(searchstring);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -307,6 +321,17 @@ public class UserManagement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	/**
+	 * update User
+	 */
+	public void updateUser(AbstractUser user) {
+		try {
+			dao.updateUser(user);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
