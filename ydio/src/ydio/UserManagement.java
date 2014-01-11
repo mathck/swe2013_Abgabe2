@@ -65,6 +65,21 @@ public class UserManagement {
 			
 		}
 	}
+	
+	/**
+	 * get the user by his username (every type of user)
+	 * @param username
+	 * @return
+	 */
+	public AbstractUser getUserByUsername(String username) {
+		try {
+			return dao.getUserByUsername(username);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 	/**
 	 * IMPLEMENT THIS METHODE IN PROTOTYPE 2
