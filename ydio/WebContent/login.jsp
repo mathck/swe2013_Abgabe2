@@ -27,11 +27,11 @@
 <!-- HEADER START -->
 <div id="header">
 <table><tr>
-<td><a href="Uicontroller?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
+<td><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
 <td><input type="search" size="50" name="search"></td>
 <% if(login){ %>
-<td><a href="Uicontroller?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
-<td><a href="Uicontroller?gewuenschteSeite=logout">Logout</a></td>
+<td><a href="UIController?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
+<td><a href="UIController?gewuenschteSeite=logout">Logout</a></td>
 </tr>
 <% } %></table>
 </div>
@@ -46,7 +46,7 @@
 <h2><%= request.getAttribute("error") %></h2>
 <%} %>
 <h1>Log dich jetzt ein!</h1>
-<form action="Uicontroller" method="post">
+<form action="UIController" method="post">
 	<table>
 	<tr>
 	<td width="200px">Username</td>
@@ -64,7 +64,7 @@
 	 </tr>
 	 <tr><td><br /></td></tr>
 	 <tr>
-	 <td><a href="http://sahws2013.cs.univie.ac.at:8080/ydio/Uicontroller?gewuenschteSeite=register">Registriere dich jetzt</a></td>
+	 <td><a href="http://sahws2013.cs.univie.ac.at:8080/ydio/UIController?gewuenschteSeite=register">Registriere dich jetzt</a></td>
 	 </tr>
 	 
 	</table>

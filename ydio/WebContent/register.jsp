@@ -24,11 +24,11 @@
 <!-- HEADER START -->
 <div id="header">
 <table><tr>
-<td><a href="Uicontroller?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
+<td><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
 <td><input type="search" size="50" name="search"></td>
 <% if(login){ %>
-<td><a href="Uicontroller?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
-<td><a href="Uicontroller?gewuenschteSeite=logout">Logout</a></td>
+<td><a href="UIController?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
+<td><a href="UIController?gewuenschteSeite=logout">Logout</a></td>
 </tr>
 <% } %></table>
 </div>
@@ -44,7 +44,7 @@
 <%	} %>
 <h1>Willkommen auf ydio!</h1>
 <h2>Melde dich jetzt noch an und gib uns deine Daten.</h2>
-<form action="Uicontroller" method="post">
+<form action="UIController" method="post">
 	<table>
 	<tr>
 	<td width="200px">Username</td>

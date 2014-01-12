@@ -27,11 +27,11 @@
 <!-- HEADER START -->
 <div id="header">
 <table style="width:100%"><tr>
-<td width="10px"><a href="Uicontroller?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
+<td width="10px"><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
 <td><input type="search" size="50" name="search"></td>
 <% if(login){ %>
-<td align="center"><a href="Uicontroller?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
-<td align="center"><a href="Uicontroller?gewuenschteSeite=logout">Logout</a></td>
+<td align="center"><a href="UIController?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
+<td align="center"><a href="UIController?gewuenschteSeite=logout">Logout</a></td>
 <% } %>
 </tr>
 </table>
@@ -75,7 +75,7 @@
 <div class="beitrag"><%= list.get(i).getContent() %></div>
 <%} %>
 
-<form action="Uicontroller" method="post">
+<form action="UIController" method="post">
 	<table>
 	<tr>
 	<tr>
