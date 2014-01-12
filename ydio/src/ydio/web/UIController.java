@@ -20,7 +20,7 @@ import ydio.user.AbstractUser;
 /**
  * 
  */
-public class Uicontroller extends HttpServlet implements SingleThreadModel {
+public class UIController extends HttpServlet implements SingleThreadModel {
 	
 	/**
 	 * 
