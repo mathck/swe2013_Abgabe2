@@ -43,7 +43,7 @@ public interface DatabaseAccess {
 	 * @return List<Beitrag> Enthält alle Einträge in der Datenbank der Klasse Beitrag.
 	 * @throws IOException Bei Ausnahmefällen in der Datenbank wird eine Exception geworfen.
 	 */
-	public List<Beitrag> getBeitragList() throws IOException;
+	public List<Beitrag> getBeitragList(String username) throws IOException;
 
 	/**
 	 * Gibt eine Tabelle mit den gewünschten Forschungsdaten zurück.

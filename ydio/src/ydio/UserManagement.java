@@ -280,7 +280,7 @@ public class UserManagement {
 	 */
 	public List<Beitrag> getBeitragListByUsername(String username) {
 		try {
-			List<Beitrag> list = dao.getBeitragList();
+			List<Beitrag> list = dao.getBeitragList(username);
 			List<Beitrag> newList = new ArrayList<Beitrag>();
 
 			for(int i = 0; i < list.size(); i++) {
