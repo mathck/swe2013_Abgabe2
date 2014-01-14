@@ -246,7 +246,7 @@ public class MySQL implements DatabaseAccess {
 		PreparedStatement get = null;
 		try {
 			connection = source.getConnection();
-			get = connection.prepareStatement("select * from beitrag where username=?");
+			get = connection.prepareStatement("select * from beitrag where recipient=?");
 			get.setString(1, username);
 			result = get.executeQuery();
 			List<Beitrag> list = new ArrayList<Beitrag> ();
