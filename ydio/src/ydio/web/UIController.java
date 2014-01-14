@@ -140,7 +140,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 					case "completeRegistration":
 						String requestDate = request.getParameter("date");
 						Date date = new SimpleDateFormat("yyyy-MM-dd").parse(requestDate);
-						um.registerYdiot(request.getParameter("username"), request.getParameter("password"),request.getParameter("fullName"),
+						um.registerYdiot(request.getParameter("username"), request.getParameter("password"),request.getParameter("fullname"),
 										request.getParameter("email"), request.getParameter("sex").charAt(0), date, request.getParameter("desc"));
 						Login.aufrufLogin(request, response, session, JSPLogin);
 						break;
