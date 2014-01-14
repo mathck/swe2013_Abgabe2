@@ -267,7 +267,7 @@ public class UserManagement {
 			try {
 				dao.addUser(new Ydiot(username, password, fullName, eMail, sex, birthday, description, fL));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 	//}
 	}

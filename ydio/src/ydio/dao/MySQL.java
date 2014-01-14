@@ -131,9 +131,6 @@ public class MySQL implements DatabaseAccess {
 		PreparedStatement add = null;
 		try {
 			String sql = "insert into user (username, password, fullname, email, sex, birthday, type, description) values (?, ?, ?, ?, ?, ?, ?, ?)";
-			if (!(user instanceof Ydiot)) {
-				
-			}
 			connection = source.getConnection();
 			add = connection.prepareStatement(sql);
 			add.setString(1, user.getUsername());
