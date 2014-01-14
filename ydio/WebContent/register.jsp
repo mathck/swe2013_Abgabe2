@@ -67,8 +67,8 @@
 	<input type="radio" name="sex" value="f"/>Weiblich
 	</tr>
 	<tr>
-	<td>Geburtstag</td>
-	<td><input type="date" name="date"></td>
+	<td>Geburtstag(yyyy-MM-dd)</td>
+	<td><input type="text" name="date"></td>
 	</tr>
 	<tr>
 	<td>Deine Beschreibung</td>
