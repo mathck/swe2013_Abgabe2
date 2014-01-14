@@ -130,7 +130,7 @@ public class MySQL implements DatabaseAccess {
 		// Version, die table user verwendet
 		PreparedStatement add = null;
 		try {
-			String sql = "insert into user (username, password, fullname, email, sex, birthday, type, description) values (?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into user (username, password, fullname, email, sex, birthday, type, description, lockeduntil) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			connection = source.getConnection();
 			add = connection.prepareStatement(sql);
 			add.setString(1, user.getUsername());
@@ -139,11 +139,12 @@ public class MySQL implements DatabaseAccess {
 			add.setString(4, user.getEMail());
 			add.setString(5, ""+user.getSex());
 			add.setDate(6, new java.sql.Date(user.getBirthday().getTime()));
+			add.setDate(9, new java.sql.Date (0));
 			if (user instanceof Ydiot) {
 				add.setString(7, "ydiot");
 				add.setString(8, ((Ydiot) user).getDescription());
 			} else {
-				sql.replace(", ?)", ")");
+				add.setString(8, "");
 				if (user instanceof Administrator) {
 					add.setString(7, "administrator");
 				} else if (user instanceof Moderator) {
