@@ -88,46 +88,6 @@ public class MySQL implements DatabaseAccess {
 	 * @throws IOException Wirft eine Exception, wenn ein Fehler bei der SQL Abfrage vorkommt für Handling im auszuführenden Code.
 	 */
 	public void addUser(AbstractUser user) throws IOException {
-		// Originalversion
-		/* ResultSet result = null;
-		Statement statement = null;
-		try {
-			connection = source.getConnection();
-			statement = connection.createStatement();
-			if (getUserByUsername(user.getUsername()) != null) return;
-			String columns = "username, email, fullname, password, sex, birthday";
-			String values = "'"+
-				user.getUsername()+"', '"+
-				user.getEMail()+"', '"+
-				user.getFullName()+"', '"+
-				user.getPassword()+"', '"+
-				user.getSex()+"', '"+
-				new java.sql.Date (user.getBirthday().getTime())+"'"; 
-			if (user instanceof Ydiot) {
-				columns = 
-					"ydiot ("+columns+", description, lockeduntil)";
-				values = 
-					values+", '"+
-					((Ydiot) user).getDescription()+"', "+
-					"null";
-			} else if (user instanceof Administrator) {
-				columns = "administrator ("+columns+")";
-			} else if (user instanceof Moderator) {
-				columns = "moderator ("+columns+")";
-			} else if (user instanceof Forscher) {
-				columns = "forscher ("+columns+")";
-			}
-			statement.executeUpdate("insert into"+columns+" values ("+values+")");
-		} catch (SQLException e) {
-			throw new IOException (e.getMessage());
-		} finally {
-			try {
-				if (result != null) result.close();
-				if (statement != null) statement.close();
-				if (connection != null) connection.close();
-			} catch (SQLException e) {}	
-		} */
-		// Version, die table user verwendet
 		PreparedStatement add = null;
 		try {
 			String sql = "insert into user (username, password, fullname, email, sex, birthday, type, description, lockeduntil) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -169,38 +129,6 @@ public class MySQL implements DatabaseAccess {
 	 * @exception IOException Gibt Fehlermeldung der Datenbank zurück.
 	 */
 	public List<AbstractUser> getAllUsers() throws IOException {
-		/* ResultSet result = null;
-		Statement statement = null;
-		try {
-			connection = source.getConnection();
-			statement = connection.createStatement();
-			List<AbstractUser> list = new ArrayList<AbstractUser> ();
-			result = statement.executeQuery("select * from ydiot");
-			while (result.next()) {
-				list.add(createYdiot(result));
-			}
-			result = statement.executeQuery("select * from administrator");
-			while (result.next()) {
-				list.add(createAdministrator(result));
-			}
-			result = statement.executeQuery("select * from moderator");
-			while (result.next()) {
-				list.add(createModerator(result));
-			}
-			result = statement.executeQuery("select * from forscher");
-			while (result.next()) {
-				list.add(createForscher(result));
-			}
-			return list;
-		} catch (SQLException e) {
-			throw new IOException (e.getMessage());
-		} finally {
-			try {
-				if (result != null) result.close();
-				if (statement != null) statement.close();
-				if (connection != null) connection.close();
-			} catch (SQLException e) {}
-		} */
 		ResultSet result = null;
 		Statement statement = null;
 		List<AbstractUser> list = new ArrayList<AbstractUser> ();
@@ -291,38 +219,6 @@ public class MySQL implements DatabaseAccess {
 	 * @throws IOException Wird geworfen, wenn Fehler bei der MySQL Abfrage auftreten.
 	 */
 	public AbstractUser getUserByUsername(String username) throws IOException{
-		/* ResultSet result = null;
-		PreparedStatement get = null;
-		try {
-			AbstractUser user = null;
-			connection = source.getConnection();
-			statement = connection.createStatement();
-			result = statement.executeQuery("select * from ydiot where username='"+username+"'");
-			if (result.next()) {
-				user = createYdiot(result);
-			}
-			result = statement.executeQuery("select * from administrator where username='"+username+"'");
-			if (result.next()) {
-				user = createAdministrator(result);
-			}
-			result = statement.executeQuery("select * from moderator where username='"+username+"'");
-			if (result.next()) {
-				user = createModerator(result);
-			}
-			result = statement.executeQuery("select * from forscher where username='"+username+"'");
-			if (result.next()) {
-				user = createForscher(result);
-			}
-			return user;
-		} catch (SQLException e) {
-			throw new IOException (e.getMessage());
-		} finally {
-			try {
-				if (result != null) result.close();
-				if (statement != null) statement.close();
-				if (connection != null) connection.close();
-			} catch (SQLException e) {}
-		} */
 		ResultSet result = null;
 		PreparedStatement get = null;
 		try {
@@ -410,29 +306,6 @@ public class MySQL implements DatabaseAccess {
 	 * @throws IOException Wird geworfen, wenn Fehler bei der Ausführung am MySQL Server auftreten.
 	 */
 	public void removeUser(AbstractUser user) throws IOException{
-		/*Statement statement = null;
-		try {
-			connection = source.getConnection();
-			statement = connection.createStatement();
-			String table = null;
-			if (user instanceof Administrator) {
-				table = "administrator";
-			} else if (user instanceof Moderator) {
-				table = "moderator";
-			} else if (user instanceof Forscher) {
-				table = "forscher";
-			} else if (user instanceof Ydiot) {
-				table = "ydiot";
-			}
-			statement.executeUpdate("delet from "+table+" where username='"+user.getUsername()+"'");
-		} catch (SQLException e) {
-			throw new IOException (e.getMessage());
-		} finally {
-			try {
-				if (statement != null) statement.close();
-				if (connection != null) connection.close();
-			} catch (SQLException e) {}	
-		}*/
 		PreparedStatement delete = null;
 		try {
 			connection = source.getConnection();
@@ -456,34 +329,6 @@ public class MySQL implements DatabaseAccess {
 	 * @return List<Ydiot> Gibt eine Liste aller Benutzer zurück, die bei Abgleich mit SQL LIKE gefunden wurden.
 	 */
 	public List<Ydiot> search(String searchstring) throws IOException{
-		/* PreparedStatement statement = null;
-		ResultSet result = null;
-		try {
-			connection = source.getConnection();
-			statement = connection.prepareStatement("select * from ydiot where username like ?");
-			result = statement.executeQuery();
-			List<Ydiot> list = new ArrayList<Ydiot> ();
-			while (result.next()) {
-				list.add(createYdiot(result));
-			}
-			statement.close();
-			statement = connection.prepareStatement("select * from ydiot where fullname like ?");
-			result = statement.executeQuery("select * from ydiot where fullname like '"+searchstring+"'");
-			while (result.next()) {
-				Ydiot temp = createYdiot(result);
-				if (!list.contains(temp))
-					list.add(temp);
-			}
-			return list;
-		} catch (SQLException e) {
-			throw new IOException (e.getMessage());
-		} finally {
-			try {
-				if (result != null) result.close();
-				if (statement != null) statement.close();
-				if (connection != null) connection.close();
-			} catch (SQLException e) {}	
-		} */
 		PreparedStatement search = null;
 		ResultSet result = null;
 		try {
@@ -523,12 +368,6 @@ public class MySQL implements DatabaseAccess {
 			connection = source.getConnection();
 			statement = connection.createStatement();
 			update = connection.prepareStatement("update beitrag set creator=?, recipient=?, content=?, date=? where id=?");
-			/*String query = "update beitrag set "+
-				"creator='"+beitrag.getCreator()+"', "+
-				"recipient='"+beitrag.getRecep()+"', "+
-				"content='"+beitrag.getContent()+"', "+
-				"date='"+new java.sql.Date(beitrag.getDate().getTime())+"'"+
-				"where id="+beitrag.getID();*/
 			update.setString(1, beitrag.getCreator());
 			update.setString(2, beitrag.getRecep());
 			update.setString(3, beitrag.getContent());
@@ -596,62 +435,6 @@ public class MySQL implements DatabaseAccess {
 	 * @throws IOException Wird ausgegeben, wenn Fehler bei der Ausführung auf dem MySQL Server auftreten.
 	 */
 	public void updateUser(AbstractUser user) throws IOException{
-		/* try {
-			connection = source.getConnection();
-			statement = connection.createStatement();
-			String table = null;
-			String setColumns = 
-				"password='"+user.getPassword()+"', "
-				+ "fullname='"+user.getFullName()+"', "
-				+ "email='"+user.getEMail()+"', "
-				+ "birthday="+new java.sql.Date(user.getBirthday().getTime())+", "
-				+ "sex='"+user.getSex()+"' "
-				+ "where username='"+user.getUsername()+"'";
-			if (user instanceof Ydiot) {
-				table = "ydiot";
-				java.sql.Date lockedUntil = null;
-				if (((Ydiot) user).getLocked() != null) lockedUntil = new java.sql.Date(((Ydiot) user).getLocked().getTime());
-				setColumns = setColumns
-					+ "lockeduntil="+lockedUntil+", "
-					+ "description='"+((Ydiot) user).getDescription()+"'";
-				result = statement.executeQuery("select * from friendlist where user1='"+user.getUsername()+"'");
-				List<String> temp = ((Ydiot) user).getFriendList();
-				List<String> oldList = new ArrayList<String> ();
-				while (result.next()) {
-					oldList.add(result.getString("user2"));
-				}
-				if (temp.containsAll(oldList)) {
-					temp.removeAll(oldList);
-					for (int i = 0; i < temp.size(); i++) {
-						statement.executeUpdate("insert into friendlist (user1, user2) values ('"
-							+ user.getUsername()+"', '"
-							+ temp.get(i)+"')");
-					}
-				} else {
-					oldList.removeAll(temp);
-					for (int i = 0; i < oldList.size(); i++) {
-						statement.executeQuery("delete from friendlist where "
-							+ "user1='"+user.getUsername()+"' and "
-							+ "user2='"+oldList.get(i)+"'");
-					}
-				}
-			} else if (user instanceof Administrator) {
-				table = "administrator";
-			} else if (user instanceof Moderator) {
-				table = "moderator";
-			} else if (user instanceof Forscher) {
-				table = "forscher";
-			}
-			result = statement.executeQuery("update "+table+" set "+setColumns);
-		} catch (SQLException e) {
-			throw new IOException (e.getMessage());
-		} finally {
-			try {
-				if (result != null) result.close();
-				if (statement != null) statement.close();
-				if (connection != null) connection.close();
-			} catch (SQLException e) {}	
-		} */
 		PreparedStatement update = null;
 		ResultSet result = null;
 		try {
