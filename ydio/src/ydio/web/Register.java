@@ -13,11 +13,7 @@ import javax.servlet.http.HttpSession;
 import ydio.UserManagement;
 
 public class Register{
-	private static final long serialVersionUID = 1L;
-	private UserManagement um;
 
-	
-    
     
     public static void aufrufRegister(HttpServletRequest request, HttpServletResponse response, HttpSession session, RequestDispatcher JSPRegister) throws ServletException, IOException
    	{

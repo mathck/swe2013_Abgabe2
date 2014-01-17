@@ -20,6 +20,7 @@ public class UserManagement {
 
 	private AbstractUser session;
 	private DatabaseAccess dao;
+	private AbstractUser target;
 
 	public UserManagement() {
 		try {
@@ -350,6 +351,14 @@ public class UserManagement {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public AbstractUser getTarget(){
+		return target;
+	}
+	
+	public void setTarget(AbstractUser target){
+		this.target = target;
 	}
 	
 	public AbstractUser getSession() {

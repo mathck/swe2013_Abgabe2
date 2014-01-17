@@ -4,15 +4,18 @@
 <%@ page import="ydio.UserManagement" %>
 <%@ page import="ydio.Beitrag" %>
 <%@ page import="java.util.List" %>
+<%@ page import="ydio.user.AbstractUser"%>
 <%! UserManagement um;%>
 <%! boolean login = false; %>
 <%! List<Beitrag> list; %>
 <%! int number = 0; %>
+<%! AbstractUser target = null; %>
 <% if(session.getAttribute("status") !=null &&  session.getAttribute("status").equals("logged in")){ %>
 <% um = (UserManagement)session.getAttribute("um");%>
 <% if(um.isSessionActive()){ %>
 <% login = true; %>
-<% list = um.getBeitragListByUsername(um.getSession().getUsername());%>
+<% target = um.getTarget(); %>
+<% list = um.getBeitragListByUsername(target.getUsername());%>
 <% } %>
 <% } %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -46,23 +49,23 @@
 <% if(request.getAttribute("error") !=null){ %>
 <h2><%= request.getAttribute("error") %></h2>
 <% } %>
-<h1><%=  um.getSession().getUsername()  %></h1>
+<h1><%=  target.getUsername()  %></h1>
 <table>
 <tr>
 <td width="200px">Username</td>
-<td><%=  um.getSession().getUsername()  %></td>
+<td><%=  target.getUsername()  %></td>
 </tr>
 <tr>
 <td width="200px">Fullname</td>
-<td><%=  um.getSession().getFullName()  %></td>
+<td><%=  target.getFullName()  %></td>
 </tr>
 <tr>
 <td>E-Mail</td>
-<td><%= um.getSession().getEMail()  %></td>
+<td><%= target.getEMail()  %></td>
 </tr>
 <tr>
 <td>Geburtstag</td>
-<td><%=  um.getSession().getBirthday()  %></td>
+<td><%=  target.getBirthday()  %></td>
 </tr>
 <% if (request.getParameter("desc") != null) {
         out.println("<tr><td>Beschreibung</td><td>" + request.getParameter("desc") + "</td></tr>");

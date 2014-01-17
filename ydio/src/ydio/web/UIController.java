@@ -33,6 +33,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 	private RequestDispatcher JSPRegister = null;
 	private RequestDispatcher JSPUserpage = null;
 	private RequestDispatcher JSPLogin = null;
+	private RequestDispatcher JSPSearch = null;
 
 	
 	public void init() throws ServletException
@@ -41,6 +42,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 		JSPRegister = getServletContext().getRequestDispatcher("/register.jsp");
 		JSPUserpage = getServletContext().getRequestDispatcher("/userpage.jsp");
 		JSPLogin = getServletContext().getRequestDispatcher("/login.jsp");
+		JSPSearch = getServletContext().getRequestDispatcher("/search.jsp");
 	}
 	
 	/**
@@ -116,8 +118,17 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						break;
 					case "userpage":
 						if(session.getAttribute("status").equals("logged in")){
-							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
-							break;
+							if(request.getParameter("target") == null || request.getParameter("target").equals(um.getSession().getUsername())){
+								um.setTarget(um.getSession());
+								Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+								break;
+							}
+							
+							if(request.getParameter("target") != null){
+								um.setTarget(um.getUserByUsername(request.getParameter("target")));
+								Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+							}
+							
 						}
 						Login.aufrufLogin(request, response, session, JSPLogin);
 						break;
@@ -162,6 +173,12 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						}
 						request.setAttribute("error", "No Login");
 						Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+						break;
+						
+					case "search":
+						
+						
+						
 						break;
 			}
 		}
