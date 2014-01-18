@@ -178,9 +178,15 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						break;
 						
 					case "search":
+						if(session.getAttribute("status").equals("logged in")){
+							String s = request.getParameter("searchstring");
+							request.setAttribute("searchstring", s);
+							Search.aufrufSearch(request, response, session, JSPSearch);
+							break;
+						}
 						
-						
-						
+						request.setAttribute("error", "Dafür müssen sie eingeloggt sein");
+						Login.aufrufLogin(request, response, session, JSPLogin);
 						break;
 			}
 		}

@@ -2,12 +2,16 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%@ page import="ydio.UserManagement" %>
+<%@ page import="java.util.List" %>
+<%@ page import="ydio.user.Ydiot" %>
 <%! UserManagement um;%>
 <%! boolean login = false; %>
+<%! List<Ydiot> resultlist; %>
 <% if(session.getAttribute("status") != null &&  session.getAttribute("status").equals("logged in")){ %>
 <% um = (UserManagement)session.getAttribute("um");%>
 <% if(um.isSessionActive()){ %>
 <% login = true; %>
+<% resultlist = um.search((String)request.getAttribute("searchstring")); %>
 <% } %>
 <% } %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -40,6 +44,9 @@
 <h2><%= request.getAttribute("error") %></h2>
 <%	} %>
 <h1>Das sind deine Suchergebnisse:</h1>
+<% for(int i = 0; i < resultlist.size(); i++){%>
+<a href="UIController?gewuenschteSeite=userpage&target=<%=resultlist.get(i).getUsername()%>"><%= resultlist.get(i).getUsername() %></a>
+<%} %>
 
 </div>
 </div>
