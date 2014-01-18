@@ -2,11 +2,12 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%@ page import="ydio.UserManagement" %>
-<%@ page import="java.util.List" %>
 <%@ page import="ydio.user.Ydiot" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%! UserManagement um;%>
 <%! boolean login = false; %>
-<%! List<Ydiot> resultlist; %>
+<%! List<Ydiot> resultlist = new ArrayList<Ydiot>(); %>
 <% if(session.getAttribute("status") != null &&  session.getAttribute("status").equals("logged in")){ %>
 <% um = (UserManagement)session.getAttribute("um");%>
 <% if(um.isSessionActive()){ %>
@@ -28,7 +29,12 @@
 <div id="header">
 <table><tr>
 <td><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
-<td><input type="search" size="50" name="search"></td>
+<td>
+<form id="searchbox" action="UIController" method="post">
+<input type="search" size="50" name="searchstring"></td>
+<input type="hidden" name="gewuenschteSeite" value="search">
+<input type="submit" value="go">
+</form>
 <% if(login){ %>
 <td><a href="UIController?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
 <td><a href="UIController?gewuenschteSeite=logout">Logout</a></td>
@@ -42,11 +48,11 @@
 <div id="content_wrapper">
 <% if(request.getAttribute("error") !=null){ %>
 <h2><%= request.getAttribute("error") %></h2>
-<%	} %>
-<h1>Das sind deine Suchergebnisse:</h1>
+<%	}  %>
+<h1>Das sind deine Suchergebnisse: <%resultlist.size();%></h1>
 <% for(int i = 0; i < resultlist.size(); i++){%>
-<a href="UIController?gewuenschteSeite=userpage&target=<%=resultlist.get(i).getUsername()%>"><%= resultlist.get(i).getUsername() %></a>
-<%} %>
+<a href="UIController?gewuenschteSeite=userpage&target=<%= resultlist.get(i).getUsername() %>"><%= resultlist.get(i).getUsername() %></a>
+<%}   %>
 
 </div>
 </div>
