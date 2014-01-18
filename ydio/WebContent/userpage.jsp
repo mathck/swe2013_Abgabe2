@@ -4,17 +4,17 @@
 <%@ page import="ydio.UserManagement" %>
 <%@ page import="ydio.Beitrag" %>
 <%@ page import="java.util.List" %>
-<%@ page import="ydio.user.AbstractUser"%>
+<%@ page import="ydio.user.Ydiot"%>
 <%! UserManagement um;%>
 <%! boolean login = false; %>
 <%! List<Beitrag> list; %>
 <%! int number = 0; %>
-<%! AbstractUser target = null; %>
+<%! Ydiot target = null; %>
 <% if(session.getAttribute("status") !=null &&  session.getAttribute("status").equals("logged in")){ %>
 <% um = (UserManagement)session.getAttribute("um");%>
 <% if(um.isSessionActive()){ %>
 <% login = true; %>
-<% target = um.getTarget(); %>
+<% target = (Ydiot) um.getTarget(); %>
 <% list = um.getBeitragListByUsername(target.getUsername());%>
 <% } %>
 <% } %>
@@ -70,13 +70,28 @@
 <td><%= target.getEMail()  %></td>
 </tr>
 <tr>
-<td>Geburtstag</td>
+<td>Birthday</td>
 <td><%=  target.getBirthday()  %></td>
+</tr>
+<tr>
+<td>Friends:</td>
+<% String friends = "";
+	for(int i = 0; i<target.getFriendList().size(); i++){
+		friends += target.getFriendList().get(i) + " ";
+	}
+%>
+<td><%=  friends  %></td>
 </tr>
 <% if (request.getParameter("desc") != null) {
         out.println("<tr><td>Beschreibung</td><td>" + request.getParameter("desc") + "</td></tr>");
     }
 %>
+<%if(!target.getUsername().equals(um.getSession().getUsername())){ %>
+<form action="UIController" method="post">
+<input type="hidden" name="gewuenschteSeite" value="addFriend">
+<input type="submit" value="Add to your Friendlist">  
+</form>
+<%} %>
 </table>
 
 <% number = list.size(); %>

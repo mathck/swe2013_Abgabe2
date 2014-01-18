@@ -65,4 +65,10 @@ public class Ydiot extends AbstractUser {
 	public void setFriendList(List<String> friendList) {
 		this.friendList = friendList;
 	}
+	
+	public void addFriend(String username){
+		if(!friendList.contains(username)){
+			friendList.add(username);
+		}
+	}
 }

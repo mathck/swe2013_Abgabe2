@@ -16,6 +16,7 @@ import ydio.Beitrag;
 import ydio.UserManagement;
 import ydio.dao.DatabaseAccess;
 import ydio.user.AbstractUser;
+import ydio.user.Ydiot;
 
 /**
  * 
@@ -187,6 +188,13 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						
 						request.setAttribute("error", "Dafür müssen sie eingeloggt sein");
 						Login.aufrufLogin(request, response, session, JSPLogin);
+						break;
+						
+					case "addFriend":
+						Ydiot user = (Ydiot) um.getSession();
+						user.addFriend(um.getTarget().getUsername());
+						um.updateUser(user);
+						Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 						break;
 			}
 		}
