@@ -127,6 +127,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 							if(request.getParameter("target") != null){
 								um.setTarget(um.getUserByUsername(request.getParameter("target")));
 								Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+								break;
 							}
 							
 						}
@@ -145,6 +146,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						else{
 							session.setAttribute("um", um);
 							session.setAttribute("status", "logged in");
+							um.setTarget(um.getSession());
 							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 						}
 						break;
