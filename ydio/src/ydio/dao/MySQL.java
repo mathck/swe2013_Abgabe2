@@ -22,6 +22,16 @@ import ydio.user.*;
  * @created 04-Dez-2013 20:51:12
  */
 public class MySQL implements DatabaseAccess {
+
+	private enum Action {
+		INSERT, UPDATE, DELETE, SELECT;
+	}
+	private enum Stats {
+		LIKE, DISLIKE, REPORT, READ;
+	}
+	private enum UserType {
+		YDIOT, ADMINISTRATOR, MODERATOR, FORSCHER; 
+	}
 	
 	private DataSource source;
 	private Connection connection;
@@ -56,7 +66,6 @@ public class MySQL implements DatabaseAccess {
 			connection = source.getConnection();
 			statement = connection.createStatement();
 			result = statement.executeQuery("select id from id where type='beitrag'");
-			
 			if (!result.next()) throw new IOException ("No ID specified in database.");
 			long id = result.getLong("id");
 			beitrag.setID(id);
@@ -375,44 +384,92 @@ public class MySQL implements DatabaseAccess {
 			update.setLong(5, beitrag.getID());
 			update.executeUpdate();
 			result = statement.executeQuery("select * from stats where id="+beitrag.getID());
-			List<String> compare = new ArrayList<String> ();
-			List<String> compareRead = new ArrayList<String> ();
-			List<String> temp = new ArrayList<String> ();
+			List<String> compareLike = beitrag.getLikes();
+			List<String> compareDislike = beitrag.getDislikes();
+			List<String> compareReport = beitrag.getReportList();
+			List<String> compareRead = beitrag.getReadList();
+			String temp = null;
+			
+			// new version
+			Action action = Action.DELETE;
+			Long beitragId = beitrag.getID();
+			Stats type = null;
 			while (result.next()) {
-				if (result.getString("type").equals("read")) compare.add(result.getString("username"));
+				temp = result.getString("username");
+				if (compareRead.contains(temp)) compareRead.remove(temp);
+				else updateBeitragStats(action, beitragId, temp, Stats.READ);
+				switch (type = Stats.valueOf(result.getString("type"))) {
+				case LIKE:
+					if (compareLike.contains(temp)) compareLike.remove(temp);
+					else updateBeitragStats(action, beitragId, temp, type);
+					break;
+				case DISLIKE:
+					if (compareDislike.contains(temp)) compareDislike.remove(temp);
+					else updateBeitragStats(action, beitragId, temp, type);
+					break;
+				case REPORT:
+					if (compareReport.contains(temp)) compareReport.remove(temp);
+					else updateBeitragStats(action, beitragId, temp, type);
+					break;
+				case READ:
+					break;
+				}
+			}
+			action = Action.INSERT;
+			for (int i = 0; i < compareRead.size(); i++)
+				this.updateBeitragStats(action, beitragId, temp, Stats.READ);
+			for (int i = 0; i < compareLike.size(); i++)
+				this.updateBeitragStats(action, beitragId, temp, Stats.LIKE);
+			for (int i = 0; i< compareDislike.size(); i++)
+				this.updateBeitragStats(action, beitragId, temp, Stats.DISLIKE);
+			for (int i = 0; i < compareReport.size(); i++)
+				this.updateBeitragStats(action, beitragId, temp, Stats.REPORT);
+			// end new version
+			
+			/*while (result.next()) {
+				if (result.getString("type").equals(Stats.READ.toString())) compare.add(result.getString("username"));
 				else compareRead.add(result.getString("username"));
 			}
 			temp.addAll(beitrag.getLikes());
 			temp.removeAll(compare);
+			String query = "insert into stats (id, username, type) values (?,?,?)";
 			for (int i = 0; i < temp.size(); i++) {
-				statement.executeUpdate("insert into stats (id, username, type) values ("+
-					beitrag.getID()+", '"+
-					temp.get(i)+"', 'like')");
+				update.close();
+				update = connection.prepareStatement(query);
+				update.setLong(1, beitrag.getID());
+				update.setString(2, temp.get(i));
+				update.setString(3, "like");
 			}
 			temp.clear();
 			temp.addAll(beitrag.getDislikes());
 			temp.removeAll(compare);
 			for (int i = 0; i < temp.size(); i++) {
-				statement.executeUpdate("insert into stats (id, username, type) values ("+
-					beitrag.getID()+", '"+
-					temp.get(i)+"', 'dislike')");
+				update.close();
+				update = connection.prepareStatement(query);
+				update.setLong(1, beitrag.getID());
+				update.setString(2, temp.get(i));
+				update.setString(3, "dislike");
 			}
 			temp.clear();
 			temp.addAll(beitrag.getReportList());
 			temp.removeAll(compare);
 			for (int i = 0; i < temp.size(); i++) {
-				statement.executeUpdate("insert into stats (id, username, type) values ("+
-					beitrag.getID()+", '"+
-					temp.get(i)+"', 'report')");
+				update.close();
+				update = connection.prepareStatement(query);
+				update.setLong(1, beitrag.getID());
+				update.setString(2, temp.get(i));
+				update.setString(3, "report");
 			}
 			temp.clear();
 			temp.addAll(beitrag.getReadList());
 			temp.removeAll(compareRead);
 			for (int i = 0; i < temp.size(); i++) {
-				statement.executeUpdate("insert into stats (id, username, type) values ("+
-					beitrag.getID()+", '"+
-					temp.get(i)+"', 'read')");
-			}
+				update.close();
+				update = connection.prepareStatement(query);
+				update.setLong(1, beitrag.getID());
+				update.setString(2, temp.get(i));
+				update.setString(3, "read");
+			}*/
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} finally {
@@ -519,14 +576,13 @@ public class MySQL implements DatabaseAccess {
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} catch (YdioException e) {
-			// wrong input was saved in database, impossible
+			throw new IOException (e.getMessage());
 		} finally {
 			try {
 				if (friendResult != null) friendResult.close();
 				if (friendStatement != null) friendStatement.close();
 			} catch (SQLException e) {}	
 		}
-		return user;
 	}
 	private Administrator createAdministrator (ResultSet result) throws SQLException {
 		Administrator user = null;
@@ -584,18 +640,18 @@ public class MySQL implements DatabaseAccess {
 			tempStatement = connection.createStatement();
 			tempResult = tempStatement.executeQuery("select * from stats where id="+result.getLong("id"));
 			while (tempResult.next()) {
-				switch (tempResult.getString("type")) {
-				case "like":
+				readList.add(tempResult.getString("username"));
+				switch (Stats.valueOf(tempResult.getString("type"))) {
+				case LIKE:
 					likeList.add(tempResult.getString("username"));
 					break;
-				case "dislike":
+				case DISLIKE:
 					dislikeList.add(tempResult.getString("username"));
 					break;
-				case "report":
+				case REPORT:
 					reportList.add(tempResult.getString("username"));
 					break;
-				case "read":
-					reportList.add(tempResult.getString("username"));
+				case READ:
 					break;
 				default:
 					throw new IOException ("type not defined, cannot build stats of beitrag");	
@@ -620,6 +676,48 @@ public class MySQL implements DatabaseAccess {
 				if (tempStatement != null) tempStatement.close();
 			} catch (SQLException e) {}
 		}
-		
+	}
+	void updateFriendList (boolean delete, String user1, String user2) throws IOException {
+		PreparedStatement update = null;
+		try {
+			String sql = null;
+			if (delete) {
+				sql = "delete from friendlist where user1=? user2=?";
+			} else {
+				sql = "insert into friendlist (user1, user2) values (?, ?)";
+			}
+			update = connection.prepareStatement(sql);
+			update.setString(1, user1);
+			update.setString(2, user2);
+			update.executeUpdate();
+		} catch (Throwable e) {
+			throw new IOException(e.getMessage());
+		} finally {
+			try {
+				if (update != null) connection.close();
+			} catch (Throwable e) {}
+		}
+	}
+	void updateBeitragStats (Action action, long beitragId, String username, Stats type) throws IOException {
+		PreparedStatement update = null;
+		try {
+			String sql = null;
+			if (action.equals(Action.DELETE)) {
+				sql = "delete from stats where id=?, username=?, type=?";
+			} else {
+				sql = "insert into stats (id, username, type) values (?, ?, ?)";
+			}
+			update = connection.prepareStatement(sql);
+			update.setLong(1, beitragId);
+			update.setString(2, username);
+			update.setString(3, type.toString());
+			update.executeUpdate();
+		} catch (Throwable e) {
+			throw new IOException (e.getMessage());
+		} finally {
+			try {
+				if (update != null) update.close();
+			} catch (Throwable e) {}
+		}
 	}
 }
