@@ -3,7 +3,6 @@ package ydio;
 import ydio.user.*;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -119,31 +118,15 @@ public class UserManagement {
 			
 			switch(dataType) {
 			
-			case ydiotCount:
+			case BEITRAG_STATS:
 				// TODO
 				break;
 				
-			case likeDislikeReportStats:
+			case YDIOT_STATS:
 				// TODO
 				break;
 				
-			case avgContentLength:
-				// TODO
-				break;
-				
-			case maleVsFemale:
-				// TODO
-				break;
-				
-			case avgAge:
-				// TODO
-				break;
-				
-			case avgPasswordLength:
-				// TODO
-				break;
-				
-			case wordCount_FuckStupidIdiotGayNoob:
+			case GLOBAL_STATS:
 				// TODO
 				break;
 				
