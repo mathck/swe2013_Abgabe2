@@ -25,7 +25,6 @@
 <div id="header">
 <table><tr>
 <td><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
-<td><input type="search" size="50" name="search"></td>
 <% if(login){ %>
 <td><a href="UIController?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
 <td><a href="UIController?gewuenschteSeite=logout">Logout</a></td>

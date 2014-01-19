@@ -31,13 +31,13 @@
 <div id="header">
 <table style="width:100%"><tr>
 <td width="10px"><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
-
+<td>
 <form id="searchbox" action="UIController" method="post">
   <input type="search" size="50" name="searchstring"></td>
   <input type="hidden" name="gewuenschteSeite" value="search">
   <input type="submit" value="go">
 </form>
-
+</td>
 <% if(login){ %>
 <td align="center"><a href="UIController?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
 <td align="center"><a href="UIController?gewuenschteSeite=logout">Logout</a></td>
@@ -96,7 +96,10 @@
 
 <% number = list.size(); %>
 <% for(int i = 0; i < number; i++){%>
-<div class="beitrag"><%= list.get(i).getContent() %></div>
+<div class="beitrag"><%= list.get(i).getContent() %><br />
+0 Likes | 0 Dislikes<br />
+<a href="#">Like</a> | <a href="#">Dislike</a> | <a href="#">Report</a>
+</div>
 <%} %>
 
 <form action="UIController" method="post">

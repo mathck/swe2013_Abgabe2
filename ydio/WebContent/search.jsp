@@ -35,6 +35,7 @@
 <input type="hidden" name="gewuenschteSeite" value="search">
 <input type="submit" value="go">
 </form>
+</td>
 <% if(login){ %>
 <td><a href="UIController?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
 <td><a href="UIController?gewuenschteSeite=logout">Logout</a></td>
