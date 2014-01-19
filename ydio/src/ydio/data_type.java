@@ -7,8 +7,7 @@ package ydio;
  */
 public enum data_type {
 	BEITRAG_STATS, // gibt alle Beiträge mit erstellungsdatum und Statistiken an
-	YDIOT_STATS, // gibt alle Ydioten mit Anzahl von Beiträgen an
-	GLOBAL_STATS; // gibt Ydioten mit Beitrag Stats an, Achtung! Sehr umfangreich!
+	YDIOT_STATS; // gibt alle Ydioten mit Anzahl von Beiträgen an
 	
 	
 }

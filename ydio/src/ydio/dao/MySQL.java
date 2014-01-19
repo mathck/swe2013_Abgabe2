@@ -205,12 +205,80 @@ public class MySQL implements DatabaseAccess {
 	 * @param data_type Durch data_type wird definiert welche Tabellen erstellt und zurückgegeben werden
 	 * @throws IOException Wird geworfen wenn die Datenbankabfrage Fehler erzeugt.
 	 */
-	public String[][] getScientistData(data_type dataType) throws IOException{
+	public List<String[]> getScientistData(data_type dataType) throws IOException{
 		ResultSet result = null;
 		Statement statement = null;
 		try {
-			// TODO Forscherzugriff einrichten
-			throw new SQLException ();
+			List<String[]> list = new ArrayList<String[]> ();
+			connection = source.getConnection();
+			statement = connection.createStatement();
+			String sql = null;
+			String[] temp = null;
+			switch (dataType) {
+			case BEITRAG_STATS:
+				sql = "select * from beitrag";
+				result = statement.executeQuery(sql);
+				while (result.next()) {
+					Beitrag beitrag = createBeitrag(result);
+					temp = new String [7];
+					temp [0] = beitrag.getDate().toString();
+					temp [1] = beitrag.getCreator().equals(beitrag.getRecep()) + "";
+					temp [2] = beitrag.getContent();
+					temp [3] = beitrag.getLikes().size() + "";
+					temp [4] = beitrag.getDislikes().size() + "";
+					temp [5] = beitrag.getReportList().size() + "";
+					temp [6] = beitrag.getReadList().size() + "";
+					list.add(temp);
+				}
+				break;
+			case YDIOT_STATS:
+				List<Ydiot> listYdiot = new ArrayList<Ydiot>();
+				List<Beitrag> listBeitrag = new ArrayList<Beitrag>();
+				sql = "select * from user where type='ydiot'";
+				result = statement.executeQuery(sql);
+				while (result.next()) listYdiot.add(createYdiot(result));
+				sql = "select * from beitrag";
+				result = statement.executeQuery(sql);
+				while (result.next()) listBeitrag.add(createBeitrag(result));
+				String user = null;
+				Beitrag beitrag = null;
+				for (int i = 0; i < listYdiot.size(); i++) {
+					int create_beitrag = 0, create_read = 0, create_like = 0, create_dislike = 0, create_report = 0;
+					int give_read = 0, give_like = 0, give_dislike = 0, give_report = 0;
+					user = listYdiot.get(i).getUsername();
+					for (int j = 0; j < listBeitrag.size(); j++) {
+						beitrag = listBeitrag.get(j);
+						if (listBeitrag.get(j).getCreator().equals(user)) {
+							create_beitrag++;
+							create_read += beitrag.getReadList().size();
+							create_like += beitrag.getCountLikes();
+							create_dislike += beitrag.getCountDislike();
+							create_report += beitrag.getCountReports();
+						}
+						if (beitrag.getRead(user)) give_read++;
+						if (beitrag.getLike(user)) give_like++;
+						if (beitrag.getDislike(user)) give_dislike++;
+						if (beitrag.getReport(user)) give_report++;
+					}
+					temp = new String[11];
+					temp[0] = listYdiot.get(i).getBirthday().toString();
+					temp[1] = listYdiot.get(i).getSex() + "";
+					temp[2] = create_beitrag + "";
+					temp[3] = create_read + "";
+					temp[4] = create_like + "";
+					temp[5] = create_dislike + "";
+					temp[6] = create_report + "";
+					temp[7] = give_read + "";
+					temp[8] = give_like + "";
+					temp[9] = give_dislike + "";
+					temp[10] = give_report + "";
+					list.add(temp);
+				}
+				break;
+			default:
+				throw new IOException ("data_type not known");
+			}
+			return list;
 		} catch (SQLException e) {
 			throw new IOException (e.getMessage());
 		} finally {

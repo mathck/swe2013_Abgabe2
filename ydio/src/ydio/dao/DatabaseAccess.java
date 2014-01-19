@@ -1,6 +1,7 @@
 package ydio.dao;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import ydio.Beitrag;
@@ -51,7 +52,7 @@ public interface DatabaseAccess {
 	 * @param data_type Gibt an welche Daten zurückgegeben werden sollen.
 	 * @throws IOException Bei Ausnahmefällen in der Datenbank wird eine Exception geworfen.
 	 */
-	public String[][] getScientistData(data_type dataType) throws IOException;
+	public List<String[]> getScientistData(data_type dataType) throws IOException;
 
 	/**
 	 * Sucht Benutzer über den Benutzernamen aus der Datenbank.
