@@ -564,7 +564,7 @@ public class MySQL implements DatabaseAccess {
 		ResultSet result = null;
 		try {
 			connection = source.getConnection();
-			update = connection.prepareStatement("update user password=?, email=?, fullname=?, sex=?, birthday=?, description=?, lockeduntil=? where username=?");
+			update = connection.prepareStatement("update user set password=?, email=?, fullname=?, sex=?, birthday=?, description=?, lockeduntil=? where username=?");
 			update.setString(1, user.getPassword());
 			update.setString(2, user.getEMail());
 			update.setString(3, user.getFullName());
