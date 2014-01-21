@@ -443,7 +443,7 @@ public class MySQL implements DatabaseAccess {
 		try {
 			connection = source.getConnection();
 			statement = connection.createStatement();
-			update = connection.prepareStatement("update beitrag set creator=?, recipient=?, content=?, date=? where id=?");
+			update = connection.prepareStatement("update beitrag set creator=?, recipient=?, content=?, creation_date=? where id=?");
 			update.setString(1, beitrag.getCreator());
 			update.setString(2, beitrag.getRecep());
 			update.setString(3, beitrag.getContent());
@@ -480,17 +480,18 @@ public class MySQL implements DatabaseAccess {
 					break;
 				case READ:
 					break;
+				default: throw new IOException ("Unknown rating type.");
 				}
 			}
 			action = Action.INSERT;
 			for (int i = 0; i < compareRead.size(); i++)
-				this.updateBeitragStats(action, beitragId, temp, Stats.READ);
+				this.updateBeitragStats(action, beitragId, compareRead.get(i), Stats.READ);
 			for (int i = 0; i < compareLike.size(); i++)
-				this.updateBeitragStats(action, beitragId, temp, Stats.LIKE);
+				this.updateBeitragStats(action, beitragId, compareLike.get(i), Stats.LIKE);
 			for (int i = 0; i< compareDislike.size(); i++)
-				this.updateBeitragStats(action, beitragId, temp, Stats.DISLIKE);
+				this.updateBeitragStats(action, beitragId, compareDislike.get(i), Stats.DISLIKE);
 			for (int i = 0; i < compareReport.size(); i++)
-				this.updateBeitragStats(action, beitragId, temp, Stats.REPORT);
+				this.updateBeitragStats(action, beitragId, compareReport.get(i), Stats.REPORT);
 			// end new version
 			
 			/*while (result.next()) {
@@ -618,7 +619,7 @@ public class MySQL implements DatabaseAccess {
 	
 	private Ydiot createYdiot (ResultSet result) throws IOException {
 		Ydiot user = null;
-		Statement friendStatement = null;
+		PreparedStatement friendStatement = null;
 		ResultSet friendResult = null;
 		try {
 			user = new Ydiot (
@@ -632,8 +633,9 @@ public class MySQL implements DatabaseAccess {
 				new ArrayList <String> ());
 			if (result.getDate("lockeduntil") != null) 
 				user.setLocked(new Date(result.getDate("lockeduntil").getTime()));
-			friendStatement = connection.createStatement();
-			friendResult = friendStatement.executeQuery("select * from friendlist where user1='"+result.getString("username")+"'");
+			friendStatement = connection.prepareStatement("select * from friendlist where user1=?");
+			friendStatement.setString(1, result.getString("username"));
+			friendResult = friendStatement.executeQuery();
 			List<String> friendList = new ArrayList<String> ();
 			while (friendResult.next()) {
 				friendList.add(friendResult.getString("user2"));
@@ -698,14 +700,15 @@ public class MySQL implements DatabaseAccess {
 	}
 	private Beitrag createBeitrag (ResultSet result) throws IOException {
 		ResultSet tempResult = null;
-		Statement tempStatement = null;
+		PreparedStatement tempStatement = null;
 		try {
 			List<String> likeList = new ArrayList<String> ();
 			List<String> dislikeList = new ArrayList<String> ();
 			List<String> reportList = new ArrayList<String> ();
 			List<String> readList = new ArrayList<String> ();
-			tempStatement = connection.createStatement();
-			tempResult = tempStatement.executeQuery("select * from stats where id="+result.getLong("id"));
+			tempStatement = connection.prepareStatement("select * from stats where id=?");
+			tempStatement.setLong(1, result.getLong("id"));
+			tempResult = tempStatement.executeQuery();
 			while (tempResult.next()) {
 				readList.add(tempResult.getString("username"));
 				switch (Stats.valueOf(tempResult.getString("type"))) {
