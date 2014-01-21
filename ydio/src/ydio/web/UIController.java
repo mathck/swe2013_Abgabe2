@@ -173,10 +173,10 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						break;
 					case "addBeitrag":
 						if(session.getAttribute("status").equals("logged in")){
-							String temp = (String) request.getParameter("content");
+							String content = (String) request.getParameter("content");
 							um = (UserManagement) session.getAttribute("um");
-							Beitrag bt = new Beitrag(um.getSession().getUsername(), um.getSession().getUsername());
-							bt.setContent(temp);
+							Beitrag bt = new Beitrag(um.getSession().getUsername(), um.getTarget().getUsername());
+							bt.setContent(content);
 							um.addBeitrag(bt);
 							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 							break;

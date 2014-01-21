@@ -129,6 +129,7 @@ public class UserManagement {
 			case GLOBAL_STATS:
 				// TODO
 				break;
+			
 				
 			default:
 				out = "wrong data_type in getScientistData(data_type dataType) in UserManagement!";
@@ -268,7 +269,7 @@ public class UserManagement {
 			List<Beitrag> newList = new ArrayList<Beitrag>();
 
 			for(int i = 0; i < list.size(); i++) {
-				if(list.get(i).getCreator().equals(username)) {
+				if(list.get(i).getRecep().equals(username)) {
 					newList.add(list.get(i));
 				}
 			}

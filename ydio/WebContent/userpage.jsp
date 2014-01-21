@@ -102,6 +102,7 @@
 
 
 <% number = list.size(); %>
+<%= number %>
 <% for(int i = 0; i < number; i++){%>
 <div class="beitrag"><%= list.get(i).getContent() %><br />
 <%=list.get(i).getCountLikes() %> Likes | <%=list.get(i).getCountDislike() %> Dislikes<br />
