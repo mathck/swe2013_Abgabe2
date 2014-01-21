@@ -26,13 +26,10 @@
 
 <!-- HEADER START -->
 <div id="header">
-<table><tr>
-<td><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
-<% if(login){ %>
-<td><a href="UIController?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
-<td><a href="UIController?gewuenschteSeite=logout">Logout</a></td>
-</tr>
-<% } %></table>
+<ul>
+	<li><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></li>
+	<% if(login){ %><li style="float: right; padding-right: 20px;">Logout (<%= um.getSession().getUsername() %>)</li><% } %>
+</ul>
 </div>
 <!-- HEADER OVER -->
 

@@ -20,6 +20,11 @@
 <td><a href="userpage.html">my username</a></td>
 </tr></table>
 </div>
+<div id="header">
+<ul>
+	<li><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></li>
+</ul>
+</div>
 <!-- HEADER OVER -->
 
 

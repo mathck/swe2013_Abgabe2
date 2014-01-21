@@ -24,21 +24,17 @@
 
 <!-- HEADER START -->
 <div id="header">
-<table style="width:100%"><tr>
-<td width="10px"><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></td>
-<td>
-<form id="searchbox" action="UIController" method="post">
-  <input type="search" size="50" name="searchstring"></td>
-  <input type="hidden" name="gewuenschteSeite" value="search">
-  <input type="submit" value="go">
-</form>
-</td>
-<% if(login){ %>
-<td align="center"><a href="UIController?gewuenschteSeite=userpage"><%= um.getSession().getUsername() %></a></td>
-<td align="center"><a href="UIController?gewuenschteSeite=logout">Logout</a></td>
-<% } %>
-</tr>
-</table>
+<ul>
+	<li><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></li>
+	<li>
+		<form id="searchbox" action="UIController" method="post">
+			<input type="search" size="50" name="searchstring">
+			<input type="hidden" name="gewuenschteSeite" value="search">
+			<input style="width: 100px;" type="submit" value="search">
+		</form>
+	</li>
+	<% if(login){ %><li style="float: right; padding-right: 20px;">Logout (<%= um.getSession().getUsername() %>)</li><% } %>
+</ul>
 </div>
 <!-- HEADER OVER -->
 
