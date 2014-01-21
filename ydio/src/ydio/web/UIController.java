@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -244,6 +245,23 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						}
 						
 						Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+						break;
+						
+					case "rateBeitrag":
+						if(request.getParameter("action").equals("like")){
+							List<Beitrag> beitraglist = um.getBeitragListByUsername(um.getTarget().getUsername());
+							long ID = Integer.parseInt(request.getParameter("id"));
+							
+							for(int i = 0; i < beitraglist.size(); i++){
+								if(beitraglist.get(i).getID() == ID){
+									beitraglist.get(i).addLike(um.getSession().getUsername());
+									um.updateBeitrag(beitraglist.get(i));
+									Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+									break;
+								}
+							}
+						}
+						
 						break;
 			}
 		}

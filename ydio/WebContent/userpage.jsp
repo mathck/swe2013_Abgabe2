@@ -92,7 +92,7 @@
 <input type="submit" value="Add to your Friendlist">  
 </form>
 <%} %>
-</table>
+</table>	
 
 
 <!-- Button zum Nutzerdaten ändern -->
@@ -104,8 +104,8 @@
 <% number = list.size(); %>
 <% for(int i = 0; i < number; i++){%>
 <div class="beitrag"><%= list.get(i).getContent() %><br />
-0 Likes | 0 Dislikes<br />
-<a href="#">Like</a> | <a href="#">Dislike</a> | <a href="#">Report</a>
+<%=list.get(i).getCountLikes() %> Likes | <%=list.get(i).getCountDislike() %> Dislikes<br />
+<a href="UIController?gewuenschteSeite=rateBeitrag&action=like&id=<%=list.get(i).getID()%>">Like</a> | <a href="#">Dislike</a> | <a href="#">Report</a>
 </div>
 <%} %>
 
