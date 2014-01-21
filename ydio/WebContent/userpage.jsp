@@ -38,7 +38,7 @@
 			<input style="width: 100px;" type="submit" value="search">
 		</form>
 	</li>
-	<% if(login){ %><li style="float: right; padding-right: 20px;">Logout (<%= um.getSession().getUsername() %>)</li><% } %>
+	<% if(login){ %><li style="float: right; padding-right: 20px;"><a href=UIController?gewuenschteSeite=logout> Logout (<%= um.getSession().getUsername() %>)</a></li><% } %>
 </ul>
 </div>
 <!-- HEADER OVER -->
@@ -112,7 +112,7 @@
 <% for(int i = number-1; i >= 0; i--){%>
 <div class="beitrag"><%= list.get(i).getContent() %><br />
 <%=list.get(i).getCountLikes() %> Likes | <%=list.get(i).getCountDislike() %> Dislikes | <%= list.get(i).getReadList().size() %> gelesen | Erstellt von <%=list.get(i).getCreator() %><br />
-<a href="UIController?gewuenschteSeite=rateBeitrag&action=like&id=<%=list.get(i).getID()%>">Like</a> | <a href="#">Dislike</a> | <a href="#">Report</a>
+<a href="UIController?gewuenschteSeite=rateBeitrag&action=like&id=<%=list.get(i).getID()%>">Like</a> | <a href="UIController?gewuenschteSeite=rateBeitrag&action=like&id=<%=list.get(i).getID()%>">Dislike</a> | <a href="#">Report</a>
 </div>
 <%} %>
 
