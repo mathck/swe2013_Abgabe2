@@ -100,32 +100,27 @@
 <a href="UIController?gewuenschteSeite=editProfile&action=open"><button type="button">Nutzerdaten ändern</button></a>
 <%} %>
 
+<form action="UIController" method="post">
+	<table>
+	<tr>
+	<td width="200px" height="50px">Inhalt</td>
+	<td><input type="text" name="content"></td>
+	 <td></td>
+	 <input type="hidden" name="gewuenschteSeite" value="addBeitrag">
+	  <td><input type="submit" value="Veröffentlichen"><br></td>
+	</table>
+	</tr>
+</form>
 
 <% number = list.size(); %>
-<%= number %>
-<% for(int i = 0; i < number; i++){%>
+<% for(int i = number-1; i >= 0; i--){%>
 <div class="beitrag"><%= list.get(i).getContent() %><br />
 <%=list.get(i).getCountLikes() %> Likes | <%=list.get(i).getCountDislike() %> Dislikes<br />
 <a href="UIController?gewuenschteSeite=rateBeitrag&action=like&id=<%=list.get(i).getID()%>">Like</a> | <a href="#">Dislike</a> | <a href="#">Report</a>
 </div>
 <%} %>
 
-<form action="UIController" method="post">
-	<table>
-	<tr>
-	<tr>
-	<tr>
-	<td width="200px" height="50px">Inhalt</td>
-	<td><input type="text" name="content"></td>
-	</tr>
-	<tr>
-	<tr>
-	 <td></td>
-	 <input type="hidden" name="gewuenschteSeite" value="addBeitrag">
-	  <td><input type="submit" value="Veröffentlichen"><br></td>
-	 </tr>
-	</table>
-</form>
+
 
 </div>
 </div>
