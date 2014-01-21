@@ -15,6 +15,9 @@ import javax.servlet.http.HttpSession;
 import ydio.Beitrag;
 import ydio.UserManagement;
 import ydio.dao.DatabaseAccess;
+import ydio.exceptions.InvalidDateInputException;
+import ydio.exceptions.InvalidEmailInputException;
+import ydio.exceptions.InvalidNameInputException;
 import ydio.user.AbstractUser;
 import ydio.user.Ydiot;
 
@@ -35,6 +38,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 	private RequestDispatcher JSPUserpage = null;
 	private RequestDispatcher JSPLogin = null;
 	private RequestDispatcher JSPSearch = null;
+	private RequestDispatcher JSPEditProfile = null;
 
 	
 	public void init() throws ServletException
@@ -44,6 +48,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 		JSPUserpage = getServletContext().getRequestDispatcher("/userpage.jsp");
 		JSPLogin = getServletContext().getRequestDispatcher("/login.jsp");
 		JSPSearch = getServletContext().getRequestDispatcher("/search.jsp");
+		JSPEditProfile = getServletContext().getRequestDispatcher("/editProfile.jsp");
 	}
 	
 	/**
@@ -92,6 +97,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 	 * @param request Http Servlet Request
 	 * @param response Http Servlet Response
 	 * @throws ParseException 
+
 	 * 
 	 */
 	private void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException
@@ -194,6 +200,49 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						Ydiot user = (Ydiot) um.getSession();
 						user.addFriend(um.getTarget().getUsername());
 						um.updateUser(user);
+						Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+						break;
+						
+					case "editProfile":
+						if(request.getParameter("action").equals("open")){
+							EditProfile.aufrufEditProfile(request, response, session, JSPEditProfile);
+							break;
+						}
+						if(request.getParameter("action").equals("process")){
+							Ydiot usertoedit = (Ydiot) um.getSession();
+							
+							try{
+								if(!request.getParameter("fullname").equals("")){
+									usertoedit.setFullName(request.getParameter("fullname"));
+								}
+							}
+							catch(InvalidNameInputException INIE){
+								request.setAttribute("error", "Invalid Fullname");
+							}
+							
+							try{
+								if(!request.getParameter("email").equals("")){
+									usertoedit.setEMail(request.getParameter("email"));
+								}
+							}
+							catch(InvalidEmailInputException IEIE){
+								request.setAttribute("error", "Invalid Email");
+							}
+							
+							try{
+								if(!request.getParameter("date").equals("")){
+									String datetoedit = request.getParameter("date");
+									Date parseddate = new SimpleDateFormat("yyyy-MM-dd").parse(datetoedit);
+									usertoedit.setBirthday(parseddate);
+								}
+							}
+							catch(InvalidDateInputException IDIE){
+								request.setAttribute("error", "Invalid Date");
+							}
+							
+							um.updateUser(usertoedit);
+						}
+						
 						Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 						break;
 			}

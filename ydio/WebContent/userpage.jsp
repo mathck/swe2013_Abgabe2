@@ -94,6 +94,13 @@
 <%} %>
 </table>
 
+
+<!-- Button zum Nutzerdaten ändern -->
+<%if(target.getUsername().equals(um.getSession().getUsername())){ %>
+<a href="UIController?gewuenschteSeite=editProfile&action=open"><button type="button">Nutzerdaten ändern</button></a>
+<%} %>
+
+
 <% number = list.size(); %>
 <% for(int i = 0; i < number; i++){%>
 <div class="beitrag"><%= list.get(i).getContent() %><br />

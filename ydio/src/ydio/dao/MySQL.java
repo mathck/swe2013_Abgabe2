@@ -38,7 +38,6 @@ public class MySQL implements DatabaseAccess {
 	
 	/**
 	 * Erstellt eine Instanz von SQL und l�dt die Resource f�r den MySQL Zugriff f�r die sp�teren Queries.
-	 * Getestet und funktioniert.
 	 * @throws SQLException
 	 */
 	public MySQL() throws IOException {
