@@ -126,11 +126,6 @@ public class UserManagement {
 				// TODO
 				break;
 				
-			case GLOBAL_STATS:
-				// TODO
-				break;
-			
-				
 			default:
 				out = "wrong data_type in getScientistData(data_type dataType) in UserManagement!";
 				throw new NotImplementedException();
