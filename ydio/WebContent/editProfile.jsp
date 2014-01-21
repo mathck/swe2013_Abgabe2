@@ -33,7 +33,7 @@
 			<input style="width: 100px;" type="submit" value="search">
 		</form>
 	</li>
-	<% if(login){ %><li style="float: right; padding-right: 20px;">Logout (<%= um.getSession().getUsername() %>)</li><% } %>
+	<% if(login){ %><li style="float: right; padding-right: 20px;"><a href=UIController?gewuenschteSeite=logout> Logout (<%= um.getSession().getUsername() %>)</a></li><% } %>
 </ul>
 </div>
 <!-- HEADER OVER -->
