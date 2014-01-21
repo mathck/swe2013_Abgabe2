@@ -261,6 +261,19 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 								}
 							}
 						}
+						else if(request.getParameter("action").equals("dislike")){
+							List<Beitrag> beitraglist = um.getBeitragListByUsername(um.getTarget().getUsername());
+							long ID = Integer.parseInt(request.getParameter("id"));
+							
+							for(int i = 0; i < beitraglist.size(); i++){
+								if(beitraglist.get(i).getID() == ID){
+									beitraglist.get(i).addDislike(um.getSession().getUsername());
+									um.updateBeitrag(beitraglist.get(i));
+									Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+									break;
+								}
+							}
+						}
 						
 						break;
 			}
