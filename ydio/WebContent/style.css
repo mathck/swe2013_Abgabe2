@@ -1,5 +1,5 @@
 body {
-	background-color: #e3e3e3;
+	background-color: #dadada;
 	font-family: bookman old style, sans-serif;
 }
 
@@ -30,12 +30,13 @@ li {
 	width: 65%;
 	height: 80px;
 	vertical-align: middle;
+	line-height: 45px;
 }
 
 #content {
 	margin: 0 auto;
     text-align: left;
-	background-color: white;
+	background-color: #f2f2f2;
 	width: 65%;
 	padding: 10px;
 	border-bottom: 1px solid #707070;
@@ -62,10 +63,18 @@ li {
 	padding-left: 40px;
 }
 
-.beitrag {
+.box {
 	background-color: white;
 	border: 1px solid #707070;
-	width: 400px;
+	width: 80%;
+	margin-top: 20px;
+	padding: 20px;
+}
+
+.beitrag {
+	background-color: white;
+	border: 2px solid #0094FF;
+	width: 80%;
 	margin-top: 20px;
 	padding: 20px;
 }

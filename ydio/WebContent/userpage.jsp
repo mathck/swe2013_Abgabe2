@@ -30,15 +30,15 @@
 <!-- HEADER START -->
 <div id="header">
 <ul>
-	<li><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></li>
+	<li><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px; padding-right: 50px;" height="50px" src="img/logo.png" alt="logo" /></a></li>
 	<li>
 		<form id="searchbox" action="UIController" method="post">
-			<input type="search" size="50" name="searchstring">
+			<input type="search" size="30" name="searchstring" style="height: 45px; font-size: 22px;" placeholder="search by username ...">
 			<input type="hidden" name="gewuenschteSeite" value="search">
-			<input style="width: 100px;" type="submit" value="search">
+			<input style="width: 100px; height: 45px; font-size: 22px; color: #333333;" type="submit" value="search">
 		</form>
 	</li>
-	<% if(login){ %><li style="float: right; padding-right: 20px;"><a href=UIController?gewuenschteSeite=logout> Logout (<%= um.getSession().getUsername() %>)</a></li><% } %>
+	<% if(login){ %><li style="float: right; padding-right: 30px; font-size: 22px;"><a href=UIController?gewuenschteSeite=logout> Logout (<%= um.getSession().getUsername() %>)</a></li><% } %>
 </ul>
 </div>
 <!-- HEADER OVER -->
@@ -52,6 +52,9 @@
 <h2><%= request.getAttribute("error") %></h2>
 <% } %>
 <h1><%=  target.getUsername()  %></h1>
+
+<div class="box">
+
 <table>
 <tr>
 <td width="200px">Username</td>
@@ -90,10 +93,13 @@
 <%} %>
 </table>	
 
+</div>
+
+
 
 <!-- Button zum Nutzerdaten ändern -->
 <%if(target.getUsername().equals(um.getSession().getUsername())){ %>
-<a href="UIController?gewuenschteSeite=editProfile&action=open"><button type="button">Nutzerdaten ändern</button></a>
+<div class="box"><a href="UIController?gewuenschteSeite=editProfile&action=open"><button type="button">Nutzerdaten ändern</button></a></div>
 <%} %>
 
 <form action="UIController" method="post">
@@ -110,11 +116,13 @@
 
 <% number = list.size(); %>
 <% for(int i = number-1; i >= 0; i--){%>
-<div class="beitrag"><%= list.get(i).getContent() %><br />
-<%=list.get(i).getCountLikes() %> Likes | <%=list.get(i).getCountDislike() %> Dislikes | <%= list.get(i).getReadList().size() %> gelesen | Erstellt von <%=list.get(i).getCreator() %><br />
-<a href="UIController?gewuenschteSeite=rateBeitrag&action=like&id=<%=list.get(i).getID()%>">Like</a> | 
-<a href="UIController?gewuenschteSeite=rateBeitrag&action=dislike&id=<%=list.get(i).getID()%>">Dislike</a> | 
-<a href="UIController?gewuenschteSeite=reportBeitrag&id=<%=list.get(i).getID()%>">Report</a>
+<div class="beitrag">
+<b><%=list.get(i).getCreator() %></b><br /><br />
+<%= list.get(i).getContent() %><br /><br />
+<hr>
+<p align="right" style="margin-bottom: 0px; padding-right: 15px;">
+<%=list.get(i).getCountLikes() %> <a href="UIController?gewuenschteSeite=rateBeitrag&action=like&id=<%=list.get(i).getID()%>">Like</a> | <%=list.get(i).getCountDislike() %> <a href="UIController?gewuenschteSeite=rateBeitrag&action=dislike&id=<%=list.get(i).getID()%>">Dislike</a> | <a href="UIController?gewuenschteSeite=reportBeitrag&id=<%=list.get(i).getID()%>">Report</a> | <%= list.get(i).getReadList().size() %> gelesen
+</p>
 </div>
 <%} %>
 
