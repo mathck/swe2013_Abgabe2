@@ -102,17 +102,19 @@
 <div class="box"><a href="UIController?gewuenschteSeite=editProfile&action=open"><button type="button">Nutzerdaten ändern</button></a></div>
 <%} %>
 
+<div class="box">
 <form action="UIController" method="post">
 	<table>
 	<tr>
-	<td width="200px" height="50px">Inhalt</td>
-	<td><input type="text" name="content"></td>
-	 <td></td>
+	
+	<td><textarea style="font-size: 18px; padding: 10px;" rows=2 cols=50 name="content" placeholder="Neuer Beitrag ..."></textarea></td>
 	 <input type="hidden" name="gewuenschteSeite" value="addBeitrag">
-	  <td><input type="submit" value="Veröffentlichen"><br></td>
+	 </tr><tr>
+	  <td style="padding-top: 10px; padding-left: 3px;"><input style="width: 100px; height: 36px; font-size: 20px; color: #333333;" type="submit" value="senden"><br></td>
 	</table>
 	</tr>
 </form>
+</div>
 
 <% number = list.size(); %>
 <% for(int i = number-1; i >= 0; i--){%>
