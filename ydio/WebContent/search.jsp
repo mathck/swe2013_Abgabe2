@@ -28,15 +28,15 @@
 <!-- HEADER START -->
 <div id="header">
 <ul>
-	<li><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px;" height="50px" src="img/logo.png" alt="logo" /></a></li>
+	<li><a href="UIController?gewuenschteSeite=userpage"><img style="float: left; padding-left: 20px; padding-right: 50px;" height="50px" src="img/logo.png" alt="logo" /></a></li>
 	<li>
 		<form id="searchbox" action="UIController" method="post">
-			<input type="search" size="50" name="searchstring">
+			<input type="search" size="30" name="searchstring" style="height: 45px; font-size: 22px;" placeholder="search by username ...">
 			<input type="hidden" name="gewuenschteSeite" value="search">
-			<input style="width: 100px;" type="submit" value="search">
+			<input style="width: 100px; height: 45px; font-size: 22px; color: #333333;" type="submit" value="search">
 		</form>
 	</li>
-	<% if(login){ %><li style="float: right; padding-right: 20px;">Logout (<%= um.getSession().getUsername() %>)</li><% } %>
+	<% if(login){ %><li style="float: right; padding-right: 30px; font-size: 22px;"><a href=UIController?gewuenschteSeite=logout> Logout (<%= um.getSession().getUsername() %>)</a></li><% } %>
 </ul>
 </div>
 <!-- HEADER OVER -->

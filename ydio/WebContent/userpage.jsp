@@ -26,7 +26,6 @@
 </head>
 <body>
 
-
 <!-- HEADER START -->
 <div id="header">
 <ul>
@@ -42,8 +41,6 @@
 </ul>
 </div>
 <!-- HEADER OVER -->
-
-
 
 <!-- CONTENT START -->
 <div id="content">
@@ -95,8 +92,6 @@
 
 </div>
 
-
-
 <!-- Button zum Nutzerdaten ändern -->
 <%if(target.getUsername().equals(um.getSession().getUsername())){ %>
 <div class="box"><a href="UIController?gewuenschteSeite=editProfile&action=open"><button type="button">Nutzerdaten ändern</button></a></div>
@@ -127,14 +122,9 @@
 </p>
 </div>
 <%} %>
-
-
-
 </div>
 </div>
 <!-- CONTENT OVER -->
-
-
 
 <!-- FOOTER START -->
 <div id="footer">
