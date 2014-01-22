@@ -276,6 +276,21 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						}
 						
 						break;
+						
+					case "reportBeitrag":
+						List<Beitrag> beitraglist = um.getBeitragListByUsername(um.getTarget().getUsername());
+						long ID = Integer.parseInt(request.getParameter("id"));
+						
+						for(int i = 0; i < beitraglist.size(); i++){
+							if(beitraglist.get(i).getID() == ID){
+								if(!beitraglist.get(i).addReport(um.getSession().getUsername())){
+									request.setAttribute("error", "Sie haben diesen Beitrag schon gemeldet!");
+								}
+								um.updateBeitrag(beitraglist.get(i));
+								Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+								break;
+							}
+						}
 			}
 		}
 		
