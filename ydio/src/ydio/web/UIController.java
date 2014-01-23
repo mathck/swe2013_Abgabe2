@@ -147,8 +147,14 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 							
 							if(request.getParameter("target") != null){
 								um.setTarget(um.getUserByUsername(request.getParameter("target")));
-								Userpage.aufrufUserpage(request, response, session, JSPUserpage);
-								break;
+								AbstractUser userclass = um.getTarget();
+                if(userclass instanceof Ydiot)
+                  Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+                else if(userclass instanceof Forscher)
+                  Userpage.aufrufUserpage(request, response, session, JSPScientistPage);
+                else if(userclass instanceof Administrator || userclass instanceof Moderator)
+                  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+break;
 							}
 							
 						}
