@@ -9,6 +9,7 @@ import java.util.List;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ydio.dao.*;
+import ydio.exceptions.NoUsernameLikeThisException;
 
 /**
  * @author mathck
@@ -143,11 +144,17 @@ public class UserManagement {
 	 * @param password
 	 * @param username
 	 * Keine Zugriffs�berpr�fung
+	 * @throws NoUsernameLikeThisException 
 	 */
-	public void login(String password, String username) {
+	public void login(String password, String username) throws NoUsernameLikeThisException {
 		try {
 			if (username == null || password == null) throw new IOException ("Username or Password is null");
-			this.session = dao.getUserByUsername(username);
+			if(dao.getUserByUsername(username) != null){
+				this.session = dao.getUserByUsername(username);
+			}
+			else{
+				throw new NoUsernameLikeThisException();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

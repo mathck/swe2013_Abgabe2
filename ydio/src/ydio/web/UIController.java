@@ -19,6 +19,7 @@ import ydio.dao.DatabaseAccess;
 import ydio.exceptions.InvalidDateInputException;
 import ydio.exceptions.InvalidEmailInputException;
 import ydio.exceptions.InvalidNameInputException;
+import ydio.exceptions.NoUsernameLikeThisException;
 import ydio.user.AbstractUser;
 import ydio.user.Administrator;
 import ydio.user.Forscher;
@@ -157,7 +158,13 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						Login.aufrufLogin(request, response, session, JSPLogin);
 						break;
 					case "verifylogin":
-						um.login(request.getParameter("password"),request.getParameter("username"));
+						try {
+							um.login(request.getParameter("password"),request.getParameter("username"));
+						} catch (NoUsernameLikeThisException e) {
+							request.setAttribute("error", "Benutzername nicht gefunden");
+							Login.aufrufLogin(request, response, session, JSPLogin);
+							break;
+						}
 						
 						if(um.getSession() == null){
 							request.setAttribute("error", "Benutzername und Password stimmen nicht �berein");
