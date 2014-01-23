@@ -40,8 +40,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 	private RequestDispatcher JSPLogin = null;
 	private RequestDispatcher JSPSearch = null;
 	private RequestDispatcher JSPEditProfile = null;
-	private RequestDispatcher JSPScientistPage = null;
-	private RequestDispatcher JSPAdminPage = null;
+
 	
 	public void init() throws ServletException
 	{
@@ -51,8 +50,6 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 		JSPLogin = getServletContext().getRequestDispatcher("/login.jsp");
 		JSPSearch = getServletContext().getRequestDispatcher("/search.jsp");
 		JSPEditProfile = getServletContext().getRequestDispatcher("/editProfile.jsp");
-		JSPScientistPage = getServletContext().getRequestDispatcher("/scientist.jsp");
-		JSPAdminPage = getServletContext().getRequestDispatcher("/admin.jsp");
 	}
 	
 	/**
@@ -131,13 +128,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						if(session.getAttribute("status").equals("logged in")){
 							if(request.getParameter("target") == null || request.getParameter("target").equals(um.getSession().getUsername())){
 								um.setTarget(um.getSession());
-								Class<?> userclass = um.getTarget();
-                if(userclass.getName().equals("Ydiot"))
-                  Userpage.aufrufUserpage(request, response, session, JSPUserpage);
-                else if(userclass.getName().equals("Forscher"))
-                  Userpage.aufrufUserpage(request, response, session, JSPScientistPage);
-                else if(userclass.getName().equals("Administrator") || userclass.getName().equals("Moderator"))
-                  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+								Userpage.aufrufUserpage(request, response, session, JSPUserpage);
 								break;
 							}
 							
