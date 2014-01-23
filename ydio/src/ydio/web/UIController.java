@@ -20,6 +20,9 @@ import ydio.exceptions.InvalidDateInputException;
 import ydio.exceptions.InvalidEmailInputException;
 import ydio.exceptions.InvalidNameInputException;
 import ydio.user.AbstractUser;
+import ydio.user.Administrator;
+import ydio.user.Forscher;
+import ydio.user.Moderator;
 import ydio.user.Ydiot;
 
 /**
