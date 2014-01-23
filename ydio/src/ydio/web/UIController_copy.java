@@ -25,7 +25,7 @@ import ydio.user.Ydiot;
 /**
  * 
  */
-public class UIController extends HttpServlet implements SingleThreadModel {
+public class UIController_copy extends HttpServlet implements SingleThreadModel {
 	
 	/**
 	 * 
