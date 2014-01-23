@@ -131,7 +131,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						if(session.getAttribute("status").equals("logged in")){
 							if(request.getParameter("target") == null || request.getParameter("target").equals(um.getSession().getUsername())){
 								um.setTarget(um.getSession());
-								Class<?> userclass = um.getTarget();
+								AbstractUser userclass = um.getTarget();
                 if(userclass.getName().equals("Ydiot"))
                   Userpage.aufrufUserpage(request, response, session, JSPUserpage);
                 else if(userclass.getName().equals("Forscher"))
