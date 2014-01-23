@@ -154,7 +154,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
                   Userpage.aufrufUserpage(request, response, session, JSPScientistPage);
                 else if(userclass instanceof Administrator || userclass instanceof Moderator)
                   Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
-break;
+								break;
 							}
 							
 						}
@@ -180,7 +180,13 @@ break;
 							session.setAttribute("um", um);
 							session.setAttribute("status", "logged in");
 							um.setTarget(um.getSession());
-							Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+							AbstractUser userclass = um.getTarget();
+              if(userclass instanceof Ydiot)
+                Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+              else if(userclass instanceof Forscher)
+                Userpage.aufrufUserpage(request, response, session, JSPScientistPage);
+              else if(userclass instanceof Administrator || userclass instanceof Moderator)
+                  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 						}
 						break;
 					case "completeRegistration":
