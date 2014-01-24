@@ -36,7 +36,7 @@
 <div id="content">
 <div id="content_wrapper">
 <% if(request.getAttribute("error") !=null){ %>
-<h2><%= request.getAttribute("error") %></h2>
+<h2><font color="#FF0000"><%= request.getAttribute("error") %></font></h2>
 <%	} %>
 <h1>Willkommen auf ydio!</h1>
 <h2>Melde dich jetzt noch an und gib uns deine Daten.</h2>
