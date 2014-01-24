@@ -2,6 +2,7 @@ package ydio.web;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,9 @@ import ydio.dao.DatabaseAccess;
 import ydio.exceptions.InvalidDateInputException;
 import ydio.exceptions.InvalidEmailInputException;
 import ydio.exceptions.InvalidNameInputException;
+import ydio.exceptions.InvalidPasswordInputException;
+import ydio.exceptions.InvalidSexInputException;
+import ydio.exceptions.InvalidUsernameInputException;
 import ydio.exceptions.NoUsernameLikeThisException;
 import ydio.user.AbstractUser;
 import ydio.user.Administrator;
@@ -136,24 +140,24 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 							if(request.getParameter("target") == null || request.getParameter("target").equals(um.getSession().getUsername())){
 								um.setTarget(um.getSession());
 								AbstractUser userclass = um.getTarget();
-                if(userclass instanceof Ydiot)
-                  Userpage.aufrufUserpage(request, response, session, JSPUserpage);
-                else if(userclass instanceof Forscher)
-                  Userpage.aufrufUserpage(request, response, session, JSPScientistPage);
-                else if(userclass instanceof Administrator || userclass instanceof Moderator)
-                  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+				                if(userclass instanceof Ydiot)
+				                  Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+				                else if(userclass instanceof Forscher)
+				                  Userpage.aufrufUserpage(request, response, session, JSPScientistPage);
+				                else if(userclass instanceof Administrator || userclass instanceof Moderator)
+				                  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 								break;
 							}
 							
 							if(request.getParameter("target") != null){
 								um.setTarget(um.getUserByUsername(request.getParameter("target")));
 								AbstractUser userclass = um.getTarget();
-                if(userclass instanceof Ydiot)
-                  Userpage.aufrufUserpage(request, response, session, JSPUserpage);
-                else if(userclass instanceof Forscher)
-                  Userpage.aufrufUserpage(request, response, session, JSPScientistPage);
-                else if(userclass instanceof Administrator || userclass instanceof Moderator)
-                  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+				                if(userclass instanceof Ydiot)
+				                  Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+				                else if(userclass instanceof Forscher)
+				                  Userpage.aufrufUserpage(request, response, session, JSPScientistPage);
+				                else if(userclass instanceof Administrator || userclass instanceof Moderator)
+				                  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 								break;
 							}
 							
@@ -181,17 +185,56 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 							session.setAttribute("status", "logged in");
 							um.setTarget(um.getSession());
 							AbstractUser userclass = um.getTarget();
-              if(userclass instanceof Ydiot)
-                Userpage.aufrufUserpage(request, response, session, JSPUserpage);
-              else if(userclass instanceof Forscher)
-                Userpage.aufrufUserpage(request, response, session, JSPScientistPage);
-              else if(userclass instanceof Administrator || userclass instanceof Moderator)
-                  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+				              if(userclass instanceof Ydiot)
+				                Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+				              else if(userclass instanceof Forscher)
+				                Userpage.aufrufUserpage(request, response, session, JSPScientistPage);
+				              else if(userclass instanceof Administrator || userclass instanceof Moderator)
+				                  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 						}
 						break;
 					case "completeRegistration":
+						if(request.getParameter("username").equals("") || request.getParameter("password").equals("") || request.getParameter("fullname").equals("")||
+								request.getParameter("email").equals("")|| request.getParameter("sex").equals("") || request.getParameter("desc").equals("")){
+							
+							request.setAttribute("error", "All fields are requiered!!");
+							Register.aufrufRegister(request, response, session,  JSPRegister);
+							break;
+						}
 						String requestDate = request.getParameter("date");
 						Date date = new SimpleDateFormat("yyyy-MM-dd").parse(requestDate);
+						
+						try{
+							new Ydiot(request.getParameter("username"), request.getParameter("password"),request.getParameter("fullname"),
+									request.getParameter("email"), request.getParameter("sex").charAt(0), date, request.getParameter("desc"), new ArrayList<String>());
+						}
+						catch(InvalidDateInputException e){
+							request.setAttribute("error", "The entered Date is not valid");
+							Register.aufrufRegister(request, response, session,  JSPRegister);
+							break;
+						}
+						catch(InvalidEmailInputException e){
+							request.setAttribute("error", "The entered Email is not valid");
+							Register.aufrufRegister(request, response, session,  JSPRegister);
+							break;
+						}
+						catch(InvalidNameInputException e){
+							request.setAttribute("error", "Fullnames must consist of at least two names!");
+							Register.aufrufRegister(request, response, session,  JSPRegister);
+							break;
+						}
+						catch(InvalidPasswordInputException e){
+							request.setAttribute("error", "Passwords must consist of at least 6 characters!");
+							Register.aufrufRegister(request, response, session,  JSPRegister);
+							break;
+						}
+						catch(InvalidSexInputException e){}
+						catch(InvalidUsernameInputException e){
+							request.setAttribute("error", "Your Username cannot consist spaces!");
+							Register.aufrufRegister(request, response, session,  JSPRegister);
+							break;
+						}
+						
 						um.registerYdiot(request.getParameter("username"), request.getParameter("password"),request.getParameter("fullname"),
 										request.getParameter("email"), request.getParameter("sex").charAt(0), date, request.getParameter("desc"));
 						Login.aufrufLogin(request, response, session, JSPLogin);
