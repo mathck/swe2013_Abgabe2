@@ -199,6 +199,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 					
 					case "logout":
 						session.setAttribute("um", null);
+						um.logout();
 						session.setAttribute("status", "no login");
 						Login.aufrufLogin(request, response, session, JSPLogin);
 						break;
