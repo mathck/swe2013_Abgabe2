@@ -52,7 +52,7 @@ public interface DatabaseAccess {
 	 * @param data_type Gibt an welche Daten zurückgegeben werden sollen.
 	 * @throws IOException Bei Ausnahmefällen in der Datenbank wird eine Exception geworfen.
 	 */
-	public List<String[]> getScientistData(data_type dataType) throws IOException;
+	public List<String[]> getScientistData(String typeString) throws IOException;
 
 	/**
 	 * Sucht Benutzer über den Benutzernamen aus der Datenbank.
