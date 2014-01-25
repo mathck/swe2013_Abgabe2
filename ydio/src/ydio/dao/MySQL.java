@@ -103,7 +103,7 @@ public class MySQL implements DatabaseAccess {
 			String sql = "insert into user (username, password, fullname, email, sex, birthday, type, description, lockeduntil) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			connection = source.getConnection();
 			test = connection.prepareStatement("select * from user where username=?");
-			test.setString(0, user.getUsername());
+			test.setString(1, user.getUsername());
 			testResult = test.executeQuery();
 			if (testResult.next()) throw new IOException ("User already exists in database.");
 			add = connection.prepareStatement(sql);
