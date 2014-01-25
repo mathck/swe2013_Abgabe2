@@ -212,9 +212,23 @@ public class MySQL implements DatabaseAccess {
 	 * @param data_type Durch data_type wird definiert welche Tabellen erstellt und zurückgegeben werden
 	 * @throws IOException Wird geworfen wenn die Datenbankabfrage Fehler erzeugt.
 	 */
-	public List<String[]> getScientistData(data_type dataType) throws IOException{
+	public List<String[]> getScientistData(String typeString) throws IOException{
 		ResultSet result = null;
 		Statement statement = null;
+		data_type dataType = null;
+		if (typeString != null) {
+			switch (typeString) {
+			case "ydiot":
+				dataType = data_type.YDIOT_STATS;
+				break;
+			case "beitrag":
+				dataType = data_type.BEITRAG_STATS;
+				break;
+			default:
+				throw new IOException ("DataType not known");
+			}
+		} else 
+			throw new IOException ("Null String cannot be used for creating stats.");
 		try {
 			List<String[]> list = new ArrayList<String[]> ();
 			connection = source.getConnection();
