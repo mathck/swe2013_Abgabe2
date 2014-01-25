@@ -46,6 +46,25 @@ public class UserManagement {
 			}
 		}
 	}
+	
+	/**
+	 * reported = true: gibt alle reporteten Beitraege zurueck
+	 * reported = false: gibt alle Beitraege zurueck
+	 * @param reported
+	 */
+	public List<Beitrag> getBeitragList(boolean reported)
+	{
+		if(session instanceof Administrator || session instanceof Moderator)
+		{
+			try{
+				return dao.getBeitragList(reported);
+			}
+			catch(Exception e) {
+				return null;
+			}
+		}
+		else return null;
+	}
 
 	/**
 	 * set strings null if no change, set char ' ' if no change
