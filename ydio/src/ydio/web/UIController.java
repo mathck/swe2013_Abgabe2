@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -366,6 +367,37 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 								break;
 							}
 						}
+						break;
+					
+					case "handleReport":
+						Beitrag beitrag = null;
+						if(request.getParameter("deleteID") != null)
+						{
+							long beitragID = Long.parseLong(request.getParameter("deleteID"));
+							beitrag = um.getBeitrag(beitragID);
+							um.removeBeitrag(beitrag);
+						}
+						
+						if(request.getParameter("lockUser") != null)
+						{
+							Ydiot lockuser = (Ydiot)um.getUserByUsername(request.getParameter("lockUser"));
+							Calendar c = Calendar.getInstance(); 
+							Date lockdate = new Date();
+							c.setTime(lockdate); 
+							c.add(Calendar.DATE, 1);
+							lockdate = c.getTime();
+							lockuser.setLocked(lockdate);
+						}
+						
+						if(request.getParameter("notBad") != null)
+						{
+							long beitragID = Long.parseLong(request.getParameter("notBad"));
+							beitrag = um.getBeitrag(beitragID);
+							beitrag.setReportList(null);
+						}
+						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+						break;
+						 
 			}
 		}
 		
