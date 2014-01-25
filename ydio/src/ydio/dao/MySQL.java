@@ -183,6 +183,36 @@ public class MySQL implements DatabaseAccess {
 	 * @return List<Beitrag> Von SQL Struktur zu Objektstruktur konvertierte Liste der Beiträge
 	 * @exception Wird geworfen, wenn bei der Datenbankabfrage Fehler auftreten.
 	 */
+	public List<Beitrag> getBeitragList(boolean reported) throws IOException {
+		ResultSet result = null;
+		PreparedStatement get = null;
+		try {
+			connection = source.getConnection();
+			get = connection.prepareStatement("select * from beitrag");
+			result = get.executeQuery();
+			List<Beitrag> list = new ArrayList<Beitrag> ();
+			while (result.next()) {
+				list.add(createBeitrag(result));
+			}
+			if (reported) {
+				for (int i = 0; i < list.size(); i++) {
+					if (list.get(i).getReportList().size() > 0) {
+						list.remove(i);
+						i--;
+					}
+				}
+			}
+			return list;
+		} catch (SQLException e) {
+			throw new IOException (e.getMessage());
+		} finally {
+			try {
+				if (result != null) result.close();
+				if (get != null) get.close();
+				if (connection != null) connection.close();
+			} catch (SQLException e) {}	
+		}
+	}
 	public List<Beitrag> getBeitragList(String username) throws IOException{
 		ResultSet result = null;
 		PreparedStatement get = null;
