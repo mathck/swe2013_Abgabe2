@@ -314,7 +314,7 @@ public class MySQL implements DatabaseAccess {
 				switch (result.getString("type")) {
 				case "ydiot":
 					return createYdiot(result);
-				case "adminstrator":
+				case "administrator":
 					return createAdministrator(result);
 				case "moderator":
 					return createModerator(result);
