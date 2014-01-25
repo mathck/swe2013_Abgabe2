@@ -97,9 +97,15 @@ public class MySQL implements DatabaseAccess {
 	 */
 	public void addUser(AbstractUser user) throws IOException {
 		PreparedStatement add = null;
+		PreparedStatement test = null;
+		ResultSet testResult = null;
 		try {
 			String sql = "insert into user (username, password, fullname, email, sex, birthday, type, description, lockeduntil) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			connection = source.getConnection();
+			test = connection.prepareStatement("select * from user where username=?");
+			test.setString(0, user.getUsername());
+			testResult = test.executeQuery();
+			if (testResult.next()) throw new IOException ("User already exists in database.");
 			add = connection.prepareStatement(sql);
 			add.setString(1, user.getUsername());
 			add.setString(2, user.getPassword());
@@ -127,6 +133,8 @@ public class MySQL implements DatabaseAccess {
 		} finally {
 			try {
 				if (add != null) add.close();
+				if (testResult != null) testResult.close();
+				if (test != null) test.close();
 				if (connection != null) connection.close();
 			} catch (Throwable e) {}
 		} 
@@ -411,6 +419,7 @@ public class MySQL implements DatabaseAccess {
 			List<Ydiot> list = new ArrayList<Ydiot> ();
 			connection = source.getConnection();
 			search = connection.prepareStatement("select * from user where (username like ? or fullname like ?) and type=?");
+			searchstring = "%"+searchstring+"%";
 			search.setString(1, searchstring);
 			search.setString(2, searchstring);
 			search.setString(3, "ydiot");
