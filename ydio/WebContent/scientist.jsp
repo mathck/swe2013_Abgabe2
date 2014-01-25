@@ -9,13 +9,17 @@
 <%! boolean login = false; %>
 <%! int number = 0; %>
 <%! Forscher target = null; %>
+<%! List<String[]> ydiotenliste = null; %>
+<%! List<String[]> beitragliste = null; %>
 <% 
 if(session.getAttribute("status") !=null &&  session.getAttribute("status").equals("logged in")){
   um = (UserManagement)session.getAttribute("um");
   if(um.isSessionActive()){
     login = true;
     target = (Forscher) um.getTarget();
-  } 
+  }
+//  ydiotenliste = um.getScientistData("ydiot"); 
+//  beitragliste = um.getScientistData("beitrag");
 } 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -43,28 +47,40 @@ if(session.getAttribute("status") !=null &&  session.getAttribute("status").equa
 <% if(request.getAttribute("error") !=null){ %>
 <h2><font color="#FF0000"><%= request.getAttribute("error") %></font></h2>
 <% } %>
-<h1><%=  target.getUsername()  %></h1>
+<h1>Statistik Seite f&uuml;r: <%=  target.getUsername()  %></h1>
 
 <div class="box">
+<h2>Beitrag-Statistiken</h2>
+<table name="beitragstats">
+  <th>
+    <td>Datum</td>
+    <td>Verfasser</td>
+    <td>Inhalt</td>
+    <td>Likes</td>
+    <td>Dislikes</td>
+    <td>Reported</td>
+    <td>Gelesen</td>
+  </th>
+<% %>
+</table>
 
-<table>
-<tr>
-<td width="200px">Username</td>
-<td><%=  target.getUsername()  %></td>
-</tr>
-<tr>
-<td width="200px">Fullname</td>
-<td><%=  target.getFullName()  %></td>
-</tr>
-<tr>
-<td>E-Mail</td>
-<td><%= target.getEMail()  %></td>
-</tr>
-<tr>
-<td>Birthday</td>
-<td><%=  target.getBirthday()  %></td>
-</tr>
-<tr>
+<h2>Ydioten-Statistiken</h2>
+<table name="ydiotenstats">
+  <th>
+    <td>Geburtstag</td>
+    <td>Geschlecht</td>
+    <td>Erstellte Beitr&auml;ge</td>
+    <td>von Anderen gelesen</td>
+    <td>Likes erhalten</td>
+    <td>Dislikes erhalten</td>
+    <td>Reports erhalten</td>
+    <td>Beitr&auml;ge gelesen</td>
+    <td>Like vergeben</td>
+    <td>Dislike vergeben</td>
+    <td>Reported</td>
+  </th>
+<% %>
+</table>
 
 </div>
 </div>
