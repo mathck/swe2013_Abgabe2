@@ -10,13 +10,18 @@
 <%! List<Beitrag> list; %>
 <%! int number = 0; %>
 <%! AbstractUser target = null; %>
-<% if(session.getAttribute("status") !=null &&  session.getAttribute("status").equals("logged in")){ %>
-<% um = (UserManagement)session.getAttribute("um");%>
-<% if(um.isSessionActive()){ %>
-<% login = true; %>
-<% target = um.getTarget(); %>
-<% } %>
-<% } %>
+<% 
+if(session.getAttribute("status") !=null &&  session.getAttribute("status").equals("logged in"))
+{ 
+  um = (UserManagement)session.getAttribute("um");
+  if(um.isSessionActive())
+  { 
+    login = true; 
+    target = um.getTarget(); 
+  }
+  list = um.getBeitragList(true); 
+} 
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -48,9 +53,23 @@
     <td>Beitrag</td>
     <td>Datum</td>
     <td>Beitrag l&ouml;schen</td>
-    <td>User sperren</td>
+    <td>User 1 Tag sperren</td>
     <td>Reporting entfernen</td>
+    <td></td>
   <th>
+<% for(int i = 0; i < list.size(); ++i){ %>
+  <tr>
+    <form method="post" action="UIController">
+      <td><% list.get(i).getCreator(); %></td>
+      <td><% list.get(i).getContent(); %></td>  
+      <td><% list.get(i).getDate().toString(); %></td>  
+      <td><input type="checkbox" name="deleteID" value=<% list.get(i).getID(); %> /> L&ouml;schen<td>  
+      <td><input type="checkbox" name="lockUser" value=<% list.get(i).getCreator(); %> /> Sperren<td>  
+      <td><input type="checkbox" name="notbad" value=<% list.get(i).getID(); %> /> Nicht B&ouml;se<td>  
+      <input type="hidden" name="gewuenschteSeite" value="handleReport" />
+      <td><input type="submit" value="Los" /></td>
+    </form>
+<% } %>
 </table>
 
 <% if(target instanceof Administrator) { %>
