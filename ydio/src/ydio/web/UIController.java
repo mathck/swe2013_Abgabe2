@@ -139,7 +139,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 					case "userpage":
 						if(session.getAttribute("status").equals("logged in")){
 							if(request.getParameter("target") == null || request.getParameter("target").equals(um.getSession().getUsername())){
-								um.setTarget(um.getSession());
+								um.setTarget(um.getUserByUsername(um.getSession().getUsername()));
 								AbstractUser userclass = um.getTarget();
 				                if(userclass instanceof Ydiot)
 				                  Userpage.aufrufUserpage(request, response, session, JSPUserpage);
