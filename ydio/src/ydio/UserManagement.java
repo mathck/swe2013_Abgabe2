@@ -306,7 +306,7 @@ public class UserManagement {
 	 * Beschr�nkt auf: Moderator
 	 */
 	public void removeBeitrag(Beitrag beitrag) {
-		if(session instanceof Moderator){
+		if(session instanceof Moderator || beitrag.getCreator() == session.getUsername()){
 			try {
 				dao.removeBeitrag(beitrag);
 			} catch (IOException e) {
