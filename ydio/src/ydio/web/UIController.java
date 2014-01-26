@@ -453,7 +453,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						}
 						String registerscientistdate = request.getParameter("date");
 						Date scientistdate = new SimpleDateFormat("yyyy-MM-dd").parse(registerscientistdate);
-						um.registerModerator(request.getParameter("username"), request.getParameter("password"), 
+						um.registerForscher(request.getParameter("username"), request.getParameter("password"), 
 								request.getParameter("fullname"), request.getParameter("email"), request.getParameter("sex").charAt(0), scientistdate);
 						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 
