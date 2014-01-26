@@ -358,6 +358,10 @@ public class UserManagement {
 		}
 	}
 	
+	public Beitrag getBeitrag(long id) throws IOException{
+		return dao.getBeitrag(id);
+	}
+	
 	public AbstractUser getTarget(){
 		return target;
 	}

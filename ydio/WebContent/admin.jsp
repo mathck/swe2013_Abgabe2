@@ -5,6 +5,8 @@
 <%@ page import="ydio.Beitrag" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ydio.user.Ydiot"%>
+<%@ page import="ydio.user.AbstractUser" %>
+<%@ page import="ydio.user.Administrator" %>
 <%! UserManagement um;%>
 <%! boolean login = false; %>
 <%! List<Beitrag> list; %>
