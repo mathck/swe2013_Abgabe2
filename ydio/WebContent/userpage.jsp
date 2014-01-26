@@ -82,12 +82,21 @@
         out.println("<tr><td>Beschreibung</td><td>" + request.getParameter("desc") + "</td></tr>");
     }
 %>
-<%if(!target.getUsername().equals(um.getSession().getUsername())){ %>
+<% if(!target.getUsername().equals(um.getSession().getUsername())){ %>
+<% if (um.getSession() instanceof Ydiot){  %>
+<% Ydiot loggedinuser = (Ydiot) um.getSession(); %>
+<% if(!loggedinuser.getFriendList().contains(target.getUsername())){ %>
 <form action="UIController" method="post">
 <input type="hidden" name="gewuenschteSeite" value="addFriend">
 <input type="submit" value="Add to your Friendlist">  
 </form>
 <%} %>
+<% if (loggedinuser.getFriendList().contains(target.getUsername())){ %><h3><font color="#04B486">Dieser Benutzer gehört zu ihrem Freundeskreis</font></h3> <%}}} %>  
+
+
+
+
+
 </table>	
 
 </div>

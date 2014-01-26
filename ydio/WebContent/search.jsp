@@ -51,12 +51,6 @@
 <% for(int i = 0; i < resultlist.size(); i++){%>
 <div class="box">
 <a href="UIController?gewuenschteSeite=userpage&target=<%= resultlist.get(i).getUsername() %>"><%= resultlist.get(i).getUsername() %></a>
-<%if(!resultlist.get(i).getUsername().equals(um.getSession().getUsername())){ %>
-<form action="UIController" method="post">
-<input type="hidden" name="gewuenschteSeite" value="addFriend">
-<input type="submit" value="Add to your Friendlist">  
-</form>
-<%} %>
 </div>
 <%}   %>
 
