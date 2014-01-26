@@ -397,7 +397,23 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						}
 						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 						break;
-						 
+						
+						
+					case "registerAdmin":
+						if(request.getParameter("username").equals("") || request.getParameter("password").equals("") || request.getParameter("fullname").equals("")||
+								request.getParameter("email").equals("")|| request.getParameter("sex").equals("") || request.getParameter("desc").equals("")){
+							
+							request.setAttribute("error", "All fields are requiered!!");
+							Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+							break;
+						}
+						String registeradmindate = request.getParameter("date");
+						Date admindate = new SimpleDateFormat("yyyy-MM-dd").parse(registeradmindate);
+						um.registerAdministrator(request.getParameter("username"), request.getParameter("password"), 
+								request.getParameter("fullname"), request.getParameter("email"), request.getParameter("sex").charAt(0), admindate);
+						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+						
+						break;	 
 			}
 		}
 		
