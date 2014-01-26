@@ -74,6 +74,32 @@ if(session.getAttribute("status") !=null &&  session.getAttribute("status").equa
 <% } %>
 </table>
 
+<p></p>
+
+<div name="lock_user">
+  <table>
+    <form name="lock_user" method="post" action="UIController">
+    <tr>  
+      <td style="font-weight:bold">User sperren:</td> 
+      <td><input type="text" name="username" placeholder="Username eingeben..." /></td><td>
+      <input type="text" name="lockdate" placeholder="Sperrdatum (yyyy-MM-dd2)"></td>
+      <td><input type="submit" value="Sperren"></td>
+    </tr>
+    <input type="hidden" name="gewuenschteSeite" value="lockUserByDate">
+    </form>
+
+    <form name="unlock_user" method="post" action="UIController">
+    <tr>  
+      <td style="font-weight:bold">User entsperren:</td>
+      <td><input type="text" name="username" placeholder="Username eingeben..." /></td>
+      
+      <td><input type="submit" value="Entsperren"></td>
+    </tr>
+    <input type="hidden" name="gewuenschteSeite" value="unlockUser">
+    </form>
+  </table>
+</div>
+
 <% if(target instanceof Administrator) { %>
 <form name="create_admin" method="post" action="UIController">
 <h3> Erstelle einen neuen Admin </h3>
