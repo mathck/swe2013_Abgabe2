@@ -163,6 +163,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 							}
 							
 						}
+						
 						Login.aufrufLogin(request, response, session, JSPLogin);
 						break;
 					case "login":
@@ -192,6 +193,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 				            	if(maybelockeduser.isLocked()){
 				            		request.setAttribute("error", "Sie wurden aufgrund unpassender Beiträge geperrt!");
 				            		um.logout();
+				            		session.setAttribute("status", "no login");
 				            		Login.aufrufLogin(request, response, session, JSPLogin);
 				            	}
 				                Userpage.aufrufUserpage(request, response, session, JSPUserpage);
