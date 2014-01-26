@@ -48,10 +48,10 @@ beitragliste = um.getScientistData("beitrag");
 <h2><font color="#FF0000"><%= request.getAttribute("error") %></font></h2>
 <% } %>
 <h1>Statistik Seite f&uuml;r: <%=  target.getUsername()  %></h1>
-
+<h2>Navigiere zu: <a href="#beitrag">Beitrag-Statistiken</a>, <a href="#ydioten">Ydioten-Statistiken</h2>
 <div class="box">
-<h2>Beitrag-Statistiken</h2>
-<table name="beitragstats" style="text-align: center; padding: 5px; width: 80%">
+<h2><a name="beitrag">Beitrag-Statistiken</a></h2>
+<table name="beitragstats" style="text-align: center; width: 80%" cellpadding="7">
   <th>
     <td class="tbl">Datum</td>
     <td class="tbl">Eigene Wall</td>
@@ -77,10 +77,10 @@ beitragliste = um.getScientistData("beitrag");
 </table>
 </div>
 <div class="box">
-<h2>Ydioten-Statistiken</h2>
-<table name="ydiotenstats"  style="text-align: center; padding: 5px; width: 80%">
+<h2><a name="ydioten">Ydioten-Statistiken</a></h2>
+<table name="ydiotenstats"  style="text-align: center; width: 80%" cellpadding="7">
   <th>
-    <td class="tbl">Geboren am</td>
+    <td class="tbl" style="width: 300px;">Geburtstag</td>
     <td class="tbl">m / f</td>
     <td class="tbl">Erstellte Beitr&auml;ge</td>
     <td class="tbl">von Anderen gelesen</td>
@@ -96,7 +96,7 @@ beitragliste = um.getScientistData("beitrag");
   <% String[] data = ydiotenliste.get(i); %>
   <tr>
   	<td>
-    <td class="tb"><%= data[0] %></td>
+    <td class="tb" style="font-size: 12px;"><%= data[0] %></td>
     <td class="tb"><%= data[1] %></td>
     <td class="tb"><%= data[2] %></td>
     <td class="tb"><%= data[3] %></td>
@@ -111,6 +111,7 @@ beitragliste = um.getScientistData("beitrag");
 <% } %>
 </table>
 
+</div>
 </div>
 </div>
 <!-- CONTENT OVER -->
