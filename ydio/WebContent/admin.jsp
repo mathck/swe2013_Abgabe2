@@ -50,7 +50,7 @@ if(session.getAttribute("status") !=null &&  session.getAttribute("status").equa
 <h1>Verwaltungsseite von: <%=  target.getUsername()  %></h1>
 <h2> Liste b&ouml;ser Beitr&auml;ge </h2>
 <table name="reported_beitrag">
-  <th>
+  <tr style="font-weight:bold">
     <td>Username</td>
     <td>Beitrag</td>
     <td>Datum</td>
@@ -58,16 +58,16 @@ if(session.getAttribute("status") !=null &&  session.getAttribute("status").equa
     <td>User 1 Tag sperren</td>
     <td>Reporting entfernen</td>
     <td></td>
-  <th>
+  </tr>
 <% for(int i = 0; i < list.size(); ++i){ %>
   <tr>
     <form method="post" action="UIController">
-      <td><% list.get(i).getCreator(); %></td>
-      <td><% list.get(i).getContent(); %></td>  
-      <td><% list.get(i).getDate().toString(); %></td>  
-      <td><input type="checkbox" name="deleteID" value=<% list.get(i).getID(); %> /> L&ouml;schen<td>  
-      <td><input type="checkbox" name="lockUser" value=<% list.get(i).getCreator(); %> /> Sperren<td>  
-      <td><input type="checkbox" name="notbad" value=<% list.get(i).getID(); %> /> Nicht B&ouml;se<td>  
+      <td><%= list.get(i).getCreator() %></td>
+      <td><%= list.get(i).getContent() %></td>  
+      <td><%= list.get(i).getDate().toString() %></td>  
+      <td><input type="checkbox" name="deleteID" value="<%= list.get(i).getID() %>" /> L&ouml;schen</td>  
+      <td><input type="checkbox" name="lockUser" value="<%= list.get(i).getCreator() %>" /> Sperren</td>  
+      <td><input type="checkbox" name="notbad" value="<%= list.get(i).getID() %>" /> Nicht B&ouml;se</td>  
       <input type="hidden" name="gewuenschteSeite" value="handleReport" />
       <td><input type="submit" value="Los" /></td>
     </form>

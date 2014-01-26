@@ -54,7 +54,7 @@ beitragliste = um.getScientistData("beitrag");
 <table name="beitragstats">
   <th>
     <td>Datum</td>
-    <td>Verfasser</td>
+    <td>an eigener Wall</td>
     <td>Inhalt</td>
     <td>Likes</td>
     <td>Dislikes</td>
