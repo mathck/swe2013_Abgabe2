@@ -131,27 +131,13 @@ public class UserManagement {
 	 * @param data_type
 	 * Zugriffs�berpr�fung
 	 * Beschr�nkt auf: Forscher
+	 * @throws IOException 
 	 */
-	public String getScientistData(data_type dataType) {
+	public List<String[]> getScientistData(String typeString) throws IOException {
+		List<String[]> out = new ArrayList<String[]>();
 		if(session instanceof Forscher){
-			String out = "";
+			out = dao.getScientistData(typeString);
 			
-			switch(dataType) {
-			
-			case BEITRAG_STATS:
-				// TODO
-				break;
-				
-			case YDIOT_STATS:
-				// TODO
-				break;
-				
-			default:
-				out = "wrong data_type in getScientistData(data_type dataType) in UserManagement!";
-				throw new NotImplementedException();
-				//break;
-			}
-		
 			return out;
 		}
 		return null;

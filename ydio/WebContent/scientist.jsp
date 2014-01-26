@@ -18,8 +18,8 @@ if(session.getAttribute("status") !=null &&  session.getAttribute("status").equa
     login = true;
     target = (Forscher) um.getTarget();
   }
-//  ydiotenliste = um.getScientistData("ydiot"); 
-//  beitragliste = um.getScientistData("beitrag");
+ydiotenliste = um.getScientistData("ydiot");
+beitragliste = um.getScientistData("beitrag");
 } 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -61,7 +61,19 @@ if(session.getAttribute("status") !=null &&  session.getAttribute("status").equa
     <td>Reported</td>
     <td>Gelesen</td>
   </th>
-<% %>
+  <%for(int i = 0; i< beitragliste.size(); i++){ %>
+  <% String[] data = beitragliste.get(i); %>
+  <tr>
+  	<td>
+    <td><%= data[0] %></td>
+    <td><%= data[1] %></td>
+    <td><%= data[2] %></td>
+    <td><%= data[3] %></td>
+    <td><%= data[4] %></td>
+    <td><%= data[5] %></td>
+    <td><%= data[6] %></td>
+  </tr>
+<% }%>
 </table>
 
 <h2>Ydioten-Statistiken</h2>
@@ -79,7 +91,23 @@ if(session.getAttribute("status") !=null &&  session.getAttribute("status").equa
     <td>Dislike vergeben</td>
     <td>Reported</td>
   </th>
-<% %>
+  <%for(int i = 0; i< ydiotenliste.size(); i++){ %>
+  <% String[] data = ydiotenliste.get(i); %>
+  <tr>
+  	<td>
+    <td><%= data[0] %></td>
+    <td><%= data[1] %></td>
+    <td><%= data[2] %></td>
+    <td><%= data[3] %></td>
+    <td><%= data[4] %></td>
+    <td><%= data[5] %></td>
+    <td><%= data[6] %></td>
+    <td><%= data[7] %></td>
+    <td><%= data[8] %></td>
+    <td><%= data[9] %></td>
+    <td><%= data[10] %></td>
+  </tr>
+<% } %>
 </table>
 
 </div>
