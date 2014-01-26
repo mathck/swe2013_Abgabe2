@@ -80,7 +80,7 @@ beitragliste = um.getScientistData("beitrag");
 <h2>Ydioten-Statistiken</h2>
 <table name="ydiotenstats"  style="text-align: center; padding: 5px; width: 80%">
   <th>
-    <td class="tbl">Geb.</td>
+    <td class="tbl">Geboren am</td>
     <td class="tbl">m / f</td>
     <td class="tbl">Erstellte Beitr&auml;ge</td>
     <td class="tbl">von Anderen gelesen</td>
