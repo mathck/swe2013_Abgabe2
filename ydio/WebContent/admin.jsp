@@ -67,7 +67,7 @@ if(session.getAttribute("status") !=null &&  session.getAttribute("status").equa
       <td><%= list.get(i).getDate().toString() %></td>  
       <td><input type="checkbox" name="deleteID" value="<%= list.get(i).getID() %>" /> L&ouml;schen</td>  
       <td><input type="checkbox" name="lockUser" value="<%= list.get(i).getCreator() %>" /> Sperren</td>  
-      <td><input type="checkbox" name="notbad" value="<%= list.get(i).getID() %>" /> Nicht B&ouml;se</td>  
+      <td><input type="checkbox" name="notBad" value="<%= list.get(i).getID() %>" /> Nicht B&ouml;se</td>  
       <input type="hidden" name="gewuenschteSeite" value="handleReport" />
       <td><input type="submit" value="Los" /></td>
     </form>

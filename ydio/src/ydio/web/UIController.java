@@ -404,7 +404,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						{
 							long beitragID = Long.parseLong(request.getParameter("notBad"));
 							beitrag = um.getBeitrag(beitragID);
-							beitrag.setReportList(new ArrayList<String>());
+							beitrag.setReportList(null);
 							um.updateBeitrag(beitrag);
 						}
 						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
