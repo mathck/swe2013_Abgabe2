@@ -213,13 +213,15 @@ public class MySQL implements DatabaseAccess {
 			while (result.next()) {
 				list.add(createBeitrag(result));
 			}
+			
 			if (reported) {
+				List<Beitrag> temp = new ArrayList<Beitrag> ();
 				for (int i = 0; i < list.size(); i++) {
 					if (list.get(i).getReportList().size() > 0) {
-						list.remove(i);
-						i--;
+						temp.add(list.get(i));
 					}
 				}
+				list = temp;
 			}
 			return list;
 		} catch (SQLException e) {
@@ -434,7 +436,7 @@ public class MySQL implements DatabaseAccess {
 		PreparedStatement delete = null;
 		try {
 			connection = source.getConnection();
-			delete = connection.prepareStatement("delete form beitrag where id=?");
+			delete = connection.prepareStatement("delete from beitrag where id=?");
 			delete.setLong(1, beitrag.getID());
 			delete.executeUpdate();
 		} catch (SQLException e) {
