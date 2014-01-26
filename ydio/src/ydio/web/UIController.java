@@ -327,6 +327,10 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 								request.setAttribute("error", "Invalid Date");
 							}
 							
+							if(!request.getParameter("desc").equals("")){
+								usertoedit.setDescription(request.getParameter("desc"));
+							}
+							
 							um.updateUser(usertoedit);
 						}
 						

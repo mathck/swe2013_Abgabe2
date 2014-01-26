@@ -57,8 +57,12 @@
 	<td><input type="text" name="email"></td>
 	</tr>
 	<tr>
-	<td>Geburtsdatum(yyyy-MM-dd)</td>
+	<td>Birthday(yyyy-MM-dd)</td>
 	<td><input type="text" name="date"></td>
+	</tr>
+	<tr>
+	<td>Description</td>
+	<td><input type="text" name="desc"></td>
 	</tr>
 	<tr>
 	 <td></td>
