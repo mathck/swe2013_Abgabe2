@@ -47,6 +47,10 @@ li {
 	padding: 40px;
 }
 
+.tb {
+	border-bottom: 1px dashed #555555;
+}
+
 #footer {
 	margin: 0 auto;
     text-align: left;

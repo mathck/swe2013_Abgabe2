@@ -51,34 +51,34 @@ beitragliste = um.getScientistData("beitrag");
 
 <div class="box">
 <h2>Beitrag-Statistiken</h2>
-<table name="beitragstats" style="border: 1px solid #333333; text-align: center; padding: 5px; width: 80%">
+<table name="beitragstats" style="border: 1px solid #555555; text-align: center; padding: 5px; width: 80%">
   <th>
-    <td>Datum</td>
-    <td>Eigene Wall</td>
-    <td>Inhalt</td>
-    <td>L</td>
-    <td>D</td>
-    <td>R</td>
-    <td>Gelesen</td>
+    <td class="dashed">Datum</td>
+    <td class="dashed">Eigene Wall</td>
+    <td class="dashed">Inhalt</td>
+    <td class="dashed">L</td>
+    <td class="dashed">D</td>
+    <td class="dashed">R</td>
+    <td class="dashed">Gelesen</td>
   </th>
   <%for(int i = 0; i< beitragliste.size(); i++){ %>
   <% String[] data = beitragliste.get(i); %>
   <tr>
   	<td>
-    <td><%= data[0] %></td>
-    <td><%= data[1] %></td>
-    <td><%= data[2] %></td>
-    <td><%= data[3] %></td>
-    <td><%= data[4] %></td>
-    <td><%= data[5] %></td>
-    <td><%= data[6] %></td>
+    <td class="dashed"><%= data[0] %></td>
+    <td class="dashed"><%= data[1] %></td>
+    <td class="dashed"><%= data[2] %></td>
+    <td class="dashed"><%= data[3] %></td>
+    <td class="dashed"><%= data[4] %></td>
+    <td class="dashed"><%= data[5] %></td>
+    <td class="dashed"><%= data[6] %></td>
   </tr>
 <% }%>
 </table>
 </div>
 <div class="box">
 <h2>Ydioten-Statistiken</h2>
-<table name="ydiotenstats"  style="border: 1px solid #333333; text-align: center; padding: 5px; width: 80%">
+<table name="ydiotenstats"  style="border: 1px solid #555555; text-align: center; padding: 5px; width: 80%">
   <th>
     <td>Geb.</td>
     <td>m / f</td>
