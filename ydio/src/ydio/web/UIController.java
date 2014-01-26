@@ -413,7 +413,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						
 					case "registerAdmin":
 						if(request.getParameter("username").equals("") || request.getParameter("password").equals("") || request.getParameter("fullname").equals("")||
-								request.getParameter("email").equals("")|| request.getParameter("sex").equals("") || request.getParameter("desc").equals("")){
+								request.getParameter("email").equals("")|| request.getParameter("sex").equals("")){
 							
 							request.setAttribute("error", "All fields are required!!");
 							Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
@@ -428,10 +428,36 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						break;
 						
 					case "registerModerator":
-						
+						if(request.getParameter("username").equals("") || request.getParameter("password").equals("") || request.getParameter("fullname").equals("")||
+								request.getParameter("email").equals("")|| request.getParameter("sex").equals("")){
+							
+							request.setAttribute("error", "All fields are required!!");
+							Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+							break;
+						}
+						String registermoderatordate = request.getParameter("date");
+						Date moderatordate = new SimpleDateFormat("yyyy-MM-dd").parse(registermoderatordate);
+						um.registerModerator(request.getParameter("username"), request.getParameter("password"), 
+								request.getParameter("fullname"), request.getParameter("email"), request.getParameter("sex").charAt(0), moderatordate);
+						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 						
 						break;
-            
+						
+					case "registerScientist":
+						if(request.getParameter("username").equals("") || request.getParameter("password").equals("") || request.getParameter("fullname").equals("")||
+								request.getParameter("email").equals("")|| request.getParameter("sex").equals("")){
+							
+							request.setAttribute("error", "All fields are required!!");
+							Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+							break;
+						}
+						String registerscientistdate = request.getParameter("date");
+						Date scientistdate = new SimpleDateFormat("yyyy-MM-dd").parse(registerscientistdate);
+						um.registerModerator(request.getParameter("username"), request.getParameter("password"), 
+								request.getParameter("fullname"), request.getParameter("email"), request.getParameter("sex").charAt(0), scientistdate);
+						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+
+						break;
 					case "lockUserByDate":
 						if(request.getParameter("username").equals("") || request.getParameter("lockdate").equals(""))
 						{
