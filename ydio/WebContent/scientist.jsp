@@ -53,25 +53,25 @@ beitragliste = um.getScientistData("beitrag");
 <h2>Beitrag-Statistiken</h2>
 <table name="beitragstats" style="border: 1px solid #555555; text-align: center; padding: 5px; width: 80%">
   <th>
-    <td class="dashed">Datum</td>
-    <td class="dashed">Eigene Wall</td>
-    <td class="dashed">Inhalt</td>
-    <td class="dashed">L</td>
-    <td class="dashed">D</td>
-    <td class="dashed">R</td>
-    <td class="dashed">Gelesen</td>
+    <td class="tb">Datum</td>
+    <td class="tb">Eigene Wall</td>
+    <td class="tb">Inhalt</td>
+    <td class="tb">L</td>
+    <td class="tb">D</td>
+    <td class="tb">R</td>
+    <td class="tb">Gelesen</td>
   </th>
   <%for(int i = 0; i< beitragliste.size(); i++){ %>
   <% String[] data = beitragliste.get(i); %>
   <tr>
   	<td>
-    <td class="dashed"><%= data[0] %></td>
-    <td class="dashed"><%= data[1] %></td>
-    <td class="dashed"><%= data[2] %></td>
-    <td class="dashed"><%= data[3] %></td>
-    <td class="dashed"><%= data[4] %></td>
-    <td class="dashed"><%= data[5] %></td>
-    <td class="dashed"><%= data[6] %></td>
+    <td class="tb"><%= data[0] %></td>
+    <td class="tb"><%= data[1] %></td>
+    <td class="tb"><%= data[2] %></td>
+    <td class="tb"><%= data[3] %></td>
+    <td class="tb"><%= data[4] %></td>
+    <td class="tb"><%= data[5] %></td>
+    <td class="tb"><%= data[6] %></td>
   </tr>
 <% }%>
 </table>
