@@ -403,7 +403,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						if(request.getParameter("username").equals("") || request.getParameter("password").equals("") || request.getParameter("fullname").equals("")||
 								request.getParameter("email").equals("")|| request.getParameter("sex").equals("") || request.getParameter("desc").equals("")){
 							
-							request.setAttribute("error", "All fields are requiered!!");
+							request.setAttribute("error", "All fields are required!!");
 							Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 							break;
 						}
@@ -413,7 +413,34 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 								request.getParameter("fullname"), request.getParameter("email"), request.getParameter("sex").charAt(0), admindate);
 						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 						
-						break;	 
+						break;	
+            
+          case "lockUserByDate":
+            if(request.getParameter("username").equals("") || request.getParameter("lockdate").equals(""))
+            {
+              request.setAttribute("error", "All fields are required!");
+							Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+            }
+            String date_s = request.getParameter("lockdate");
+						Date date = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
+					  Ydiot lockuser = (Ydiot)um.getUserByUsername(request.getParameter("username"));
+
+            lockuser.setLocked(date);
+					  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+            break;
+            
+          case "unlockUser":
+            if(request.getParameter("username").equals("")) 
+            {
+              request.setAttribute("error", "All fields are required!");
+							Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+            }
+					  Ydiot lockuser = (Ydiot)um.getUserByUsername(request.getParameter("username"));
+
+            lockuser.setLocked(null);
+					  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+            
+            break; 
 			}
 		}
 		
