@@ -51,14 +51,14 @@ beitragliste = um.getScientistData("beitrag");
 
 <div class="box">
 <h2>Beitrag-Statistiken</h2>
-<table name="beitragstats">
+<table name="beitragstats" style="border: 1px solid #333333; text-align: center; padding: 5px; width: 80%">
   <th>
     <td>Datum</td>
-    <td>an eigener Wall</td>
+    <td>Eigene Wall</td>
     <td>Inhalt</td>
-    <td>Likes</td>
-    <td>Dislikes</td>
-    <td>Reported</td>
+    <td>L</td>
+    <td>D</td>
+    <td>R</td>
     <td>Gelesen</td>
   </th>
   <%for(int i = 0; i< beitragliste.size(); i++){ %>
@@ -75,12 +75,13 @@ beitragliste = um.getScientistData("beitrag");
   </tr>
 <% }%>
 </table>
-
+</div>
+<div class="box">
 <h2>Ydioten-Statistiken</h2>
-<table name="ydiotenstats">
+<table name="ydiotenstats"  style="border: 1px solid #333333; text-align: center; padding: 5px; width: 80%">
   <th>
-    <td>Geburtstag</td>
-    <td>Geschlecht</td>
+    <td>Geb.</td>
+    <td>m / f</td>
     <td>Erstellte Beitr&auml;ge</td>
     <td>von Anderen gelesen</td>
     <td>Likes erhalten</td>
