@@ -51,15 +51,15 @@ beitragliste = um.getScientistData("beitrag");
 
 <div class="box">
 <h2>Beitrag-Statistiken</h2>
-<table name="beitragstats" style="border: 1px solid #555555; text-align: center; padding: 5px; width: 80%">
+<table name="beitragstats" style="text-align: center; padding: 5px; width: 80%">
   <th>
-    <td class="tb">Datum</td>
-    <td class="tb">Eigene Wall</td>
-    <td class="tb">Inhalt</td>
-    <td class="tb">L</td>
-    <td class="tb">D</td>
-    <td class="tb">R</td>
-    <td class="tb">Gelesen</td>
+    <td class="tbl">Datum</td>
+    <td class="tbl">Eigene Wall</td>
+    <td class="tbl">Inhalt</td>
+    <td class="tbl">L</td>
+    <td class="tbl">D</td>
+    <td class="tbl">R</td>
+    <td class="tbl">Gelesen</td>
   </th>
   <%for(int i = 0; i< beitragliste.size(); i++){ %>
   <% String[] data = beitragliste.get(i); %>
@@ -67,7 +67,7 @@ beitragliste = um.getScientistData("beitrag");
   	<td>
     <td class="tb"><%= data[0] %></td>
     <td class="tb"><%= data[1] %></td>
-    <td class="tb"><%= data[2] %></td>
+    <td class="tb" style="text-align: left;"><%= data[2] %></td>
     <td class="tb"><%= data[3] %></td>
     <td class="tb"><%= data[4] %></td>
     <td class="tb"><%= data[5] %></td>
@@ -78,35 +78,35 @@ beitragliste = um.getScientistData("beitrag");
 </div>
 <div class="box">
 <h2>Ydioten-Statistiken</h2>
-<table name="ydiotenstats"  style="border: 1px solid #555555; text-align: center; padding: 5px; width: 80%">
+<table name="ydiotenstats"  style="text-align: center; padding: 5px; width: 80%">
   <th>
-    <td>Geb.</td>
-    <td>m / f</td>
-    <td>Erstellte Beitr&auml;ge</td>
-    <td>von Anderen gelesen</td>
-    <td>Likes erhalten</td>
-    <td>Dislikes erhalten</td>
-    <td>Reports erhalten</td>
-    <td>Beitr&auml;ge gelesen</td>
-    <td>Like vergeben</td>
-    <td>Dislike vergeben</td>
-    <td>Reported</td>
+    <td class="tbl">Geb.</td>
+    <td class="tbl">m / f</td>
+    <td class="tbl">Erstellte Beitr&auml;ge</td>
+    <td class="tbl">von Anderen gelesen</td>
+    <td class="tbl">Likes erhalten</td>
+    <td class="tbl">Dislikes erhalten</td>
+    <td class="tbl">Reports erhalten</td>
+    <td class="tbl">Beitr&auml;ge gelesen</td>
+    <td class="tbl">Like vergeben</td>
+    <td class="tbl">Dislike vergeben</td>
+    <td class="tbl">Reported</td>
   </th>
   <%for(int i = 0; i< ydiotenliste.size(); i++){ %>
   <% String[] data = ydiotenliste.get(i); %>
   <tr>
   	<td>
-    <td><%= data[0] %></td>
-    <td><%= data[1] %></td>
-    <td><%= data[2] %></td>
-    <td><%= data[3] %></td>
-    <td><%= data[4] %></td>
-    <td><%= data[5] %></td>
-    <td><%= data[6] %></td>
-    <td><%= data[7] %></td>
-    <td><%= data[8] %></td>
-    <td><%= data[9] %></td>
-    <td><%= data[10] %></td>
+    <td class="tb"><%= data[0] %></td>
+    <td class="tb"><%= data[1] %></td>
+    <td class="tb"><%= data[2] %></td>
+    <td class="tb"><%= data[3] %></td>
+    <td class="tb"><%= data[4] %></td>
+    <td class="tb"><%= data[5] %></td>
+    <td class="tb"><%= data[6] %></td>
+    <td class="tb"><%= data[7] %></td>
+    <td class="tb"><%= data[8] %></td>
+    <td class="tb"><%= data[9] %></td>
+    <td class="tb"><%= data[10] %></td>
   </tr>
 <% } %>
 </table>

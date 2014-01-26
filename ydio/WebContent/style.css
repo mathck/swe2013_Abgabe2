@@ -48,7 +48,11 @@ li {
 }
 
 .tb {
-	border-bottom: 1px dashed #555555;
+	border-bottom: 1px dashed #A0A0A0;
+}
+
+.tbl {
+	border-bottom: 1px solid black;
 }
 
 #footer {
