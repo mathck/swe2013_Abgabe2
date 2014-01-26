@@ -89,7 +89,26 @@ public class MySQL implements DatabaseAccess {
 			} catch (SQLException e) {}			
 		}
 	}
-
+	public Beitrag getBeitrag (long id) throws IOException {
+		PreparedStatement get = null;
+		ResultSet result = null;
+		try {
+			connection = source.getConnection();
+			get = connection.prepareStatement("select * from beitrag where id=?");
+			get.setLong(1, id);
+			result = get.executeQuery();
+			if (result.next()) return createBeitrag(result);
+			else return null;
+		} catch (SQLException e) {
+			throw new IOException (e.getMessage());
+		} finally {
+			try {
+				if (get != null) get.close();
+				if (result != null) result.close();
+				if (connection != null) connection.close();
+			} catch (Throwable e) {}
+		}
+	}
 	/**
 	 * Speichert eine Repräsentation des Benutzers in der Datenbank.
 	 * @param user Benutzerobjekt. Es wird die leere Freundesliste nicht übernommen (da keine Daten vorhanden).

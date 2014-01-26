@@ -37,6 +37,7 @@ public interface DatabaseAccess {
 	 * @throws IOException Bei Ausnahmefällen in der Datenbank wird eine Exception geworfen.
 	 */
 	public List<AbstractUser> getAllUsers() throws IOException;
+	public Beitrag getBeitrag(long id) throws IOException;
 	public List<Beitrag> getBeitragList(boolean reported) throws IOException;
 	/**
 	 * Gibt eine Liste aller Beiträge in der Datenbank zurück.
