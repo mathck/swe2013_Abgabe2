@@ -442,7 +442,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
               request.setAttribute("error", "All fields are required!");
 							Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
             }
-					  Ydiot lockuser = (Ydiot)um.getUserByUsername(request.getParameter("username"));
+					  lockuser = (Ydiot)um.getUserByUsername(request.getParameter("username"));
 
             lockuser.setLocked(null);
 					  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
