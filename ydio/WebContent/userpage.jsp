@@ -78,10 +78,10 @@
 %>
 <td><%=  friends  %></td>
 </tr>
-<% if (request.getParameter("desc") != null) {
-        out.println("<tr><td>Beschreibung</td><td>" + request.getParameter("desc") + "</td></tr>");
-    }
-%>
+<tr>
+<td>Description</td>
+<td><%=  target.getDescription()  %></td>
+</tr>
 <% if(!target.getUsername().equals(um.getSession().getUsername())){ %>
 <% if (um.getSession() instanceof Ydiot){  %>
 <% Ydiot loggedinuser = (Ydiot) um.getSession(); %>
