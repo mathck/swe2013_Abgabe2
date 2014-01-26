@@ -178,7 +178,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						}
 						
 						if(um.getSession() == null){
-							request.setAttribute("error", "Benutzername und Password stimmen nicht ï¿½berein");
+							request.setAttribute("error", "Benutzername und Password stimmen nicht überein");
 							Login.aufrufLogin(request, response, session, JSPLogin);
 						}
 						else{
@@ -186,8 +186,15 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 							session.setAttribute("status", "logged in");
 							um.setTarget(um.getSession());
 							AbstractUser userclass = um.getTarget();
-				              if(userclass instanceof Ydiot)
+				              if(userclass instanceof Ydiot){
+				            	//Falls der benutzer gesperrt ist wird ihm der Login verweigert
+				            	Ydiot maybelockeduser = (Ydiot) um.getSession();
+				            	if(maybelockeduser.isLocked()){
+				            		request.setAttribute("error", "You are locked!");
+				            		Login.aufrufLogin(request, response, session, JSPLogin);
+				            	}
 				                Userpage.aufrufUserpage(request, response, session, JSPUserpage);
+				              }
 				              else if(userclass instanceof Forscher)
 				                Userpage.aufrufUserpage(request, response, session, JSPScientistPage);
 				              else if(userclass instanceof Administrator || userclass instanceof Moderator)
