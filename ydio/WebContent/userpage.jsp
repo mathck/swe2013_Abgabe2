@@ -73,7 +73,9 @@
 <td>Friends:</td>
 <% String friends = "";
 	for(int i = 0; i<target.getFriendList().size(); i++){
-		friends += target.getFriendList().get(i) + ", ";
+		friends += target.getFriendList().get(i);
+		if(i < target.getFriendList().size() -1) 
+			friends += ", ";
 	}
 %>
 <td><%=  friends  %></td>
