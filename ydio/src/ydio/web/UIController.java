@@ -190,7 +190,8 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 				            	//Falls der benutzer gesperrt ist wird ihm der Login verweigert
 				            	Ydiot maybelockeduser = (Ydiot) um.getSession();
 				            	if(maybelockeduser.isLocked()){
-				            		request.setAttribute("error", "You are locked!");
+				            		request.setAttribute("error", "Sie wurden aufgrund unpassender Beiträge geperrt!");
+				            		um.logout();
 				            		Login.aufrufLogin(request, response, session, JSPLogin);
 				            	}
 				                Userpage.aufrufUserpage(request, response, session, JSPUserpage);
@@ -394,6 +395,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 							c.add(Calendar.DATE, 1);
 							lockdate = c.getTime();
 							lockuser.setLocked(lockdate);
+							um.updateUser(lockuser);
 						}
 						
 						if(request.getParameter("notBad") != null)
@@ -401,6 +403,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 							long beitragID = Long.parseLong(request.getParameter("notBad"));
 							beitrag = um.getBeitrag(beitragID);
 							beitrag.setReportList(null);
+							um.updateBeitrag(beitrag);
 						}
 						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 						break;
