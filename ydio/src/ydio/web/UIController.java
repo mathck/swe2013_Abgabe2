@@ -429,10 +429,10 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 							Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
             }
             String date_s = request.getParameter("lockdate");
-						Date date = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
+						Date lockdate = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
 					  Ydiot lockuser = (Ydiot)um.getUserByUsername(request.getParameter("username"));
 
-            lockuser.setLocked(date);
+            lockuser.setLocked(lockdate);
 					  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
             break;
             
