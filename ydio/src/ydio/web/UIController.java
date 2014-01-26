@@ -425,34 +425,40 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 								request.getParameter("fullname"), request.getParameter("email"), request.getParameter("sex").charAt(0), admindate);
 						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 						
-						break;	
+						break;
+						
+					case "registerModerator":
+						
+						
+						break;
             
-          case "lockUserByDate":
-            if(request.getParameter("username").equals("") || request.getParameter("lockdate").equals(""))
-            {
-              request.setAttribute("error", "All fields are required!");
+					case "lockUserByDate":
+						if(request.getParameter("username").equals("") || request.getParameter("lockdate").equals(""))
+						{
+							request.setAttribute("error", "All fields are required!");
 							Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
-            }
-            String date_s = request.getParameter("lockdate");
+						}
+						String date_s = request.getParameter("lockdate");
 						Date lockdate = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
-					  Ydiot lockuser = (Ydiot)um.getUserByUsername(request.getParameter("username"));
+						Ydiot lockuser = (Ydiot)um.getUserByUsername(request.getParameter("username"));
 
-            lockuser.setLocked(lockdate);
-					  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
-            break;
+						lockuser.setLocked(lockdate);
+						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+						um.updateUser(lockuser);
+						break;
             
-          case "unlockUser":
-            if(request.getParameter("username").equals("")) 
-            {
-              request.setAttribute("error", "All fields are required!");
+					case "unlockUser":
+						if(request.getParameter("username").equals("")) 
+						{
+							request.setAttribute("error", "All fields are required!");
 							Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
-            }
-					  lockuser = (Ydiot)um.getUserByUsername(request.getParameter("username"));
+						}
+						lockuser = (Ydiot)um.getUserByUsername(request.getParameter("username"));
 
-            lockuser.setLocked(null);
-					  Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
-            
-            break; 
+						lockuser.setLocked(null);
+						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
+						um.updateUser(lockuser);
+						break; 
 			}
 		}
 		
