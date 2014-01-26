@@ -455,7 +455,7 @@ public class UIController extends HttpServlet implements SingleThreadModel {
 						}
 						lockuser = (Ydiot)um.getUserByUsername(request.getParameter("username"));
 
-						lockuser.setLocked(null);
+						lockuser.setLocked(new Date());
 						Userpage.aufrufUserpage(request, response, session, JSPAdminPage);
 						um.updateUser(lockuser);
 						break; 
